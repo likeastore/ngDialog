@@ -1,0 +1,31 @@
+{
+  "name": "ngDialog",
+  "version": "0.0.0",
+  "homepage": "https://github.com/likeastore/ngDialog",
+  "description": "Modal dialogs and popups provider for Angular.js applications",
+  "main": "./ngDialog.js",
+  "keywords": [
+    "angular.js",
+    "modals",
+    "popups",
+    "dialog",
+    "ng",
+    "provider",
+    "factory",
+    "directive"
+  ],
+  "author": {
+    "name": "Dmitri Voronianski",
+    "email": "dmitri.voronianski@gmail.com",
+    "web": "http://pixelhunter.me",
+    "twitter": "voronianski"
+  },
+  "homepage": "https://github.com/likeastore/ngDialog",
+  "bugs": "https://github.com/likeastore/ngDialog/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/likeastore/ngDialog"
+  },
+  "readmeFilename": "README.md",
+  "license": "MIT"
+}
