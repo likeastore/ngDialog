@@ -20,12 +20,15 @@
     "web": "http://pixelhunter.me",
     "twitter": "voronianski"
   },
-  "homepage": "https://github.com/likeastore/ngDialog",
   "bugs": "https://github.com/likeastore/ngDialog/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/likeastore/ngDialog"
   },
   "readmeFilename": "README.md",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "myth": "~0.1.6",
+    "grunt": "~0.4.2"
+  }
 }
