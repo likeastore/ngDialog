@@ -2,13 +2,13 @@
 
 Modal dialogs and popups provider for [Angular.js](http://angularjs.org/) applications.
 
-ngDialog is small (``~2Kb``), has minimalistic API, highly customizable through themes and has only Angular.js as dependency.
+ngDialog is small (~2Kb), has minimalistic API, highly customizable through themes and has only Angular.js as dependency.
 
 ### [Demo](ngdialog.github.io)
 
 ## Install
 
-You can download necessary ngDialog files manually or install it with bower:
+You can download all necessary ngDialog files manually or install it with bower:
 
 ```bash
 bower install ngDialog
@@ -34,6 +34,25 @@ ngDialog service provides easy to use and minimalistic API, but in the same time
 
 ##### ``.open(options)``
 
+Method allows to open dialog window, creates new dialog instance on each call. It accepts ``options`` object as the only argument:
+
+- ``template {String}`` - dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``
+
+```html
+<script type="text/ng-template" id="templateId">
+	<h1>Template heading</h1>
+	<p>Content goes here</p>
+</script>
+```
+
+```javascript
+ngDialog.open({ template: 'templateId' });
+```
+
+Also it is possible to use simple string as template together with ``plain`` option.
+
+- ``plain {Boolean}`` - if ``true`` allows to use plain string as template, default ``false``
+
 ##### ``.close(id)``
 
 ##### ``.closeAll()``
@@ -54,6 +73,8 @@ Some imaginary button, for example, will look like:
 ```
 
 ## Themes
+
+
 
 ## Licence
 

@@ -31,6 +31,7 @@
     "myth": "~0.1.6",
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.7.2",
-    "grunt-contrib-uglify": "~0.2.7"
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-myth": "~0.1.0"
   }
 }
