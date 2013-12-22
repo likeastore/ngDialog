@@ -170,6 +170,24 @@
 			}];
 	});
 
-	module.directive('ngDialog', function () {});
+	module.directive('ngDialog', function (ngDialog) {
+		return {
+			restrict: 'A',
+			link: function (scope, elem, attrs) {
+				elem.on('click', function (e) {
+					e.preventDefault();
+
+					ngDialog.open({
+						template: attrs.ngDialog,
+						className: attrs.ngDialogClass,
+						controller: attrs.ngDialogController,
+						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
+						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
+						closeByEscape: attrs.ngDialogCloseByKeyup === 'false' ? false : true
+					});
+				});
+			}
+		};
+	});
 
 })(window, window.angular);

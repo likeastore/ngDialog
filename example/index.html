@@ -8,7 +8,9 @@
 </head>
 <body ng-controller="MainCtrl">
 
-	<a href="#" ng-click="open()">Open</a>
+	<a href="#" ng-click="open()">Open via service</a>
+
+	<button type="button" ng-dialog="firstDialogId" ng-dialog-controller="InsideCtrl" ng-dialog-class="ngdialog-theme-default" ng-dialog-show-close="false">Open via directive</button>
 
 	<script type="text/ng-template" id="firstDialogId">
 		<h1>Test template</h1>
