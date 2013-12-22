@@ -40,7 +40,7 @@ Method allows to open dialog window, creates new dialog instance on each call. I
 
 ###### ``template {String}``
 
-Dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``
+Dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``:
 
 ```html
 <script type="text/ng-template" id="templateId">
@@ -57,7 +57,7 @@ Also it is possible to use simple string as template together with ``plain`` opt
 
 ###### ``plain {Boolean}``
 
-If ``true`` allows to use plain string as template, default ``false``.
+If ``true`` allows to use plain string as template, default ``false``:
 
 ```javascript
 ngDialog.open({
@@ -68,11 +68,27 @@ ngDialog.open({
 
 ###### ``scope {Object}``
 
+If not delegated new empty scope is created inside dialog window via ``$rootScope.new()``.
+
 ###### ``controller {String}``
+
+Name of controller that will be used for dialog window if necessary.
 
 ###### ``className {String}``
 
+This option allows to controll dialog look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
+
 ###### ``showClose {Boolean}``
+
+If ``false`` it allows to hide close button on modals, default ``true``.
+
+###### ``closeByEscape {Boolean}``
+
+It allows to close modals by clicking ``Esc`` button*, default ``true``.
+
+* This will close all open modals if there several of them open at the same time.
+
+###### ``closeByDocument {Boolean}``
 
 ### ``.close(id)``
 
