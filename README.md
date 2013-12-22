@@ -78,6 +78,17 @@ Name of controller that will be used for dialog window if necessary.
 
 This option allows to controll dialog look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
 
+This example enables one of built-in ngDialog themes - ``ngdialog-theme-flat`` (do not forget to include necessary css files):
+
+```javascript
+ngDialog.open({
+	template: 'templateId',
+	className: 'ngdialog-theme-flat'
+});
+```
+
+Check [themes](https://github.com/likeastore/ngDialog#themes) block to learn more.
+
 ##### ``showClose {Boolean}``
 
 If ``false`` it allows to hide close button on modals, default ``true``.
