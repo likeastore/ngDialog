@@ -6,7 +6,7 @@ It has minimalistic API, highly customizable through themes and has only Angular
 
 ## Install
 
-You can download ``ngDialog.js`` manually or install it with bower:
+You can download necessary ngDialog files manually or install it with bower:
 
 ```bash
 bower install ngDialog
@@ -17,20 +17,18 @@ bower install ngDialog
 You need only to include ``ngDialog.js`` and  ``ngDialog.css`` (as minimal setup) to your project, and then you can start using ``ngDialog`` provider in your directives, controllers and services. For example in controllers:
 
 ```javascript
+var app = angular.module('exampleApp', ['ngDialog']);
 
-	var app = angular.module('exampleApp', ['ngDialog']);
-
-	app.controller('MainCtrl', function ($scope, ngDialog) {
-		$scope.clickToOpen = function () {
-			ngDialog.open({ template: 'popupTmpl.html' });
-		};
-	});
-
+app.controller('MainCtrl', function ($scope, ngDialog) {
+	$scope.clickToOpen = function () {
+		ngDialog.open({ template: 'popupTmpl.html' });
+	};
+});
 ```
 
 ## API
 
-ngDialog service provides easy to use and minimalistic API, but in same time it is powerful enough. Here is the list of accessible methods that you can use:
+ngDialog service provides easy to use and minimalistic API, but in the same time it's powerful enough. Here is the list of accessible methods that you can use:
 
 ##### ``.open(options)``
 
@@ -45,14 +43,12 @@ By default ngDialog module is served with ``ngDialog`` directive which can be us
 Some imaginary button, for example, will look like:
 
 ```html
-
-	<button type="button"
-		ng-dialog="templateId.html"
-		ng-dialog-class="ngdialog-theme-flat"
-		ng-dialog-controller="ModalCtrl">
-		Open modal text
-	</button>
-
+<button type="button"
+	ng-dialog="templateId.html"
+	ng-dialog-class="ngdialog-theme-flat"
+	ng-dialog-controller="ModalCtrl">
+	Open modal text
+</button>
 ```
 
 ## Themes
