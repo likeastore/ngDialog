@@ -34,9 +34,13 @@ ngDialog service provides easy to use and minimalistic API, but in the same time
 
 ### ``.open(options)``
 
-Method allows to open dialog window, creates new dialog instance on each call. It accepts ``options`` object as the only argument:
+Method allows to open dialog window, creates new dialog instance on each call. It accepts ``options`` object as the only argument.
 
-- *``template {String}``* - dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``
+##### Options:
+
+###### ``template {String}``
+
+Dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``
 
 ```html
 <script type="text/ng-template" id="templateId">
@@ -51,7 +55,24 @@ ngDialog.open({ template: 'templateId' });
 
 Also it is possible to use simple string as template together with ``plain`` option.
 
-- **``plain {Boolean}``** - if ``true`` allows to use plain string as template, default ``false``
+###### ``plain {Boolean}``
+
+If ``true`` allows to use plain string as template, default ``false``.
+
+```javascript
+ngDialog.open({
+	template: '<p>my template</p>',
+	plain: true
+});
+```
+
+###### ``scope {Object}``
+
+###### ``controller {String}``
+
+###### ``className {String}``
+
+###### ``showClose {Boolean}``
 
 ### ``.close(id)``
 
