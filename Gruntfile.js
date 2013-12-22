@@ -22,7 +22,9 @@ module.exports = function (grunt) {
 			dist: {
 				files: {
 					'./css/ngDialog.css': './css/myth/ngDialog.css',
-					'./css/ngDialog-theme-default.css': './css/myth/ngDialog-theme-default.css'
+					'./css/ngDialog-theme-default.css': './css/myth/ngDialog-theme-default.css',
+					'./css/ngDialog-theme-plain.css': './css/myth/ngDialog-theme-plain.css',
+					'./css/ngDialog-theme-flat.css': './css/myth/ngDialog-theme-flat.css'
 				}
 			}
 		}
@@ -33,6 +35,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-myth');
 
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('build', ['uglify']);
+	grunt.registerTask('build', ['uglify', 'myth']);
 	grunt.registerTask('css', ['myth']);
 };

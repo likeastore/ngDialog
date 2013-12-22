@@ -6,6 +6,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="../css/ngDialog.css">
 	<link rel="stylesheet" href="../css/ngDialog-theme-default.css">
+	<link rel="stylesheet" href="../css/ngDialog-theme-plain.css">
 	<link rel="stylesheet" href="../css/ngDialog-theme-flat.css">
 
 </head>
@@ -16,12 +17,13 @@
 	<button type="button" ng-dialog="firstDialogId" ng-dialog-controller="InsideCtrl" ng-dialog-class="ngdialog-theme-default" ng-dialog-show-close="false">Open via directive</button>
 
 	<a href="#" ng-click="openDefault()">Default theme</a>
+	<a href="#" ng-click="openPlain()">Plain theme</a>
 	<a href="#" ng-click="openFlat()">Flat theme</a>
 
 	<script type="text/ng-template" id="firstDialogId">
 		<div class="ngdialog-message">
 			<h3>ngDialog template</h3>
-			<p>Test content for <code>ngdialog-theme-default</code></p>
+			<p>Test content for <code>{{theme}}</code></p>
 		</div>
 		<div class="ngdialog-buttons">
 			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
@@ -33,12 +35,14 @@
 	<script>
 		var app = angular.module('exampleDialog', ['ngDialog']);
 
-		app.controller('MainCtrl', function ($scope, ngDialog) {
+		app.controller('MainCtrl', function ($scope, $rootScope, ngDialog) {
 			$scope.open = function () {
 				ngDialog.open({ template: 'firstDialogId', controller: 'InsideCtrl' });
 			};
 
 			$scope.openDefault = function () {
+				$rootScope.theme = 'ngdialog-theme-default';
+
 				ngDialog.open({
 					template: 'firstDialogId',
 					controller: 'InsideCtrl',
@@ -46,7 +50,19 @@
 				});
 			};
 
+			$scope.openPlain = function () {
+				$rootScope.theme = 'ngdialog-theme-plain';
+
+				ngDialog.open({
+					template: 'firstDialogId',
+					controller: 'InsideCtrl',
+					className: 'ngdialog-theme-plain'
+				});
+			};
+
 			$scope.openFlat = function () {
+				$rootScope.theme = 'ngdialog-theme-flat';
+
 				ngDialog.open({
 					template: 'firstDialogId',
 					controller: 'InsideCtrl',

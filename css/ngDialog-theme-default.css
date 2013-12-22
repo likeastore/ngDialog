@@ -110,11 +110,10 @@
 
 .ngdialog.ngdialog-theme-default .ngdialog-close:hover:before,
 .ngdialog.ngdialog-theme-default .ngdialog-close:active:before {
-  background: #e0e0e0;
   color: #777;
 }
 
-.ngdialog.ngdialog-theme-default .ngdialog-dialog-message {
+.ngdialog.ngdialog-theme-default .ngdialog-message {
   margin-bottom: .5em;
 }
 
