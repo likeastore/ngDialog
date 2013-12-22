@@ -11,10 +11,8 @@
 	<a href="#" ng-click="open()">Open</a>
 
 	<script type="text/ng-template" id="firstDialogId">
-		<div ng-controller="InsideCtrl">
-			<h1>Test template</h1>
-			<a href="#" ng-click="openSecond()">Open next</a>
-		</div>
+		<h1>Test template</h1>
+		<a href="#" ng-click="openSecond()">Open next</a>
 	</script>
 
 	<script src="../bower_components/angular/angular.min.js"></script>
@@ -24,13 +22,24 @@
 
 		app.controller('MainCtrl', function ($scope, ngDialog) {
 			$scope.open = function () {
-				ngDialog.open({ template: 'firstDialogId' });
+				ngDialog.open({ template: 'firstDialogId', controller: 'InsideCtrl' });
 			};
 		});
 
 		app.controller('InsideCtrl', function ($scope, ngDialog) {
 			$scope.openSecond = function () {
-				ngDialog.open();
+				ngDialog.open({
+					template: '<a href="#" ng-click="closeSecond()">Close here</a>',
+					plain: true,
+					closeByEscape: false,
+					controller: 'SecondModalCtrl'
+				});
+			};
+		});
+
+		app.controller('SecondModalCtrl', function ($scope, ngDialog) {
+			$scope.closeSecond = function () {
+				ngDialog.close();
 			};
 		});
 

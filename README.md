@@ -1,22 +1,65 @@
 # ngDialog
 
-Modal dialogs and popups provider and directive for Angular.js applications.
+Modal dialogs and popups provider for [Angular.js](http://angularjs.org/) applications.
 
-It has minimalistic API, highly customizable through themes and has only [angular.js](http://angularjs.org/) as dependency.
+It has minimalistic API, highly customizable through themes and has only Angular.js as dependency.
 
 ## Install
 
+You can download ``ngDialog.js`` manually or install it with bower:
+
+```bash
+bower install ngDialog
+```
+
 ## Usage
+
+You need only to include ``ngDialog.js`` and  ``ngDialog.css`` (as minimal setup) to your project, and then you can start using ``ngDialog`` provider in your directives, controllers and services. For example in controllers:
+
+```javascript
+
+	var app = angular.module('exampleApp', ['ngDialog']);
+
+	app.controller('MainCtrl', function ($scope, ngDialog) {
+		$scope.clickToOpen = function () {
+			ngDialog.open({ template: 'popupTmpl.html' });
+		};
+	});
+
+```
 
 ## API
 
-## Themes
+ngDialog service provides easy to use and minimalistic API, but in same time it is powerful enough. Here is the list of accessible methods that you can use:
 
-## References
+##### ``.open(options)``
+
+##### ``.close(id)``
+
+##### ``.closeAll()``
+
+## Directive
+
+By default ngDialog module is served with ``ngDialog`` directive which can be used as attribute for buttons, links, etc. Almost all ``.open()`` options are available through tag attributes as well, the only difference is that ``ng-template`` id or path of template file is a required content of ``ng-dialog`` directive.
+
+Some imaginary button, for example, will look like:
+
+```html
+
+	<button type="button"
+		ng-dialog="templateId.html"
+		ng-dialog-class="ngdialog-theme-flat"
+		ng-dialog-controller="ModalCtrl">
+		Open modal text
+	</button>
+
+```
+
+## Themes
 
 ## Licence
 
-MIT License
+MIT Licensed
 
 Copyright (c) 2013, Likeastore.com <info@likeastore.com>
 
