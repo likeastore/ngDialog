@@ -16,8 +16,6 @@
 	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
 
 	module.provider('ngDialog', function () {
-		var globalID = this.globalID = 0;
-
 		var defaults = this.defaults = {
 			className: 'ngdialog-theme-default',
 			plain: false,
@@ -26,17 +24,27 @@
 			closeByEscape: true
 		};
 
+		var globalID = 0, dialogsCount = 0;
+
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout',
 			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout) {
 				var $body = $document.find('body');
 
 				var privateMethods = {
-					closeDialog: function ($dialog, next) {
+					onDocumentKeyup: function (event) {
+						if (event.keyCode === 27) {
+							publicMethods.close();
+						}
+					},
+
+					closeDialog: function ($dialog) {
 						$dialog.unbind('click');
 
-						if (!next) {
+						if (dialogsCount === 1) {
 							$body.unbind('keyup').removeClass('ngdialog-open');
 						}
+
+						dialogsCount -= 1;
 
 						if (animationEndSupport) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
@@ -101,11 +109,7 @@
 							$body.addClass('ngdialog-open').append($dialog);
 
 							if (options.closeByEscape) {
-								$body.bind('keyup', function (event) {
-									if (event.keyCode === 27) {
-										publicMethods.close($dialog.attr('id'));
-									}
-								});
+								$body.bind('keyup', privateMethods.onDocumentKeyup);
 							}
 
 							if (options.closeByDocument) {
@@ -119,9 +123,9 @@
 								});
 							}
 
-							return {
+							dialogsCount += 1;
 
-							};
+							return publicMethods;
 						});
 
 						function loadTemplate (tmpl) {
@@ -138,11 +142,11 @@
 					},
 
 					/*
+					 * @param {String} id
 					 * @return {Object} dialog
 					 */
 					close: function (id) {
 						var $dialog = $el(document.getElementById(id));
-						//debugger;
 
 						if ($dialog.length) {
 							privateMethods.closeDialog($dialog);
@@ -155,6 +159,7 @@
 
 					closeAll: function () {
 						var $all = document.querySelectorAll('.ngdialog');
+
 						angular.forEach($all, function (dialog) {
 							privateMethods.closeDialog($el(dialog));
 						});

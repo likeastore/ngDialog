@@ -38,7 +38,7 @@ ngDialog service provides easy to use and minimalistic API, but in the same time
 
 ## Directive
 
-By default ngDialog module is served with ``ngDialog`` directive which can be used as attribute for buttons, links, etc. Almost all ``.open()`` options are available through tag attributes as well, the only difference is that ``ng-template`` id or path of template file is a required content of ``ng-dialog`` directive.
+By default ngDialog module is served with ``ngDialog`` directive which can be used as attribute for buttons, links, etc. Almost all ``.open()`` options are available through tag attributes as well, the only difference is that ``ng-template`` id or path of template file is required.
 
 Some imaginary button, for example, will look like:
 
