@@ -36,7 +36,7 @@ ngDialog service provides easy to use and minimalistic API, but in the same time
 
 Method allows to open dialog window, creates new dialog instance on each call. It accepts ``options`` object as the only argument:
 
-- **``template {String}``** - dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``
+- *``template {String}``* - dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``
 
 ```html
 <script type="text/ng-template" id="templateId">
