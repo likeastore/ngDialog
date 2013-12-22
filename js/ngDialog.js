@@ -170,7 +170,7 @@
 			}];
 	});
 
-	module.directive('ngDialog', function (ngDialog) {
+	module.directive('ngDialog', ['ngDialog', function (ngDialog) {
 		return {
 			restrict: 'A',
 			link: function (scope, elem, attrs) {
@@ -188,6 +188,6 @@
 				});
 			}
 		};
-	});
+	}]);
 
 })(window, window.angular);
