@@ -1,367 +1,101 @@
-/* Common dialog styles */
-@-webkit-keyframes ngdialog-fadein {
-	0% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
-
-@-moz-keyframes ngdialog-fadein {
-	0% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
-
-@-ms-keyframes ngdialog-fadein {
-	0% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
-
-@keyframes ngdialog-fadein {
-	0% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
-
 @-webkit-keyframes ngdialog-fadeout {
-	0% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 1;
+  }
 
-	100% {
-		opacity: 0;
-	}
-}
-
-@-moz-keyframes ngdialog-fadeout {
-	0% {
-		opacity: 1;
-	}
-
-	100% {
-		opacity: 0;
-	}
-}
-
-@-ms-keyframes ngdialog-fadeout {
-	0% {
-		opacity: 1;
-	}
-
-	100% {
-		opacity: 0;
-	}
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes ngdialog-fadeout {
-	0% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 1;
+  }
 
-	100% {
-		opacity: 0;
-	}
+  100% {
+    opacity: 0;
+  }
 }
 
-@-webkit-keyframes ngdialog-flipin-horizontal {
-	0% {
-		opacity: 0;
-		transform: rotateY(-90deg);
-		-webkit-transform: rotateY(-90deg);
-		-moz-transform: rotateY(-90deg);
-		-ms-transform: rotateY(-90deg);
-		-o-transform: rotateY(-90deg);
-	}
+@-webkit-keyframes ngdialog-fadein {
+  0% {
+    opacity: 0;
+  }
 
-	100% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
+  100% {
+    opacity: 1;
+  }
 }
 
-@-moz-keyframes ngdialog-flipin-horizontal {
-	0% {
-		opacity: 0;
-		transform: rotateY(-90deg);
-		-webkit-transform: rotateY(-90deg);
-		-moz-transform: rotateY(-90deg);
-		-ms-transform: rotateY(-90deg);
-		-o-transform: rotateY(-90deg);
-	}
+@keyframes ngdialog-fadein {
+  0% {
+    opacity: 0;
+  }
 
-	100% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
+  100% {
+    opacity: 1;
+  }
 }
 
-@-ms-keyframes ngdialog-flipin-horizontal {
-	0% {
-		opacity: 0;
-		transform: rotateY(-90deg);
-		-webkit-transform: rotateY(-90deg);
-		-moz-transform: rotateY(-90deg);
-		-ms-transform: rotateY(-90deg);
-		-o-transform: rotateY(-90deg);
-	}
-
-	100% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
-}
-
-@keyframes ngdialog-flipin-horizontal {
-	0% {
-		opacity: 0;
-		transform: rotateY(-90deg);
-		-webkit-transform: rotateY(-90deg);
-		-moz-transform: rotateY(-90deg);
-		-ms-transform: rotateY(-90deg);
-		-o-transform: rotateY(-90deg);
-	}
-
-	100% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
-}
-
-@-webkit-keyframes ngdialog-flipout-horizontal {
-	0% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
-
-	100% {
-		opacity: 0;
-		transform: rotateY(90deg);
-		-webkit-transform: rotateY(90deg);
-		-moz-transform: rotateY(90deg);
-		-ms-transform: rotateY(90deg);
-		-o-transform: rotateY(90deg);
-	}
-}
-
-@-moz-keyframes ngdialog-flipout-horizontal {
-	0% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
-
-	100% {
-		opacity: 0;
-		transform: rotateY(90deg);
-		-webkit-transform: rotateY(90deg);
-		-moz-transform: rotateY(90deg);
-		-ms-transform: rotateY(90deg);
-		-o-transform: rotateY(90deg);
-	}
-}
-
-@-ms-keyframes ngdialog-flipout-horizontal {
-	0% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
-
-	100% {
-		opacity: 0;
-		transform: rotateY(90deg);
-		-webkit-transform: rotateY(90deg);
-		-moz-transform: rotateY(90deg);
-		-ms-transform: rotateY(90deg);
-		-o-transform: rotateY(90deg);
-	}
-}
-
-@keyframes ngdialog-flipout-horizontal {
-	0% {
-		opacity: 1;
-		transform: rotateY(0deg);
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-	}
-
-	100% {
-		opacity: 0;
-		transform: rotateY(90deg);
-		-webkit-transform: rotateY(90deg);
-		-moz-transform: rotateY(90deg);
-		-ms-transform: rotateY(90deg);
-		-o-transform: rotateY(90deg);
-	}
+.ngdialog,
+.ngdialog *,
+.ngdialog *:before,
+.ngdialog *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .ngdialog {
-	position: fixed;
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
-	z-index: 10000;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-}
-
-.ngdialog, .ngdialog *, .ngdialog *:before, .ngdialog *:after {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+  position: fixed;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 10000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .ngdialog-overlay {
-	position: fixed;
-	background: rgba(0, 0, 0, 0.4);
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	height: 20000px;
-	-webkit-backface-visibility: hidden;
-	-webkit-animation: ngdialog-fadein 0.5s;
-	-moz-animation: ngdialog-fadein 0.5s;
-	-ms-animation: ngdialog-fadein 0.5s;
-	animation: ngdialog-fadein 0.5s;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 20000px;
+  -webkit-backface-visibility: hidden;
+  -webkit-animation: ngdialog-fadein 0.5s;
+  animation: ngdialog-fadein 0.5s;
 }
 
 .ngdialog.ngdialog-closing .ngdialog-overlay {
   -webkit-backface-visibility: hidden;
   -webkit-animation: ngdialog-fadeout 0.5s;
-  -moz-animation: ngdialog-fadeout 0.5s;
-  -ms-animation: ngdialog-fadeout 0.5s;
   animation: ngdialog-fadeout 0.5s;
 }
 
+.ngdialog-content {
+  background: white;
+  -webkit-backface-visibility: hidden;
+  -webkit-animation: ngdialog-fadein 0.5s;
+  animation: ngdialog-fadein 0.5s;
+}
+
+.ngdialog.ngdialog-closing .ngdialog-content {
+  -webkit-backface-visibility: hidden;
+  -webkit-animation: ngdialog-fadeout 0.5s;
+  animation: ngdialog-fadeout 0.5s;
+}
+
+.ngdialog-close:before {
+  font-family: 'Helvetica', Arial, sans-serif;
+  content: '\00D7';
+  cursor: pointer;
+}
+
 body.ngdialog-open {
-	overflow: hidden;
-}
-
-/* Dialog themes */
-.ngdialog.ngdialog-theme-default {
-	padding-top: 160px;
-	padding-bottom: 160px;
-	-webkit-perspective: 1300px;
-	-moz-perspective: 1300px;
-	-ms-perspective: 1300px;
-	-o-perspective: 1300px;
-	perspective: 1300px;
-	-webkit-perspective-origin: 50% 150px;
-	-moz-perspective-origin: 50% 150px;
-	-ms-perspective-origin: 50% 150px;
-	-o-perspective-origin: 50% 150px;
-	perspective-origin: 50% 150px;
-	padding-top: 100px;
-	padding-bottom: 100px;
-	font-size: 1.5em;
-}
-
-.ngdialog.ngdialog-theme-default .ngdialog-content {
-	font-weight: 300;
-	background: #fff;
-	color: #1f282d;
-	padding: 1.2em;
-	line-height: 1.5em;
-	text-align: center;
-	position: relative;
-	margin: 0 auto;
-	max-width: 100%;
-	width: 450px;
-}
-
-.ngdialog.ngdialog-theme-default .ngdialog-close {
-	position: absolute;
-	top: 0;
-	right: 0;
-	cursor: pointer;
-}
-
-.ngdialog.ngdialog-theme-default .ngdialog-close:before {
-	position: absolute;
-	content: "\00D7";
-	font-size: 26px;
-	font-weight: normal;
-	line-height: 30px;
-	height: 30px;
-	width: 30px;
-	text-align: center;
-	top: 3px;
-	right: 3px;
-	color: #1abc9c;
-	background: transparent;
-}
-
-.ngdialog.ngdialog-theme-default .ngdialog-content h1,
-.ngdialog.ngdialog-theme-default .ngdialog-content h2,
-.ngdialog.ngdialog-theme-default .ngdialog-content h3 {
-	color: #1f282d;
-	font-family: 'proxima-nova-bold';
-	margin-bottom: 10px;
-}
-
-.ngdialog.ngdialog-theme-default.ngdialog-closing .ngdialog-content {
-	animation: ngdialog-flipout-horizontal 0.5s;
-	-webkit-animation: ngdialog-flipout-horizontal 0.5s;
-	-moz-animation: ngdialog-flipout-horizontal 0.5s;
-	-ms-animation: ngdialog-flipout-horizontal 0.5s;
-	-o-animation: ngdialog-flipout-horizontal 0.5s;
-	-webkit-backface-visibility: hidden;
-}
-
-.ngdialog.ngdialog-theme-default .ngdialog-content {
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-	animation: ngdialog-flipin-horizontal 0.5s;
-	-webkit-animation: ngdialog-flipin-horizontal 0.5s;
-	-moz-animation: ngdialog-flipin-horizontal 0.5s;
-	-ms-animation: ngdialog-flipin-horizontal 0.5s;
-	-o-animation: ngdialog-flipin-horizontal 0.5s;
-	-webkit-backface-visibility: hidden;
+  overflow: hidden;
 }

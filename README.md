@@ -16,7 +16,7 @@ bower install ngDialog
 
 ## Usage
 
-You need only to include ``ngDialog.js`` and  ``ngDialog.css`` (as minimal setup) to your project, and then you can start using ``ngDialog`` provider in your directives, controllers and services. For example in controllers:
+You need only to include ``ngDialog.js`` and  ``ngDialog.css`` (as minimal setup) to your project and then you can start using ``ngDialog`` provider in your directives, controllers and services. For example in controllers:
 
 ```javascript
 var app = angular.module('exampleApp', ['ngDialog']);
@@ -38,7 +38,7 @@ Method allows to open dialog window, creates new dialog instance on each call. I
 
 ##### Options:
 
-###### ``template {String}``
+##### ``template {String}``
 
 Dialog template can be loaded through ``path`` to external html template or ``<script>`` tag with ``text/ng-template``:
 

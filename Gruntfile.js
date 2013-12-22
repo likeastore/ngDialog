@@ -17,11 +17,22 @@ module.exports = function (grunt) {
 				ignores: ['./js/ngDialog.min.js']
 			},
 			files: ['*.js']
+		},
+		myth: {
+			dist: {
+				files: {
+					'./css/ngDialog.css': './css/myth/ngDialog.css',
+					'./css/ngDialog-theme-default.css': './css/myth/ngDialog-theme-default.css'
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-myth');
+
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('build', ['uglify']);
+	grunt.registerTask('css', ['myth']);
 };
