@@ -66,10 +66,6 @@ ngDialog.open({
 });
 ```
 
-##### ``scope {Object}``
-
-If not delegated new empty scope is created inside dialog window via ``$rootScope.new()``.
-
 ##### ``controller {String}``
 
 Name of controller that will be used for dialog window if necessary.
