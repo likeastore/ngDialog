@@ -8,10 +8,32 @@
 </head>
 <body ng-controller="MainCtrl">
 
+	<a href="#" ng-click="open()">Open</a>
+
+	<script type="text/ng-template" id="firstDialogId">
+		<div ng-controller="InsideCtrl">
+			<h1>Test template</h1>
+			<a href="#" ng-click="openSecond()">Open next</a>
+		</div>
+	</script>
+
 	<script src="../bower_components/angular/angular.min.js"></script>
 	<script src="../js/ngDialog.js"></script>
 	<script>
-		var app = angular.module('exampleDialog', []);
+		var app = angular.module('exampleDialog', ['ngDialog']);
+
+		app.controller('MainCtrl', function ($scope, ngDialog) {
+			$scope.open = function () {
+				ngDialog.open({ template: 'firstDialogId' });
+			};
+		});
+
+		app.controller('InsideCtrl', function ($scope, ngDialog) {
+			$scope.openSecond = function () {
+				ngDialog.open();
+			};
+		});
+
 	</script>
 </body>
 </html>

@@ -23,7 +23,9 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "example",
+    "Gruntfile.js"
   ],
   "dependencies": {
     "angular": "~1"
