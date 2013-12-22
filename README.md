@@ -55,7 +55,7 @@ ngDialog.open({ template: 'templateId' });
 
 Also it is possible to use simple string as template together with ``plain`` option.
 
-###### ``plain {Boolean}``
+##### ``plain {Boolean}``
 
 If ``true`` allows to use plain string as template, default ``false``:
 
@@ -66,33 +66,39 @@ ngDialog.open({
 });
 ```
 
-###### ``scope {Object}``
+##### ``scope {Object}``
 
 If not delegated new empty scope is created inside dialog window via ``$rootScope.new()``.
 
-###### ``controller {String}``
+##### ``controller {String}``
 
 Name of controller that will be used for dialog window if necessary.
 
-###### ``className {String}``
+##### ``className {String}``
 
 This option allows to controll dialog look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
 
-###### ``showClose {Boolean}``
+##### ``showClose {Boolean}``
 
 If ``false`` it allows to hide close button on modals, default ``true``.
 
-###### ``closeByEscape {Boolean}``
+##### ``closeByEscape {Boolean}``
 
-It allows to close modals by clicking ``Esc`` button*, default ``true``.
+It allows to close modals by clicking ``Esc`` button, default ``true``.
 
-* This will close all open modals if there several of them open at the same time.
+This will close all open modals if there several of them open at the same time.
 
-###### ``closeByDocument {Boolean}``
+##### ``closeByDocument {Boolean}``
+
+It allows to close modals by clicking on overlay background, default ``true``.
 
 ### ``.close(id)``
 
+Method accepts dialog's ``id`` as string argument to close specific dialog window, if ``id`` is not specified it will close all currently active modals (same behavior as ``.closeAll()``).
+
 ### ``.closeAll()``
+
+Method manages closing all active modals on the page.
 
 ## Directive
 
@@ -111,6 +117,7 @@ Some imaginary button, for example, will look like:
 
 ## Themes
 
+Currently ngDialog supports..
 
 
 ## Licence
