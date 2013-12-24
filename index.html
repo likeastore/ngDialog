@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="exampleDialog">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -9,7 +9,7 @@
 		<link rel="shortcut icon" href="./img/favicon.png" />
 		<link rel="apple-touch-icon" href="./img/favicon.png"/>
 		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Montserrat:700|Pacifico' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="css/ngDialog.css">
+		<link rel="stylesheet" href="./css/ngDialog.css">
 		<style>
 			* { margin: 0; padding: 0; border: 0; outline: 0; }
 
@@ -138,7 +138,7 @@
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 	</head>
-	<body>
+	<body ng-controller="MainCtrl">
 		<div class="bg"></div>
 
 		<div class="header">
@@ -157,6 +157,12 @@
 		<script src="./js/ngDialog.min.js"></script>
 		<script>
 			var app = angular.module('exampleDialog', ['ngDialog']);
+
+			app.controller('MainCtrl', function ($scope, ngDialog) {
+				$scope.open = function () {
+					ngDialog.open();
+				};
+			});
 		</script>
 	</body>
 </html>
