@@ -8,7 +8,7 @@
 		<title>ngDialog.js by likeastore</title>
 		<link rel="shortcut icon" href="./img/favicon.png" />
 		<link rel="apple-touch-icon" href="./img/favicon.png"/>
-		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Pacifico' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Montserrat:700|Pacifico' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/ngDialog.css">
 		<style>
 			* { margin: 0; padding: 0; border: 0; outline: 0; }
@@ -22,8 +22,8 @@
 			}
 
 			.bg {
-				background-image: url('./img/bg.jpg');
-				opacity: .6;
+				background-image: url('./img/mount-sky.jpg');
+				opacity: 1;
 				background-repeat: no-repeat;
 				background-size: cover;
 				background-position: 50% 50%;
@@ -54,8 +54,60 @@
 			.desc {
 				font-size: 16px;
 				font-weight: 300;
-				margin: 10px auto;
+				line-height: 22px;
+				margin: 15px auto;
+				max-width: 365px;
 			}
+
+			.desc a {
+				color: #fff;
+			}
+
+			.desc a:hover {
+				text-decoration: none;
+			}
+
+			.buttons a {
+				display: inline-block;
+				border: 2px solid #fff;
+				width: 125px;
+				font-size: 14px;
+				font-family: 'Montserrat', 'Helvetica', Arial, sans-serif;
+				font-weight: 700;
+				line-height: 21px;
+				padding: 8px 0;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				vertical-align: top;
+				margin: 0 10px;
+				-webkit-transition: all .3s ease-in;
+			}
+
+			.buttons {
+				margin: 30px auto;
+			}
+
+			.buttons a.demo {
+				background: transparent;
+				color: #fff;
+			}
+
+			.buttons a.demo:hover {
+				background: #fff;
+				color: #86aa9c;
+			}
+
+			.buttons a.docs {
+				color: #86aa9c;
+				background: #fff;
+			}
+
+			.buttons a.docs:hover {
+				color: #fff;
+				background: transparent;
+			}
+
 
 			.github-link {
 				display: block;
@@ -93,7 +145,11 @@
 			<a class="github-link" href="https://github.com/likeastore/ngDialog">Star on GitHub</a>
 			<h1>ngDialog</h1>
 			<div class="desc">
-				Modals and popups provider for Angular.js applications.
+				Modals and popups provider for <a href="http://angularjs.org" target="_blank">Angular.js</a> applications. No dependecies. Highly customizable.
+			</div>
+			<div class="buttons">
+				<a href="#" ng-click="open()" class="demo">Demo</a>
+				<a href="https://github.com/likeastore/ngDialog#api" class="docs">Github</a>
 			</div>
 		</div>
 
