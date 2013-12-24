@@ -109,7 +109,6 @@
 				background: transparent;
 			}
 
-
 			.github-link {
 				display: block;
 				position: absolute;
@@ -133,6 +132,54 @@
 				-ms-transform-origin: 50% 50%;
 				transform-origin: 50% 50%;
 			}
+
+			.ngdialog.ngdialog-theme-custom {
+				padding-top: 125px;
+				padding-bottom: 125px;
+			}
+
+			.ngdialog.ngdialog-theme-custom .ngdialog-overlay {
+				background: rgba(255,255,255,.5);
+			}
+
+			.ngdialog.ngdialog-theme-custom .ngdialog-content {
+				background: rgba(255,255,255,.9);
+				padding: 1.8em 2em;
+				width: 440px;
+				-webkit-border-radius: 0;
+				border-radius: 0;
+			}
+
+			.ngdialog.ngdialog-theme-custom .ngdialog-message h2 {
+				font-size: 26px;
+				font-family: 'Montserrat', 'Helvetica', Arial, sans-serif;
+				line-height: 30px;
+				margin-bottom: 20px;
+			}
+
+			.ngdialog.ngdialog-theme-custom .ngdialog-message {
+				font-size: 16px;
+				font-family: 'Source Sans Pro';
+				line-height: 22px;
+			}
+
+			.ngdialog.ngdialog-theme-custom .ngdialog-message ul {
+				padding: 0 0 5px 35px;
+			}
+
+			.ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-primary {
+				background: #27ae60;
+				-webkit-border-radius: 0;
+				border-radius: 0;
+			}
+
+			.mt {
+				margin-top: 15px;
+			}
+
+			.small-font {
+				font-size: 12px;
+			}
 		</style>
 
 		<!--[if lt IE 9]>
@@ -150,13 +197,33 @@
 			</div>
 			<div class="buttons">
 				<a href="#" ng-click="open()" class="demo">Demo</a>
-				<a href="https://github.com/likeastore/ngDialog#api" class="docs">Docs</a>
+				<a href="https://github.com/likeastore/ngDialog#api" class="docs">★ Docs</a>
 			</div>
 		</div>
 
+		<a href="https://twitter.com/share" class="twitter-share-button" data-via="likeastore" data-related="likeastore">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 		<script type="text/ng-template" id="firstDialog">
-			<h2>Native Angular.js solution for dialogs</h2>
-			<div>With ngDialog you don't need jQuery or Bootstrap to make your dialogs work.</div>
+			<div class="ngdialog-message">
+				<h2>Native Angular.js solution</h2>
+				<div>With ngDialog you don't need jQuery or Bootstrap to create dialogs for ng-app:</div>
+				<ul class="mt">
+					<li>Use it in controllers, factories or directives</li>
+					<li>Create your own directives</li>
+					<li>Style all UI and templates</li>
+					<li>Configure themes</li>
+					<li>Add animations and effects</li>
+				</ul>
+				<div class="mt">Module is shipped with both <code class="small-font">ngDialog</code> service and default directive.</div>
+			</div>
+			<div class="ngdialog-buttons mt">
+				<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="next()">►</button>
+			</div>
+		</script>
+
+		<script type="text/ng-template" id="secondDialog">
+			<div>Foo</div>
 		</script>
 
 		<script src="./bower_components/angular/angular.min.js"></script>
@@ -167,7 +234,19 @@
 			app.controller('MainCtrl', function ($scope, ngDialog) {
 				$scope.open = function () {
 					ngDialog.open({
-						template: 'firstDialog'
+						template: 'firstDialog',
+						controller: 'FirstDialogCtrl',
+						className: 'ngdialog-theme-default ngdialog-theme-custom'
+					});
+				};
+			});
+
+			app.controller('FirstDialogCtrl', function ($scope, ngDialog) {
+				$scope.next = function () {
+					ngDialog.close('ngdialog1');
+					ngDialog.open({
+						template: 'secondDialog',
+						className: 'ngdialog-theme-flat ngdialog-theme-custom second-dialog'
 					});
 				};
 			});
