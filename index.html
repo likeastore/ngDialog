@@ -10,6 +10,7 @@
 		<link rel="apple-touch-icon" href="./img/favicon.png"/>
 		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Montserrat:700|Pacifico' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="./css/ngDialog.css">
+		<link rel="stylesheet" href="./css/ngDialog-theme-default.css">
 		<style>
 			* { margin: 0; padding: 0; border: 0; outline: 0; }
 
@@ -149,9 +150,14 @@
 			</div>
 			<div class="buttons">
 				<a href="#" ng-click="open()" class="demo">Demo</a>
-				<a href="https://github.com/likeastore/ngDialog#api" class="docs">Github</a>
+				<a href="https://github.com/likeastore/ngDialog#api" class="docs">Docs</a>
 			</div>
 		</div>
+
+		<script type="text/ng-template" id="firstDialog">
+			<h2>Native Angular.js solution for dialogs</h2>
+			<div>With ngDialog you don't need jQuery or Bootstrap to make your dialogs work.</div>
+		</script>
 
 		<script src="./bower_components/angular/angular.min.js"></script>
 		<script src="./js/ngDialog.min.js"></script>
@@ -160,7 +166,9 @@
 
 			app.controller('MainCtrl', function ($scope, ngDialog) {
 				$scope.open = function () {
-					ngDialog.open();
+					ngDialog.open({
+						template: 'firstDialog'
+					});
 				};
 			});
 		</script>
