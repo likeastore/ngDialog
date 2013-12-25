@@ -25,6 +25,7 @@
     "test",
     "tests",
     "example",
+    "css/myth",
     "Gruntfile.js"
   ],
   "dependencies": {
