@@ -23,8 +23,7 @@ module.exports = function (grunt) {
 				files: {
 					'./css/ngDialog.css': './css/myth/ngDialog.css',
 					'./css/ngDialog-theme-default.css': './css/myth/ngDialog-theme-default.css',
-					'./css/ngDialog-theme-plain.css': './css/myth/ngDialog-theme-plain.css',
-					'./css/ngDialog-theme-flat.css': './css/myth/ngDialog-theme-flat.css'
+					'./css/ngDialog-theme-plain.css': './css/myth/ngDialog-theme-plain.css'
 				}
 			}
 		}
