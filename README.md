@@ -4,7 +4,7 @@ Modal dialogs and popups provider for [Angular.js](http://angularjs.org/) applic
 
 ngDialog is small (~2Kb), has minimalistic API, highly customizable through themes and has only Angular.js as dependency.
 
-### [Demo](https://likeastore.github.io/ngDialog)
+### [Demo](http://likeastore.github.io/ngDialog)
 
 ## Install
 
