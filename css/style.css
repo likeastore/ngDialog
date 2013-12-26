@@ -36,6 +36,7 @@ body {
 .header h1 {
 	color: #fff;
 	font: 3em 'Pacifico', cursive;
+	cursor: default;
 }
 
 .desc {
