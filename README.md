@@ -124,8 +124,7 @@ Some imaginary button, for example, will look like:
 
 ## Themes
 
-Currently ngDialog supports..
-
+Currently ngDialog contains three default themes that show how easily you can create your own. Check ``examples`` folder for demonstration purposes.
 
 ## Licence
 
