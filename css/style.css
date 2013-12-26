@@ -13,7 +13,7 @@ body {
 	opacity: 1;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: 50% 50%;
+	background-position: 50% 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -26,7 +26,7 @@ body {
 
 .header {
 	margin: 0 auto;
-	padding: 120px 0 0;
+	padding: 110px 0 0;
 	text-align: center;
 	overflow: hidden;
 	position: relative;
@@ -151,7 +151,6 @@ body {
 
 .ngdialog.ngdialog-theme-custom .ngdialog-message ul {
 	padding: 0 0 5px 35px;
-	list-style-type: lower-alpha;
 }
 
 .ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-primary {
@@ -193,6 +192,49 @@ body {
 	margin-top: 15px;
 }
 
-.small-font {
+code {
 	font-size: 14px;
+}
+
+.hr {
+	height: 1px;
+	width: 100px;
+	margin: 15px auto;
+	background: #fff;
+	position: relative;
+	z-index: 10;
+}
+
+.socials {
+	opacity: .9;
+	text-align: center;
+	position: absolute;
+	z-index: 10;
+	left: 0;
+	right: 0;
+	bottom: 40px;
+}
+
+.socials iframe:first-child {
+	width: 90px !important;
+}
+
+.footer {
+	font-weight: 300;
+	text-align: center;
+	position: absolute;
+	z-index: 10;
+	bottom: 9px;
+	left: 0;
+	right: 0;
+}
+
+.footer .logo {
+	display: inline-block;
+	background: transparent;
+	color: #fff;
+	font: 1.4em 'Montserrat', 'Helvetica', Arial, sans-serif;
+	line-height: 22px;
+	vertical-align: text-top;
+	text-decoration: none;
 }

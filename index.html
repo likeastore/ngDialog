@@ -33,13 +33,25 @@
 			</div>
 		</div>
 
-		<a href="https://twitter.com/share" class="twitter-share-button" data-via="likeastore" data-related="likeastore">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		<div class="hr"></div>
+
+		<div class="socials">
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="likeastore" data-related="likeastore">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+			<iframe src="http://ghbtns.com/github-btn.html?user=likeastore&repo=ngDialog&type=watch&count=true"
+		  allowtransparency="true" frameborder="0" scrolling="0" width="90" height="20"></iframe>
+			<a href="https://twitter.com/likeastore" class="twitter-follow-button" data-show-count="false">Follow @likeastore</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		</div>
+
+		<div class="footer">
+			Created by <a href="https://likeastore.com" class="logo">likeastore.</a>
+		</div>
 
 		<script type="text/ng-template" id="firstDialog">
 			<div class="ngdialog-message">
 				<h2>Native Angular.js solution</h2>
-				<div>With ngDialog you don't need jQuery or Bootstrap to create dialogs for ng-app:</div>
+				<div>With ngDialog you don't need jQuery or Bootstrap to create dialogs for <code>ng-app:</code></div>
 				<ul class="mt">
 					<li>Use it in controllers, factories or directives</li>
 					<li>Create your own directives</li>
@@ -47,7 +59,7 @@
 					<li>Configure themes</li>
 					<li>Add animations and effects</li>
 				</ul>
-				<div class="mt">Module is shipped with both <code class="small-font">ngDialog</code> service and default directive.</div>
+				<div class="mt">Module is shipped with both <code>ngDialog</code> service and default directive.</div>
 			</div>
 			<div class="ngdialog-buttons mt">
 				<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="next()">►</button>
@@ -59,15 +71,15 @@
 				<h2>And even more!</h2>
 				<ul class="mt">
 					<li>Load your templates as strings, ng-template tags or html partials</li>
-					<li>ngDialog.js is < 2kb when minified</li>
-					<li>It has simple and extendable API</li>
+					<li>ngDialog.js is < 2kb when minified!</li>
+					<li>It has simple, extendable and elegant API ;)</li>
 				</ul>
 				<div class="mt">Spread a word about it:</div>
 			</div>
 			<div class="mt">
-				<a href="#" class="action-btn">Tweet</a>
-				<a href="#" class="action-btn">Star</a>
-				<a href="#" class="action-btn read">Read docs</a>
+				<a href="http://twitter.com/home?status=ngDialog.js - modal windows and popups provider for Angular.js applications, via @likeastore!+http://likeastore.github.io/ngDialog/" class="action-btn" ng-like>Tweet</a>
+				<a href="http://www.facebook.com/share.php?u=http://likeastore.github.io/ngDialog" class="action-btn" ng-like>Like</a>
+				<a href="https://github.com/likeastore/ngDialog#ngdialog" class="action-btn read" target="_blank">Read docs</a>
 			</div>
 		</script>
 
@@ -93,6 +105,17 @@
 						template: 'secondDialog',
 						className: 'ngdialog-theme-flat ngdialog-theme-custom'
 					});
+				};
+			});
+
+			app.directive('ngLike', function () {
+				return {
+					restrict: 'E',
+					link: function (scope, elem, attrs) {
+						elem.on('click', function () {
+							window.open(attr.href, 'Share', 'width=600,height=400,resizable=yes');
+						});
+					}
 				};
 			});
 		</script>
