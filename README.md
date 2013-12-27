@@ -79,7 +79,7 @@ This example enables one of built-in ngDialog themes - ``ngdialog-theme-flat`` (
 ```javascript
 ngDialog.open({
 	template: 'templateId',
-	className: 'ngdialog-theme-flat'
+	className: 'ngdialog-theme-default'
 });
 ```
 
