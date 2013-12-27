@@ -74,7 +74,7 @@ Name of controller that will be used for dialog window if necessary.
 
 This option allows to controll dialog look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
 
-This example enables one of built-in ngDialog themes - ``ngdialog-theme-flat`` (do not forget to include necessary css files):
+This example enables one of built-in ngDialog themes - ``ngdialog-theme-default`` (do not forget to include necessary css files):
 
 ```javascript
 ngDialog.open({
