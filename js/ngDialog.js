@@ -98,6 +98,10 @@
 								$dialog.addClass(options.className);
 							}
 
+							if (options.data && angular.isString(options.data)) {
+								scope.ngDialogData = options.data.replace(/^\s*/, '')[0] === '{' ? angular.fromJson(options.data) : options.data;
+							}
+
 							$timeout(function () {
 								$compile($dialog)(scope);
 							});
@@ -181,6 +185,7 @@
 						template: attrs.ngDialog,
 						className: attrs.ngDialogClass,
 						controller: attrs.ngDialogController,
+						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
 						closeByEscape: attrs.ngDialogCloseByKeyup === 'false' ? false : true
