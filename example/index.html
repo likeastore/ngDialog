@@ -17,6 +17,7 @@
 
 	<a href="" ng-click="openDefault()">Default theme</a>
 	<a href="" ng-click="openPlain()">Plain theme</a>
+	<a href="" ng-click="openTemplate()">Open with external template for modal</a>
 
 	<script type="text/ng-template" id="firstDialogId">
 		<div class="ngdialog-message">
@@ -59,6 +60,13 @@
 					className: 'ngdialog-theme-plain'
 				});
 			};
+
+			$scope.openTemplate = function () {
+				ngDialog.open({
+					template: 'externalTemplate.html',
+					className: 'ngDialog-theme-plain'
+				});
+			}
 		});
 
 		app.controller('InsideCtrl', function ($scope, ngDialog) {

@@ -83,6 +83,12 @@
 						var $dialog;
 
 						$q.when(loadTemplate(options.template)).then(function (template) {
+							template = angular.isString(template) ?
+								template :
+								template.data && angular.isString( template.data ) ?
+									template.data :
+									'';
+
 							if (options.showClose) {
 								template += '<div class="ngdialog-close"></div>';
 							}
