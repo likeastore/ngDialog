@@ -66,7 +66,6 @@
   bottom: 0;
   left: 0;
   height: 20000px;
-  z-index: 1;
   -webkit-backface-visibility: hidden;
   -webkit-animation: ngdialog-fadein 0.5s;
   animation: ngdialog-fadein 0.5s;
@@ -79,8 +78,7 @@
 }
 
 .ngdialog-content {
-  background: #fff;
-  z-index: 2;
+  background: white;
   -webkit-backface-visibility: hidden;
   -webkit-animation: ngdialog-fadein 0.5s;
   animation: ngdialog-fadein 0.5s;
