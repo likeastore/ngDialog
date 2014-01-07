@@ -79,7 +79,7 @@
 
 						globalID += 1;
 
-						var scope = options.scope && angular.isObject(options.scope) || $rootScope.$new();
+						var scope = angular.isObject(options.scope) ? options.scope : $rootScope.$new();
 						var $dialog;
 
 						$q.when(loadTemplate(options.template)).then(function (template) {
@@ -191,6 +191,7 @@
 						template: attrs.ngDialog,
 						className: attrs.ngDialogClass,
 						controller: attrs.ngDialogController,
+						scope: attrs.ngDialogScope,
 						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,

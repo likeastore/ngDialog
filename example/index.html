@@ -62,9 +62,12 @@
 			};
 
 			$scope.openTemplate = function () {
+				$scope.value = true;
+
 				ngDialog.open({
 					template: 'externalTemplate.html',
-					className: 'ngDialog-theme-plain'
+					className: 'ngdialog-theme-plain',
+					scope: $scope
 				});
 			}
 		});

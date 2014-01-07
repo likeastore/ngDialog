@@ -70,6 +70,30 @@ ngDialog.open({
 
 Name of controller that will be used for dialog window if necessary.
 
+##### ``scope {Object}``
+
+Scope object that will be passed to dialog. If you use controller with separate ``$scope`` service this object will be passed to ``$scope.$parent`` param:
+
+```javascript
+$scope.value = true;
+
+ngDialog.open({
+	template: 'externalTemplate.html',
+	className: 'ngdialog-theme-plain',
+	scope: $scope
+});
+```
+
+```html
+<script type="text/ng-template" id="externalTemplate.html">
+<p>External scope: <code>{{value}}</code></p>
+</script>
+```
+
+##### ``data {String}``
+
+Any data that you want to be stored in controller's ``$parent`` scope, it could be stringified JSON as well.
+
 ##### ``className {String}``
 
 This option allows to controll dialog look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
