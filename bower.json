@@ -3,7 +3,12 @@
   "version": "0.1.2",
   "homepage": "https://github.com/likeastore/ngDialog",
   "description": "Modal dialogs and popups provider for Angular.js applications",
-  "main": "ngDialog.js",
+  "main": [
+    "./js/ngDialog.js",
+    "./css/ngDialog.css",
+    "./css/ngDialog-theme-default.css",
+    "./css/ngDialog-theme-plain.css"
+  ],
   "keywords": [
     "angular.js",
     "modals",
@@ -15,7 +20,8 @@
     "directive"
   ],
   "authors": [
-    "Dmitri Voronianski"
+    "Dmitri Voronianski",
+    "featZima"
   ],
   "license": "MIT",
   "ignore": [
