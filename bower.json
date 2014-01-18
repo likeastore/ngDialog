@@ -3,7 +3,11 @@
   "version": "0.1.2",
   "homepage": "https://github.com/likeastore/ngDialog",
   "description": "Modal dialogs and popups provider for Angular.js applications",
-  "main": "ngDialog.js",
+  "main": [
+      "js/ngDialog.js",
+      "css/ngDialog.css",
+      "css/ngDialog-theme-default.css"
+  ],
   "keywords": [
     "angular.js",
     "modals",
