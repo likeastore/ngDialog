@@ -154,7 +154,7 @@ Everytime when ngDialog is opened or closed we're broadcasting two events (dispa
 
 - ``ngDialog.closed``
 
-You can register your own to listen for them, example:
+This allows you to register your own listeners, example:
 
 ```javascript
 $rootScope.$on('ngDialog.opened', function (e, $dialog) {
