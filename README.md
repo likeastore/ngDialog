@@ -146,9 +146,29 @@ Some imaginary button, for example, will look like:
 </button>
 ```
 
+## Events
+
+Everytime when ngDialog is opened or closed we're broadcasting two events (dispatching events downwards to all child scopes):
+
+- ``ngDialog.opened``
+
+- ``ngDialog.closed``
+
+You can register your own to listen for them, example:
+
+```javascript
+$rootScope.$on('ngDialog.opened', function (e, $dialog) {
+	console.log('ngDialog opened: ' + $dialog.attr('id'));
+});
+```
+
 ## Themes
 
 Currently ngDialog contains two default themes that show how easily you can create your own. Check ``example`` folder for demonstration purposes.
+
+## References
+
+Have a nice experience and use **ngDialog** in your project? Let us know! We appreciate any kind of feedback ;)
 
 ## Licence
 
