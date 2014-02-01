@@ -70,6 +70,14 @@
 					scope: $scope
 				});
 			}
+
+			$rootScope.$on('ngDialog.opened', function (e, $dialog) {
+				console.log('ngDialog opened: ' + $dialog.attr('id'));
+			});
+
+			$rootScope.$on('ngDialog.closed', function (e, $dialog) {
+				console.log('ngDialog closed: ' + $dialog.attr('id'));
+			});
 		});
 
 		app.controller('InsideCtrl', function ($scope, ngDialog) {

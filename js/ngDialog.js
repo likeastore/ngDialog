@@ -53,6 +53,8 @@
 						} else {
 							$dialog.remove();
 						}
+
+						$rootScope.$broadcast('ngDialog.closed', $dialog);
 					}
 				};
 
@@ -72,6 +74,7 @@
 					 * @return {Object} dialog
 					 */
 					open: function (opts) {
+						var self = this;
 						var options = angular.copy(defaults);
 
 						opts = opts || {};
@@ -79,13 +82,15 @@
 
 						globalID += 1;
 
-						var scope = angular.isObject(options.scope) ? options.scope : $rootScope.$new();
+						self.latestID = 'ngdialog' + globalID;
+
+						var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
 						var $dialog;
 
 						$q.when(loadTemplate(options.template)).then(function (template) {
 							template = angular.isString(template) ?
 								template :
-								template.data && angular.isString( template.data ) ?
+								template.data && angular.isString(template.data) ?
 									template.data :
 									'';
 
@@ -93,7 +98,7 @@
 								template += '<div class="ngdialog-close"></div>';
 							}
 
-							$dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
+							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
 							$dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
 
 							if (options.controller && angular.isString(options.controller)) {
@@ -134,6 +139,8 @@
 							}
 
 							dialogsCount += 1;
+
+							$rootScope.$broadcast('ngDialog.opened', $dialog);
 
 							return publicMethods;
 						});
