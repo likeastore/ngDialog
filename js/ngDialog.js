@@ -192,7 +192,9 @@
 			restrict: 'A',
 			link: function (scope, elem, attrs) {
 				elem.on('click', function (e) {
-					e.preventDefault();
+				    e.preventDefault();
+
+				    angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
 
 					ngDialog.open({
 						template: attrs.ngDialog,
