@@ -93,7 +93,9 @@
 								template.data && angular.isString(template.data) ?
 									template.data :
 									'';
-
+							
+							$templateCache.put(options.template, template);
+							
 							if (options.showClose) {
 								template += '<div class="ngdialog-close"></div>';
 							}
