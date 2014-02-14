@@ -48,9 +48,11 @@
 
 						if (animationEndSupport) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
+								$dialog.scope().$parent.$destroy();
 								$dialog.remove();
 							}).addClass('ngdialog-closing');
 						} else {
+							$dialog.scope().$parent.$destroy();
 							$dialog.remove();
 						}
 
@@ -118,7 +120,7 @@
 							});
 
 							scope.$on('$destroy', function () {
-								$dialog.remove();
+								//$dialog.remove(); TODO should be called after child scopes destroy
 							});
 
 							$body.addClass('ngdialog-open').append($dialog);
