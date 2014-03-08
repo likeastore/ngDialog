@@ -93,7 +93,9 @@
 								template.data && angular.isString(template.data) ?
 									template.data :
 									'';
-
+							
+							$templateCache.put(options.template, template);
+							
 							if (options.showClose) {
 								template += '<div class="ngdialog-close"></div>';
 							}
@@ -193,6 +195,8 @@
 			link: function (scope, elem, attrs) {
 				elem.on('click', function (e) {
 					e.preventDefault();
+
+					angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
 
 					ngDialog.open({
 						template: attrs.ngDialog,
