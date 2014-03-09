@@ -13,7 +13,12 @@
 
 	<a href="" ng-click="open()">Open via service</a>
 
-	<button type="button" ng-dialog="firstDialogId" ng-dialog-controller="InsideCtrl" ng-dialog-data="{{jsonData}}" ng-dialog-class="ngdialog-theme-default" ng-dialog-show-close="false">Open via directive</button>
+	<button type="button"
+		ng-dialog="firstDialogId"
+		ng-dialog-controller="InsideCtrl"
+		ng-dialog-data="{{jsonData}}"
+		ng-dialog-class="ngdialog-theme-default"
+		ng-dialog-show-close="false">Open via directive</button>
 
 	<a href="" ng-click="openDefault()">Default theme</a>
 	<a href="" ng-click="openPlain()">Plain theme</a>
@@ -26,8 +31,17 @@
 			<p ng-show="ngDialogData.foo">Data passed through directive: <code>{{ngDialogData.foo}}</code></p>
 		</div>
 		<div class="ngdialog-buttons">
+			<button type="button" class="ngdialog-button ngdialog-button-secondary"
+				ng-dialog="secondDialogId"
+				ng-dialog-class="ngdialog-theme-default"
+				ng-dialog-controller="SecondModalCtrl"
+				ng-dialog-close-previous>Close</button>
 			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
 		</div>
+	</script>
+
+	<script type="text/ng-template" id="secondDialogId">
+		<h3><a href="" ng-click="closeSecond()">Close all by click here!</a></h3>
 	</script>
 
 	<script src="../bower_components/angular/angular.min.js"></script>

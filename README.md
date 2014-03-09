@@ -90,6 +90,17 @@ ngDialog.open({
 </script>
 ```
 
+##### ``scope.closeThisDialog()``
+
+In addition ``.closeThisDialog()`` method get injected to passed scope. This allows you to close dialog straight from handler in a popup element, for example:
+
+```html
+<div class="dialog-contents">
+	<input type="text"/>
+	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog()"/>
+</button>
+```
+
 ##### ``data {String}``
 
 Any data that you want to be stored in controller's ``$parent`` scope, it could be stringified JSON as well.
@@ -131,16 +142,6 @@ Method accepts dialog's ``id`` as string argument to close specific dialog windo
 
 Method manages closing all active modals on the page.
 
-### ``Scope.closeThisDialog()``
-
-``.closeThisDialog()`` method get injected to passed scope. This allows closing dialog straight from handler in a popup element.
-```html
-<div class="dialog-contents">
-	<input type="text"/>
-	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog()"/>
-</button>
-```
-
 ## Directive
 
 By default ngDialog module is served with ``ngDialog`` directive which can be used as attribute for buttons, links, etc. Almost all ``.open()`` options are available through tag attributes as well, the only difference is that ``ng-template`` id or path of template file is required.
@@ -151,10 +152,13 @@ Some imaginary button, for example, will look like:
 <button type="button"
 	ng-dialog="templateId.html"
 	ng-dialog-class="ngdialog-theme-flat"
-	ng-dialog-controller="ModalCtrl">
+	ng-dialog-controller="ModalCtrl"
+	ng-dialog-close-previous>
 	Open modal text
 </button>
 ```
+
+Directive contains one more additional but very useful option, it's an attribute named ``ng-dialog-close-previous``. It allows you to close previously opened dialogs automaticly.
 
 ## Events
 
