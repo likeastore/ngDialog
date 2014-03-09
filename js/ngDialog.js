@@ -48,9 +48,11 @@
 
 						if (animationEndSupport) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
+								$dialog.scope().$parent.$destroy();
 								$dialog.remove();
 							}).addClass('ngdialog-closing');
 						} else {
+							$dialog.scope().$parent.$destroy();
 							$dialog.remove();
 						}
 
@@ -121,10 +123,6 @@
 
 							$timeout(function () {
 								$compile($dialog)(scope);
-							});
-
-							scope.$on('$destroy', function () {
-								$dialog.remove();
 							});
 
 							$body.addClass('ngdialog-open').append($dialog);
