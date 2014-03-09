@@ -106,7 +106,9 @@
 							if (options.controller && angular.isString(options.controller)) {
 								$dialog.attr('ng-controller', options.controller);
 							}
-
+							scope.closeThisDialog = function() {
+								privateMethods.closeDialog($dialog);
+							};
 							if (options.className) {
 								$dialog.addClass(options.className);
 							}

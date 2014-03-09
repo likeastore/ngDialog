@@ -131,6 +131,16 @@ Method accepts dialog's ``id`` as string argument to close specific dialog windo
 
 Method manages closing all active modals on the page.
 
+### ``Scope.closeThisDialog()``
+
+``.closeThisDialog()`` method get injected to passed scope. This allows closing dialog straight from handler in a popup element.
+```html
+<div class="dialog-contents">
+	<input type="text"/>
+	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog()"/>
+</button>
+```
+
 ## Directive
 
 By default ngDialog module is served with ``ngDialog`` directive which can be used as attribute for buttons, links, etc. Almost all ``.open()`` options are available through tag attributes as well, the only difference is that ``ng-template`` id or path of template file is required.
