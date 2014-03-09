@@ -93,9 +93,9 @@
 								template.data && angular.isString(template.data) ?
 									template.data :
 									'';
-							
+
 							$templateCache.put(options.template, template);
-							
+
 							if (options.showClose) {
 								template += '<div class="ngdialog-close"></div>';
 							}
@@ -106,9 +106,7 @@
 							if (options.controller && angular.isString(options.controller)) {
 								$dialog.attr('ng-controller', options.controller);
 							}
-							scope.closeThisDialog = function() {
-								privateMethods.closeDialog($dialog);
-							};
+
 							if (options.className) {
 								$dialog.addClass(options.className);
 							}
@@ -116,6 +114,10 @@
 							if (options.data && angular.isString(options.data)) {
 								scope.ngDialogData = options.data.replace(/^\s*/, '')[0] === '{' ? angular.fromJson(options.data) : options.data;
 							}
+
+							scope.closeThisDialog = function() {
+								privateMethods.closeDialog($dialog);
+							};
 
 							$timeout(function () {
 								$compile($dialog)(scope);
