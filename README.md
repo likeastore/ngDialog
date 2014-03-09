@@ -92,7 +92,7 @@ ngDialog.open({
 
 ##### ``scope.closeThisDialog()``
 
-In addition ``.closeThisDialog()`` method get injected to passed scope. This allows you to close dialog straight from handler in a popup element, for example:
+In addition ``.closeThisDialog()`` method get injected to passed ``$scope``. This allows you to close dialog straight from handler in a popup element, for example:
 
 ```html
 <div class="dialog-contents">
