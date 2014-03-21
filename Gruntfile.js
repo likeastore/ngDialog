@@ -26,14 +26,27 @@ module.exports = function (grunt) {
 					'./css/ngDialog-theme-plain.css': './css/myth/ngDialog-theme-plain.css'
 				}
 			}
+		},
+		cssmin: {
+			options: {
+				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> (<%= pkg.homepage %>) */\n'
+			},
+			minify:{
+				files: {
+					'css/ngDialog.min.css': ['css/ngDialog.css'],
+					'css/ngDialog-theme-default.min.css': ['css/ngDialog-theme-default.css'],
+					'css/ngDialog-theme-plain.min.css': ['css/ngDialog-theme-plain.css']
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-myth');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('build', ['uglify', 'myth']);
-	grunt.registerTask('css', ['myth']);
+	grunt.registerTask('build', ['uglify', 'myth', 'cssmin']);
+	grunt.registerTask('css', ['myth', 'cssmin']);
 };
