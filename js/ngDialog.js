@@ -24,7 +24,7 @@
 			closeByEscape: true
 		};
 
-		var globalID = 0, dialogsCount = 0;
+		var globalID = 0, dialogsCount = 0, closeByDocumentHandler;
 
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout',
 			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout) {
@@ -38,7 +38,11 @@
 					},
 
 					closeDialog: function ($dialog) {
-						$dialog.unbind('click');
+						if (typeof Hammer !== 'undefined') {
+							Hammer($dialog[0]).off('tap', closeByDocumentHandler);
+						} else {
+							$dialog.unbind('click');
+						}
 
 						if (dialogsCount === 1) {
 							$body.unbind('keyup').removeClass('ngdialog-open');
@@ -132,14 +136,20 @@
 							}
 
 							if (options.closeByDocument) {
-								$dialog.bind('click', function (event) {
+								closeByDocumentHandler = function (event) {
 									var isOverlay = $el(event.target).hasClass('ngdialog-overlay');
 									var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
 
 									if (isOverlay || isCloseBtn) {
 										publicMethods.close($dialog.attr('id'));
 									}
-								});
+								};
+
+								if (typeof Hammer !== 'undefined') {
+									Hammer($dialog[0]).on('tap', closeByDocumentHandler);
+								} else {
+									$dialog.bind('click', closeByDocumentHandler);
+								}
 							}
 
 							dialogsCount += 1;
