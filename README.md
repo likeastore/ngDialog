@@ -181,6 +181,16 @@ $rootScope.$on('ngDialog.opened', function (e, $dialog) {
 
 Currently ngDialog contains two default themes that show how easily you can create your own. Check ``example`` folder for demonstration purposes.
 
+## CDN
+
+ngDialog is available for public on [cdnjs](http://cdnjs.com/). Please use following urls for version 0.1.5.
+
+```html
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.1.5/ng-dialog.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.1.5/ng-dialog-theme-plain.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.1.5/ng-dialog.min.js
+```
+
 ## References
 
 Have a nice experience and use **ngDialog** in your project? Let us know! We appreciate any kind of feedback ;)
