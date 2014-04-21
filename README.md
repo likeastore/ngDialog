@@ -191,10 +191,6 @@ ngDialog is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dialog
 //cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.1.6/ng-dialog.min.js
 ```
 
-## References
-
-Have a nice experience and use **ngDialog** in your project? Let us know! We appreciate any kind of feedback ;)
-
 ## Licence
 
 MIT Licensed
