@@ -31,21 +31,21 @@
 				var $body = $document.find('body');
 
 				var privateMethods = {
-					onDocumentKeyup: function (event) {
+					onDocumentKeydown: function (event) {
 						if (event.keyCode === 27) {
 							publicMethods.close();
 						}
 					},
 
 					closeDialog: function ($dialog) {
-						if (typeof Hammer !== 'undefined') {
-							Hammer($dialog[0]).off('tap', closeByDocumentHandler);
+						if (typeof window.Hammer !== 'undefined') {
+							window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
 						} else {
 							$dialog.unbind('click');
 						}
 
 						if (dialogsCount === 1) {
-							$body.unbind('keyup').removeClass('ngdialog-open');
+							$body.unbind('keydown').removeClass('ngdialog-open');
 						}
 
 						dialogsCount -= 1;
@@ -132,7 +132,7 @@
 							$body.addClass('ngdialog-open').append($dialog);
 
 							if (options.closeByEscape) {
-								$body.bind('keyup', privateMethods.onDocumentKeyup);
+								$body.bind('keydown', privateMethods.onDocumentKeydown);
 							}
 
 							if (options.closeByDocument) {
@@ -145,8 +145,8 @@
 									}
 								};
 
-								if (typeof Hammer !== 'undefined') {
-									Hammer($dialog[0]).on('tap', closeByDocumentHandler);
+								if (typeof window.Hammer !== 'undefined') {
+									window.Hammer($dialog[0]).on('tap', closeByDocumentHandler);
 								} else {
 									$dialog.bind('click', closeByDocumentHandler);
 								}
@@ -218,7 +218,7 @@
 						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
-						closeByEscape: attrs.ngDialogCloseByKeyup === 'false' ? false : true
+						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true
 					});
 				});
 			}
