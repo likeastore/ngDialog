@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 			options: {
 				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> (<%= pkg.homepage %>) */\n'
 			},
-			avgrund: {
+			ngDialog: {
 				files: {
 					'./js/ngDialog.min.js': ['./js/ngDialog.js']
 				}
