@@ -45,7 +45,7 @@
 						}
 
 						if (dialogsCount === 1) {
-							$body.unbind('keydown').removeClass('ngdialog-open');
+							$body.unbind('keydown');
 						}
 
 						dialogsCount -= 1;
@@ -54,10 +54,14 @@
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
 								$dialog.scope().$destroy();
 								$dialog.remove();
+								if (dialogsCount === 0)
+									$body.removeClass('ngdialog-open');
 							}).addClass('ngdialog-closing');
 						} else {
 							$dialog.scope().$destroy();
 							$dialog.remove();
+							if (dialogsCount === 0)
+								$body.removeClass('ngdialog-open');
 						}
 
 						$rootScope.$broadcast('ngDialog.closed', $dialog);
