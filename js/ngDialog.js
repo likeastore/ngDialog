@@ -131,9 +131,8 @@
 
 							$timeout(function () {
 								$compile($dialog)(scope);
+								$body.addClass('ngdialog-open').append($dialog);
 							});
-
-							$body.addClass('ngdialog-open').append($dialog);
 
 							if (options.closeByEscape) {
 								$body.bind('keydown', privateMethods.onDocumentKeydown);
