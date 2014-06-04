@@ -48,9 +48,9 @@
 							$body.unbind('keydown');
 						}
 
-                        if (!$dialog.hasClass("ngdialog-closing")){
-                            dialogsCount -= 1;
-                        }
+						if (!$dialog.hasClass("ngdialog-closing")){
+							dialogsCount -= 1;
+						}
 
 						if (animationEndSupport) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
