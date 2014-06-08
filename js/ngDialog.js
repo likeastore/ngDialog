@@ -48,9 +48,7 @@
 							$body.unbind('keydown');
 						}
 
-						if (!$dialog.hasClass("ngdialog-closing")){
-							dialogsCount -= 1;
-						}
+						dialogsCount -= 1;
 
 						if (animationEndSupport) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
@@ -141,6 +139,13 @@
 							if (options.closeByEscape) {
 								$body.bind('keydown', privateMethods.onDocumentKeydown);
 							}
+							if (options.submitByEnter) {
+								$body.bind('keydown', function(event) {
+									if (event.keyCode === 13) {
+										$dialog.scope().$eval($dialog.find('.ngdialog-submit').attr('ng-click'));
+									}
+								});
+							}
 
 							closeByDocumentHandler = function (event) {
 								var isOverlay = options.closeByDocument ? $el(event.target).hasClass('ngdialog-overlay') : false;
@@ -223,7 +228,8 @@
 						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
-						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true
+						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true,
+						submitByEnter: attrs.ngDialogSubmitByEnter === 'false' ? false : true
 					});
 				});
 			}
