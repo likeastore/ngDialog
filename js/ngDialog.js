@@ -141,10 +141,13 @@
 							if (options.closeByEscape) {
 								$body.bind('keydown', privateMethods.onDocumentKeydown);
 							}
+
 							if (options.submitByEnter) {
 								$body.bind('keydown', function(event) {
 									if (event.keyCode === 13) {
-										$dialog.scope().$eval($dialog.find('.ngdialog-submit').attr('ng-click'));
+										var enterAction = angular.element(document.querySelector('.ngdialog-submit')).attr('ng-click');
+										if(Boolean(enterAction))
+											$dialog.scope().$eval(enterAction);
 									}
 								});
 							}
