@@ -142,16 +142,6 @@
 								$body.bind('keydown', privateMethods.onDocumentKeydown);
 							}
 
-							if (options.submitByEnter) {
-								$body.bind('keydown', function(event) {
-									if (event.keyCode === 13) {
-										var enterAction = angular.element(document.querySelector('.ngdialog-submit')).attr('ng-click');
-										if(Boolean(enterAction))
-											$dialog.scope().$eval(enterAction);
-									}
-								});
-							}
-
 							closeByDocumentHandler = function (event) {
 								var isOverlay = options.closeByDocument ? $el(event.target).hasClass('ngdialog-overlay') : false;
 								var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
@@ -233,8 +223,7 @@
 						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
-						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true,
-						submitByEnter: attrs.ngDialogSubmitByEnter === 'false' ? false : true
+						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true
 					});
 				});
 			}
