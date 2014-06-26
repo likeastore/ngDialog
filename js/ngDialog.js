@@ -209,17 +209,21 @@
 	module.directive('ngDialog', ['ngDialog', function (ngDialog) {
 		return {
 			restrict: 'A',
+			scope : {
+				ngDialogScope : '='
+			},
 			link: function (scope, elem, attrs) {
 				elem.on('click', function (e) {
 					e.preventDefault();
 
+					var ngDialogScope = angular.isDefined(scope.ngDialogScope) ? scope.ngDialogScope : 'noScope';
 					angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
 
 					ngDialog.open({
 						template: attrs.ngDialog,
 						className: attrs.ngDialogClass,
 						controller: attrs.ngDialogController,
-						scope: attrs.ngDialogScope,
+						scope: ngDialogScope ,
 						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,

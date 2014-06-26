@@ -18,6 +18,7 @@
 		ng-dialog-controller="InsideCtrl"
 		ng-dialog-data="{{jsonData}}"
 		ng-dialog-class="ngdialog-theme-default"
+        ng-dialog-scope="this"
 		ng-dialog-show-close="false">Open via directive</button>
 
 	<a href="" ng-click="openDefault()">Default theme</a>
@@ -29,6 +30,7 @@
 			<h3>ngDialog template</h3>
 			<p ng-show="theme">Test content for <code>{{theme}}</code></p>
 			<p ng-show="ngDialogData.foo">Data passed through directive: <code>{{ngDialogData.foo}}</code></p>
+            <p ng-show="dialogModel.message">Scope passed through directive: <code>{{dialogModel.message}}</code></p>
 		</div>
 		<div class="ngdialog-buttons">
 			<button type="button" class="ngdialog-button ngdialog-button-secondary"
@@ -84,7 +86,7 @@
 					className: 'ngdialog-theme-plain',
 					scope: $scope
 				});
-			}
+			};
 
 			$rootScope.$on('ngDialog.opened', function (e, $dialog) {
 				console.log('ngDialog opened: ' + $dialog.attr('id'));
@@ -96,6 +98,9 @@
 		});
 
 		app.controller('InsideCtrl', function ($scope, ngDialog) {
+            $scope.dialogModel = {
+                message : 'message from passed scope'
+            };
 			$scope.openSecond = function () {
 				ngDialog.open({
 					template: '<h3><a href="" ng-click="closeSecond()">Close all by click here!</a></h3>',
