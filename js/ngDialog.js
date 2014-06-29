@@ -24,7 +24,7 @@
 			closeByEscape: true
 		};
 
-		var globalID = 0, dialogsCount = 0, closeByDocumentHandler;
+		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout',
 			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout) {
@@ -38,6 +38,7 @@
 					},
 
 					closeDialog: function ($dialog) {
+						var id = $dialog.attr('id');
 						if (typeof window.Hammer !== 'undefined') {
 							window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
 						} else {
@@ -67,7 +68,14 @@
 								$body.removeClass('ngdialog-open');
 							}
 						}
-
+						if (defers[id]) {
+							defers[id].resolve({
+								id: id,
+								$dialog: $dialog,
+								remainingDialogs: dialogsCount
+							});
+							delete defers[id];
+						}
 						$rootScope.$broadcast('ngDialog.closed', $dialog);
 					}
 				};
@@ -97,6 +105,8 @@
 						globalID += 1;
 
 						self.latestID = 'ngdialog' + globalID;
+						var defer;
+						defers[self.latestID] = defer = $q.defer();
 
 						var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
 						var $dialog;
@@ -166,6 +176,7 @@
 
 						return {
 							id: 'ngdialog' + globalID,
+							closePromise: defer.promise,
 							close: function() {
 								privateMethods.closeDialog($dialog);
 							}
