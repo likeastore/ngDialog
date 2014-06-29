@@ -164,6 +164,13 @@
 							return publicMethods;
 						});
 
+						return {
+							id: 'ngdialog' + globalID,
+							close: function() {
+								privateMethods.closeDialog($dialog);
+							}
+						};
+
 						function loadTemplate (tmpl) {
 							if (!tmpl) {
 								return 'Empty template';
