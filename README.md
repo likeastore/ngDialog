@@ -135,7 +135,7 @@ This will close all open modals if there several of them open at the same time.
 It allows to close modals by clicking on overlay background, default ``true``.
 If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
 
-### Returns
+### Returns:
 
 The ``open()`` method returns an object with some useful properties.
 
