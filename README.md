@@ -135,6 +135,33 @@ This will close all open modals if there several of them open at the same time.
 It allows to close modals by clicking on overlay background, default ``true``.
 If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
 
+#### Returns
+
+The ``open()`` method returns an object with some useful properties.
+
+##### ``id {String}``
+
+This is the ID of the dialog which was just created. It is the ID on the dialog's DOM element.
+
+##### ``close() {Function}``
+
+This is a function which will close the dialog which was opened by the current call to ``open()``.
+
+##### ``closePromise {Promise}``
+
+A promise which will resolve when the dialog is closed. It is resolved with an object containing: ``id``, the ID of the closed dialog; ``$dialog``, the dialog element which at this point has been removed from the DOM; and ``remainingDialogs``, the number of dialogs still open.
+
+This allows you do to something like this:
+
+```javascript
+var dialog = ngDialog.open({
+	template: 'templateId'
+});
+dialog.closePromise.then(function (data) {
+	console.log(data.id + ' has been dismissed.');
+});
+```
+
 ### ``.close(id)``
 
 Method accepts dialog's ``id`` as string argument to close specific dialog window, if ``id`` is not specified it will close all currently active modals (same behavior as ``.closeAll()``).

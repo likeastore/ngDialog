@@ -24,6 +24,8 @@
 	<a href="" ng-click="openDefault()">Default theme</a>
 	<a href="" ng-click="openPlain()">Plain theme</a>
 	<a href="" ng-click="openTemplate()">Open with external template for modal</a>
+	<a href="" ng-click="openTimed()">Open and use return value to close later</a>
+	<a href="" ng-click="openNotify()">Open and use promise to know when closed</a>
 
 	<script type="text/ng-template" id="firstDialogId">
 		<div class="ngdialog-message">
@@ -85,6 +87,28 @@
 					template: 'externalTemplate.html',
 					className: 'ngdialog-theme-plain',
 					scope: $scope
+				});
+			};
+
+			$scope.openTimed = function () {
+				var dialog = ngDialog.open({
+					template: '<p>Just passing through!</p>',
+					plain: true,
+					closeByDocument: false,
+					closeByEscape: false
+				});
+				setTimeout(function () {
+					dialog.close();
+				}, 2000);
+			};
+
+			$scope.openNotify = function () {
+				var dialog = ngDialog.open({
+					template: '<p>You can do whatever you want when I close, however that happens.</p>',
+					plain: true
+				});
+				dialog.closePromise.then(function (data) {
+					console.log('ngDialog closed and notified by promise: ' + data.id);
 				});
 			};
 
