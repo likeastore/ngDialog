@@ -36,7 +36,7 @@ ngDialog service provides easy to use and minimalistic API, but in the same time
 
 Method allows to open dialog window, creates new dialog instance on each call. It accepts ``options`` object as the only argument.
 
-##### Options:
+### Options:
 
 ##### ``template {String}``
 
@@ -98,7 +98,7 @@ In addition ``.closeThisDialog()`` method get injected to passed ``$scope``. Thi
 <div class="dialog-contents">
 	<input type="text"/>
 	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog()"/>
-</button>
+</div>
 ```
 
 ##### ``data {String}``
@@ -135,7 +135,7 @@ This will close all open modals if there several of them open at the same time.
 It allows to close modals by clicking on overlay background, default ``true``.
 If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
 
-#### Returns
+### Returns
 
 The ``open()`` method returns an object with some useful properties.
 
@@ -149,7 +149,7 @@ This is a function which will close the dialog which was opened by the current c
 
 ##### ``closePromise {Promise}``
 
-A promise which will resolve when the dialog is closed. It is resolved with an object containing: ``id``, the ID of the closed dialog; ``$dialog``, the dialog element which at this point has been removed from the DOM; and ``remainingDialogs``, the number of dialogs still open.
+A promise which will resolve when the dialog is closed. It is resolved with an object containing: ``id`` - the ID of the closed dialog, ``$dialog`` - the dialog element which at this point has been removed from the DOM and ``remainingDialogs`` - the number of dialogs still open.
 
 This allows you do to something like this:
 
@@ -157,6 +157,7 @@ This allows you do to something like this:
 var dialog = ngDialog.open({
 	template: 'templateId'
 });
+
 dialog.closePromise.then(function (data) {
 	console.log(data.id + ' has been dismissed.');
 });

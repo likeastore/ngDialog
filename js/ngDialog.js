@@ -105,6 +105,7 @@
 						globalID += 1;
 
 						self.latestID = 'ngdialog' + globalID;
+
 						var defer;
 						defers[self.latestID] = defer = $q.defer();
 
