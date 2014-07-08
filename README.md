@@ -163,7 +163,7 @@ dialog.closePromise.then(function (data) {
 });
 ```
 
--------------
+===
 
 ### ``.openModal(options)``
 
