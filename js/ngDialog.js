@@ -117,6 +117,8 @@
 								template :
 								template.data && angular.isString(template.data) ?
 									template.data :
+									template[1] && angular.isString(template[1]) ?
+									template[1] :
 									'';
 
 							$templateCache.put(options.template, template);
