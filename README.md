@@ -167,7 +167,7 @@ dialog.closePromise.then(function (data) {
 
 ===
 
-### ``.confirm(options)``
+### ``.openConfirm(options)``
 
 Opens a dialog that by default does not close when hitting escape or clicking outside the dialog window. The function returns a promise that is either resolved or rejected depending on the way the dialog was closed.
 
@@ -177,7 +177,7 @@ The options are the same as the regular open() function, with an extra function 
 
 ##### ``scope.confirm()``
 
-In addition to the ``.closeThisDialog()`` method. The method ```.confirm()``` is also injected to passed ``$scope``. Use this method to close the dialog and ```resolve``` the promise that was returned when opening the modal.
+In addition to the ``.closeThisDialog()`` method. The method ``.confirm()`` is also injected to passed ``$scope``. Use this method to close the dialog and ``resolve`` the promise that was returned when opening the modal.
 
 The function accepts a single optional parameter which is used as the value of the resolved promise.
 
@@ -191,7 +191,7 @@ The function accepts a single optional parameter which is used as the value of t
 
 ### Returns:
 
-An Angular promise object that is resolved if the ```confirm()``` function is used to close the dialog, otherwise the promise is rejected.
+An Angular promise object that is resolved if the ``.confirm()`` function is used to close the dialog, otherwise the promise is rejected.
 
 ===
 

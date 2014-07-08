@@ -209,7 +209,7 @@
 					 *
 					 * @return {Object} dialog
 					 */
-					confirm: function (opts) {
+					openConfirm: function (opts) {
 						var defer = $q.defer();
 
 						var options = {
