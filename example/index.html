@@ -34,7 +34,7 @@
 	<a href="" ng-click="openTemplate()">Open with external template for modal</a>
 	<a href="" ng-click="openTimed()">Open and use return value to close later</a>
 	<a href="" ng-click="openNotify()">Open and use promise to know when closed</a>
-	<a href="" ng-click="openModal()">Open modal</a>
+	<a href="" ng-click="openConfirm()">Open confirm modal</a>
 
 	<script type="text/ng-template" id="firstDialogId">
 		<div class="ngdialog-message">
@@ -60,8 +60,7 @@
 	<script type="text/ng-template" id="modalDialogId">
 		<div class="ngdialog-message">
 			<h3>ngDialog modal example</h3>
-			<p>The openModal function returns a promise that is resolved when confirmed and rejected when otherwise closed.</p>
-			<p>Modal dialogs by default do not close when clicked outside the dialog or when hitting escape. This can ofcourse be overridden when opening the dialog.</p>
+			<p>The <code>.confirm()</code> function returns a promise that is resolved when confirmed and rejected when otherwise closed. Modal dialogs by default do not close when clicked outside the dialog or when hitting escape. This can ofcourse be overridden when opening the dialog.</p>
 			<p>Confirm can take a value. Enter one here for example and see the console output: <input ng-model="confirmValue" /></p>
 		</div>
 		<div class="ngdialog-buttons">
@@ -91,8 +90,8 @@
 				});
 			};
 
-			$scope.openModal = function () {
-				ngDialog.openModal({
+			$scope.openConfirm = function () {
+				ngDialog.confirm({
 					template: 'modalDialogId',
 					className: 'ngdialog-theme-default'
 				}).then(function (value) {

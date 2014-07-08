@@ -209,7 +209,7 @@
 					 *
 					 * @return {Object} dialog
 					 */
-					openModal: function (opts) {
+					confirm: function (opts) {
 						var defer = $q.defer();
 
 						var options = {
@@ -231,7 +231,6 @@
 
 						return defer.promise;
 					},
-
 
 					/*
 					 * @param {String} id
