@@ -163,6 +163,8 @@ dialog.closePromise.then(function (data) {
 });
 ```
 
+-------------
+
 ### ``.openModal(options)``
 
 Opens a dialog that by default does not close when hitting escape or clicking outside the dialog window. The function returns a promise that is either resolved or rejected depending on the way the dialog was closed.
