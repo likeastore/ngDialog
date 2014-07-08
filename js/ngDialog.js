@@ -197,6 +197,51 @@
 					},
 
 					/*
+					 * @param {Object} options:
+					 * - template {String} - id of ng-template, url for partial, plain string (if enabled)
+					 * - plain {Boolean} - enable plain string templates, default false
+					 * - scope {Object}
+					 * - controller {String}
+					 * - className {String} - dialog theme class
+					 * - showClose {Boolean} - show close button, default true
+					 * - closeByEscape {Boolean} - default false
+					 * - closeByDocument {Boolean} - default false
+					 *
+					 * @return {Object} dialog
+					 */
+					openModal: function (opts) {
+						var defer = $q.defer();
+
+						// Set modal defaults
+						var options = {
+							closeByEscape: false,
+							closeByDocument: false
+						};
+						angular.extend(options, opts);
+						// Setup scope confirm function
+						options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
+						options.scope.confirm = function (value) {
+							// If confirm is called, resolve the deferred
+							defer.resolve(value);
+							// And close the dialog
+							openResult.close();
+						};
+
+						// Open the dialog
+						var openResult = publicMethods.open(options);
+						openResult.closePromise.then(function () {
+							/* 
+								When the dialog is closed, reject the deferred. If the confirm function 
+								was used, the defer was already resolved and reject does nothing.
+							 */
+							defer.reject();
+						});
+
+						return defer.promise;
+					},
+
+
+					/*
 					 * @param {String} id
 					 * @return {Object} dialog
 					 */

@@ -32,6 +32,9 @@ app.controller('MainCtrl', function ($scope, ngDialog) {
 
 ngDialog service provides easy to use and minimalistic API, but in the same time it's powerful enough. Here is the list of accessible methods that you can use:
 
+##### Options:
+
+
 ### ``.open(options)``
 
 Method allows to open dialog window, creates new dialog instance on each call. It accepts ``options`` object as the only argument.
@@ -162,6 +165,34 @@ dialog.closePromise.then(function (data) {
 	console.log(data.id + ' has been dismissed.');
 });
 ```
+
+
+### ``.openModal(options)``
+
+Opens a dialog that by default does not close when hitting escape or clicking outside the dialog window. The function returns a promise that is either resolved or rejected depending on the way the dialog was closed.
+
+##### Options:
+
+The options are the same as the regular open() function, with an extra function added to the scope:
+
+##### ``scope.confirm()``
+
+In addition to the ``.closeThisDialog()`` method. The method ```.confirm()``` is also injected to passed ``$scope``. Use this method to close the dialog and ```resolve``` the promise that was returned when opening the modal.
+
+The function accepts a single optional parameter which is used as the value of the resolved promise.
+
+```html
+<div class="dialog-contents">
+	Some message
+	<button ng-click="closeThisDialog()">Cancel</button>
+	<button ng-click="confirm()">Confirm</button>
+</button>
+```
+
+#### Returns
+
+An Angular promise object that is resolved if the ```confirm()``` function is used to close the dialog, otherwise the promise is rejected.
+
 
 ### ``.close(id)``
 
