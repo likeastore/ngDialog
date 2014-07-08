@@ -212,28 +212,20 @@
 					openModal: function (opts) {
 						var defer = $q.defer();
 
-						// Set modal defaults
 						var options = {
 							closeByEscape: false,
 							closeByDocument: false
 						};
 						angular.extend(options, opts);
-						// Setup scope confirm function
+
 						options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
 						options.scope.confirm = function (value) {
-							// If confirm is called, resolve the deferred
 							defer.resolve(value);
-							// And close the dialog
 							openResult.close();
 						};
 
-						// Open the dialog
 						var openResult = publicMethods.open(options);
 						openResult.closePromise.then(function () {
-							/* 
-								When the dialog is closed, reject the deferred. If the confirm function 
-								was used, the defer was already resolved and reject does nothing.
-							 */
 							defer.reject();
 						});
 
