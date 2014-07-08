@@ -33,6 +33,7 @@ app.controller('MainCtrl', function ($scope, ngDialog) {
 ngDialog service provides easy to use and minimalistic API, but in the same time it's powerful enough. Here is the list of accessible methods that you can use:
 
 ### ``.open(options)``
+===
 
 Method allows to open dialog window, creates new dialog instance on each call. It accepts ``options`` object as the only argument.
 
@@ -163,9 +164,8 @@ dialog.closePromise.then(function (data) {
 });
 ```
 
-===
-
 ### ``.openModal(options)``
+===
 
 Opens a dialog that by default does not close when hitting escape or clicking outside the dialog window. The function returns a promise that is either resolved or rejected depending on the way the dialog was closed.
 
