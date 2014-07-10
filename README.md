@@ -173,7 +173,7 @@ Opens a dialog that by default does not close when hitting escape or clicking ou
 
 ### Options:
 
-The options are the same as the regular open() function, with an extra function added to the scope:
+The options are the same as the regular [``.open()``](https://github.com/likeastore/ngDialog#options) method with an extra function added to the scope:
 
 ##### ``scope.confirm()``
 
