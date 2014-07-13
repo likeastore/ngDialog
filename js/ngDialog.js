@@ -21,14 +21,13 @@
 			plain: false,
 			showClose: true,
 			closeByDocument: true,
-			closeByEscape: true,
-			applyBodyPadding: true
+			closeByEscape: true
 		};
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
-		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout',
-			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout) {
+		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window',
+			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window) {
 				var $body = $document.find('body');
 				var systemScrollbarWidth;
 
@@ -37,10 +36,6 @@
 						if (event.keyCode === 27) {
 							publicMethods.close();
 						}
-					},
-
-					bodyHasScrollbar: function () {
-						return ($body[0].clientWidth < window.innerWidth);
 					},
 
 					setBodyPadding: function () {
@@ -97,9 +92,7 @@
 								$dialog.remove();
 								if (dialogsCount === 0) {
 									$body.removeClass('ngdialog-open');
-									if (options.applyBodyPadding) {
-										privateMethods.resetBodyPadding();
-									}
+									privateMethods.resetBodyPadding();
 								}
 							}).addClass('ngdialog-closing');
 						} else {
@@ -107,9 +100,7 @@
 							$dialog.remove();
 							if (dialogsCount === 0) {
 								$body.removeClass('ngdialog-open');
-								if (options.applyBodyPadding) {
-									privateMethods.resetBodyPadding();
-								}
+								privateMethods.resetBodyPadding();
 							}
 						}
 						if (defers[id]) {
@@ -190,10 +181,12 @@
 
 							$timeout(function () {
 								$compile($dialog)(scope);
-								if (options.applyBodyPadding && privateMethods.bodyHasScrollbar()) {
+								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
+								$body.addClass('ngdialog-open');
+								if (widthDiffs != ($window.innerWidth - $body.prop('clientWidth'))) {
 									privateMethods.setBodyPadding();
 								}
-								$body.addClass('ngdialog-open').append($dialog);
+								$body.append($dialog);
 							});
 
 							if (options.closeByEscape) {
