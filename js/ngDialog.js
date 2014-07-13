@@ -29,7 +29,6 @@
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window',
 			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window) {
 				var $body = $document.find('body');
-				var systemScrollbarWidth;
 
 				var privateMethods = {
 					onDocumentKeydown: function (event) {
@@ -38,12 +37,10 @@
 						}
 					},
 
-					setBodyPadding: function () {
+					setBodyPadding: function (width) {
 						var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10)
-						if (systemScrollbarWidth || (systemScrollbarWidth = privateMethods.measureScrollbar())) {
-							$body.css('padding-right', (originalBodyPadding + systemScrollbarWidth) + 'px');
-							$body.data('ng-dialog-original-padding', originalBodyPadding);
-						}
+						$body.css('padding-right', (originalBodyPadding + width) + 'px');
+						$body.data('ng-dialog-original-padding', originalBodyPadding);
 					},
 
 					resetBodyPadding: function () {
@@ -53,21 +50,6 @@
 						} else {
 							$body.css('padding-right', '');
 						}
-					},
-
-					measureScrollbar: function () { 
-						var scrollDiv = $el('<div></div>');
-						scrollDiv.css('position', 'absolute');
-						scrollDiv.css('top', '-9999px');
-						scrollDiv.css('width', '50px');
-						scrollDiv.css('height', '50px');
-						scrollDiv.css('overflow', 'scroll');
-						$body.append(scrollDiv);
-
-						var scrollDivElem = scrollDiv[0];
-						var systemScrollbarWidth = scrollDivElem.offsetWidth - scrollDivElem.clientWidth;
-						scrollDiv.remove();
-						return systemScrollbarWidth;
 					},
 
 					closeDialog: function ($dialog) {
@@ -183,8 +165,9 @@
 								$compile($dialog)(scope);
 								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
 								$body.addClass('ngdialog-open');
-								if (widthDiffs != ($window.innerWidth - $body.prop('clientWidth'))) {
-									privateMethods.setBodyPadding();
+								var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
+								if (scrollBarWidth > 0) {
+									privateMethods.setBodyPadding(scrollBarWidth);
 								}
 								$body.append($dialog);
 							});
