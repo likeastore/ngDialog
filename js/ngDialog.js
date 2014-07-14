@@ -87,6 +87,7 @@
 									$body.removeClass('ngdialog-open');
 									privateMethods.resetBodyPadding();
 								}
+								$rootScope.$broadcast('ngDialog.closed', $dialog);
 							}).addClass('ngdialog-closing');
 						} else {
 							$dialog.scope().$destroy();
@@ -95,6 +96,7 @@
 								$body.removeClass('ngdialog-open');
 								privateMethods.resetBodyPadding();
 							}
+							$rootScope.$broadcast('ngDialog.closed', $dialog);
 						}
 						if (defers[id]) {
 							defers[id].resolve({
@@ -105,7 +107,6 @@
 							});
 							delete defers[id];
 						}
-						$rootScope.$broadcast('ngDialog.closed', $dialog);
 					}
 				};
 
@@ -189,7 +190,6 @@
 									privateMethods.setBodyPadding(scrollBarWidth);
 								}
 								$dialogParent.append($dialog);
-
 								$rootScope.$broadcast('ngDialog.opened', $dialog);
 							});
 
@@ -268,10 +268,10 @@
 
 						var openResult = publicMethods.open(options);
 						openResult.closePromise.then(function (data) {
-							if (data)
-								defer.reject(data.value);
-							else
-								defer.reject();
+							if (data) {
+								return defer.reject(data.value);
+							}
+							return defer.reject();
 						});
 
 						return defer.promise;
