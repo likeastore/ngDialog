@@ -38,7 +38,7 @@
 					},
 
 					setBodyPadding: function (width) {
-						var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10)
+						var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10);
 						$body.css('padding-right', (originalBodyPadding + width) + 'px');
 						$body.data('ng-dialog-original-padding', originalBodyPadding);
 					},
@@ -163,6 +163,7 @@
 
 							$timeout(function () {
 								$compile($dialog)(scope);
+
 								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
 								$body.addClass('ngdialog-open');
 								var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
@@ -170,6 +171,8 @@
 									privateMethods.setBodyPadding(scrollBarWidth);
 								}
 								$body.append($dialog);
+
+								$rootScope.$broadcast('ngDialog.opened', $dialog);
 							});
 
 							if (options.closeByEscape) {
@@ -192,8 +195,6 @@
 							}
 
 							dialogsCount += 1;
-
-							$rootScope.$broadcast('ngDialog.opened', $dialog);
 
 							return publicMethods;
 						});
