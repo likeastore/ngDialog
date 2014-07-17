@@ -147,6 +147,7 @@
 							$timeout(function () {
 								$compile($dialog)(scope);
 								$body.addClass('ngdialog-open').append($dialog);
+								$rootScope.$broadcast('ngDialog.opened', $dialog);
 							});
 
 							if (options.closeByEscape) {
@@ -169,8 +170,6 @@
 							}
 
 							dialogsCount += 1;
-
-							$rootScope.$broadcast('ngDialog.opened', $dialog);
 
 							return publicMethods;
 						});
