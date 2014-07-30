@@ -65,7 +65,6 @@
   right: 0;
   bottom: 0;
   left: 0;
-  height: 20000px;
   -webkit-backface-visibility: hidden;
   -webkit-animation: ngdialog-fadein 0.5s;
   animation: ngdialog-fadein 0.5s;
