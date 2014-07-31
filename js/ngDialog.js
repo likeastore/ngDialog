@@ -21,7 +21,8 @@
 			plain: false,
 			showClose: true,
 			closeByDocument: true,
-			closeByEscape: true
+			closeByEscape: true,
+			forceBodyReload: false
 		};
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
@@ -29,6 +30,11 @@
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window',
 			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window) {
 				var $body = $document.find('body');
+				if (defaults.forceBodyReload) {
+					$rootScope.$on('$locationChangeSuccess', function () {
+						$body = $document.find('body');
+					});
+				}
 
 				var privateMethods = {
 					onDocumentKeydown: function (event) {
