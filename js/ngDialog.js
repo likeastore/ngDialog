@@ -26,14 +26,29 @@
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
-		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout',
-			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout) {
+		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window',
+			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window) {
 				var $body = $document.find('body');
 
 				var privateMethods = {
 					onDocumentKeydown: function (event) {
 						if (event.keyCode === 27) {
 							publicMethods.close();
+						}
+					},
+
+					setBodyPadding: function (width) {
+						var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10);
+						$body.css('padding-right', (originalBodyPadding + width) + 'px');
+						$body.data('ng-dialog-original-padding', originalBodyPadding);
+					},
+
+					resetBodyPadding: function () {
+						var originalBodyPadding = $body.data('ng-dialog-original-padding');
+						if (originalBodyPadding) {
+							$body.css('padding-right', originalBodyPadding + 'px');
+						} else {
+							$body.css('padding-right', '');
 						}
 					},
 
@@ -59,6 +74,7 @@
 								$dialog.remove();
 								if (dialogsCount === 0) {
 									$body.removeClass('ngdialog-open');
+									privateMethods.resetBodyPadding();
 								}
 							}).addClass('ngdialog-closing');
 						} else {
@@ -66,6 +82,7 @@
 							$dialog.remove();
 							if (dialogsCount === 0) {
 								$body.removeClass('ngdialog-open');
+								privateMethods.resetBodyPadding();
 							}
 						}
 						if (defers[id]) {
@@ -146,7 +163,15 @@
 
 							$timeout(function () {
 								$compile($dialog)(scope);
-								$body.addClass('ngdialog-open').append($dialog);
+
+								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
+								$body.addClass('ngdialog-open');
+								var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
+								if (scrollBarWidth > 0) {
+									privateMethods.setBodyPadding(scrollBarWidth);
+								}
+								$body.append($dialog);
+
 								$rootScope.$broadcast('ngDialog.opened', $dialog);
 							});
 
