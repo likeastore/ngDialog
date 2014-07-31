@@ -14,6 +14,7 @@
 	var style = (document.body || document.documentElement).style;
 	var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
 	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
+	var forceBodyReload = false;
 
 	module.provider('ngDialog', function () {
 		var defaults = this.defaults = {
@@ -22,7 +23,10 @@
 			showClose: true,
 			closeByDocument: true,
 			closeByEscape: true,
-			forceBodyReload: false
+		};
+
+		this.setForceBodyReload = function (_useIt) {
+			forceBodyReload = _useIt || false;
 		};
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
