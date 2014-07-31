@@ -139,7 +139,7 @@ If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will liste
 
 ##### ``forceBodyReload {Boolean}``
 
-Adds additional listener on every ``$locationChangeSuccess`` event and gets update version of ``body`` into dialog. Maybe useful in some rare cases when you're dependant on DOM changes.
+Adds additional listener on every ``$locationChangeSuccess`` event and gets update version of ``body`` into dialog. Maybe useful in some rare cases when you're dependant on DOM changes, defaults to ``false``.
 
 ### Returns:
 
