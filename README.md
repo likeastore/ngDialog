@@ -137,6 +137,10 @@ This will close all open modals if there several of them open at the same time.
 It allows to close modals by clicking on overlay background, default ``true``.
 If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
 
+##### ``forceBodyReload {Boolean}``
+
+Adds additional listener on every ``$locationChangeSuccess`` event and gets update version of ``body`` into dialog. Maybe useful in some rare cases when you're dependant on DOM changes.
+
 ### Returns:
 
 The ``open()`` method returns an object with some useful properties.
