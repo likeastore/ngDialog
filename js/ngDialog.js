@@ -22,7 +22,7 @@
 			plain: false,
 			showClose: true,
 			closeByDocument: true,
-			closeByEscape: true,
+			closeByEscape: true
 		};
 
 		this.setForceBodyReload = function (_useIt) {
