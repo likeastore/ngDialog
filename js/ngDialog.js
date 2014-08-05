@@ -137,7 +137,7 @@
 						defers[self.latestID] = defer = $q.defer();
 
 						var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
-						var $dialog;
+						var $dialog, $dialogParent;
 
 						$q.when(loadTemplate(options.template)).then(function (template) {
 							template = angular.isString(template) ?
@@ -167,6 +167,13 @@
 								scope.ngDialogData = options.data.replace(/^\s*/, '')[0] === '{' ? angular.fromJson(options.data) : options.data;
 							}
 
+							if (options.id && angular.isString(options.id)) {
+								$dialogParent = angular.element(document.querySelector('#' + options.id));
+							}
+							else {
+								$dialogParent = $body;
+							}
+
 							scope.closeThisDialog = function() {
 								privateMethods.closeDialog($dialog);
 							};
@@ -180,7 +187,7 @@
 								if (scrollBarWidth > 0) {
 									privateMethods.setBodyPadding(scrollBarWidth);
 								}
-								$body.append($dialog);
+								$dialogParent.append($dialog);
 
 								$rootScope.$broadcast('ngDialog.opened', $dialog);
 							});
