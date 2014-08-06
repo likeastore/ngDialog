@@ -32,8 +32,8 @@
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
-		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window',
-			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window) {
+		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller',
+			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller) {
 				var $body = $document.find('body');
 				if (defaults.forceBodyReload) {
 					$rootScope.$on('$locationChangeSuccess', function () {
@@ -158,8 +158,13 @@
 							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
 							$dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
 
-							if (options.controller && angular.isString(options.controller)) {
-								$dialog.attr('ng-controller', options.controller);
+							if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
+								var locals = {
+									$scope: scope,
+									$element: $dialog
+								}
+								var controllerInstance = $controller(options.controller, locals);
+								$dialog.data('$ngDialogControllerController', controllerInstance);
 							}
 
 							if (options.className) {
