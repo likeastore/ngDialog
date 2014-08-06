@@ -31,6 +31,7 @@
 
 	<a href="" ng-click="openDefault()">Default theme</a>
 	<a href="" ng-click="openPlain()">Plain theme</a>
+	<a href="" ng-click="openInlineController()">Inline controller</a>
 	<a href="" ng-click="openTemplate()">Open with external template for modal</a>
 	<a href="" ng-click="openTimed()">Open and use return value to close later</a>
 	<a href="" ng-click="openNotify()">Open and use promise to know when closed</a>
@@ -108,6 +109,29 @@
 				ngDialog.open({
 					template: 'firstDialogId',
 					controller: 'InsideCtrl',
+					className: 'ngdialog-theme-plain',
+					closeByDocument: false
+				});
+			};
+
+			$scope.openInlineController = function () {
+				$rootScope.theme = 'ngdialog-theme-plain';
+
+				ngDialog.open({
+					template: 'firstDialogId',
+					controller: ['$scope', 'ngDialog', function ($scope, ngDialog) {
+						$scope.dialogModel = {
+							message : 'message from passed scope'
+						};
+						$scope.openSecond = function () {
+							ngDialog.open({
+								template: '<h3><a href="" ng-click="closeSecond()">Close all by click here!</a></h3>',
+								plain: true,
+								closeByEscape: false,
+								controller: 'SecondModalCtrl'
+							});
+						};
+					}],
 					className: 'ngdialog-theme-plain',
 					closeByDocument: false
 				});
