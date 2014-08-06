@@ -14,6 +14,7 @@
 	var style = (document.body || document.documentElement).style;
 	var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
 	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
+	var forceBodyReload = false;
 
 	module.provider('ngDialog', function () {
 		var defaults = this.defaults = {
@@ -21,7 +22,12 @@
 			plain: false,
 			showClose: true,
 			closeByDocument: true,
-			closeByEscape: true
+			closeByEscape: true,
+			appendTo: false
+		};
+
+		this.setForceBodyReload = function (_useIt) {
+			forceBodyReload = _useIt || false;
 		};
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
@@ -29,6 +35,11 @@
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window',
 			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window) {
 				var $body = $document.find('body');
+				if (defaults.forceBodyReload) {
+					$rootScope.$on('$locationChangeSuccess', function () {
+						$body = $document.find('body');
+					});
+				}
 
 				var privateMethods = {
 					onDocumentKeydown: function (event) {
@@ -38,7 +49,7 @@
 					},
 
 					setBodyPadding: function (width) {
-						var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10)
+						var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10);
 						$body.css('padding-right', (originalBodyPadding + width) + 'px');
 						$body.data('ng-dialog-original-padding', originalBodyPadding);
 					},
@@ -128,7 +139,7 @@
 						defers[self.latestID] = defer = $q.defer();
 
 						var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
-						var $dialog;
+						var $dialog, $dialogParent;
 
 						$q.when(loadTemplate(options.template)).then(function (template) {
 							template = angular.isString(template) ?
@@ -158,19 +169,26 @@
 								scope.ngDialogData = options.data.replace(/^\s*/, '')[0] === '{' ? angular.fromJson(options.data) : options.data;
 							}
 
+							if (options.appendTo && angular.isString(options.appendTo)) {
+								$dialogParent = angular.element(document.querySelector(options.appendTo));
+							} else {
+								$dialogParent = $body;
+							}
+
 							scope.closeThisDialog = function() {
 								privateMethods.closeDialog($dialog);
 							};
 
 							$timeout(function () {
 								$compile($dialog)(scope);
+
 								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
 								$body.addClass('ngdialog-open');
 								var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
 								if (scrollBarWidth > 0) {
 									privateMethods.setBodyPadding(scrollBarWidth);
 								}
-								$body.append($dialog);
+								$dialogParent.append($dialog);
 
 								$rootScope.$broadcast('ngDialog.opened', $dialog);
 							});

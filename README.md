@@ -134,8 +134,11 @@ This will close all open modals if there several of them open at the same time.
 
 ##### ``closeByDocument {Boolean}``
 
-It allows to close modals by clicking on overlay background, default ``true``.
-If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
+It allows to close modals by clicking on overlay background, default ``true``. If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
+
+##### ``appendTo {String}``
+
+Specify your element where to append dialog instance, accepts selector string (e.g. ``#yourId``, ``.yourClass``). If not specified appends dialog to ``body`` as default behavior.
 
 ### Returns:
 
@@ -204,6 +207,20 @@ Method accepts dialog's ``id`` as string argument to close specific dialog windo
 ### ``.closeAll()``
 
 Method manages closing all active modals on the page.
+
+===
+
+### ``.setForceBodyReload({Boolean})``
+
+Adds additional listener on every ``$locationChangeSuccess`` event and gets update version of ``body`` into dialog. Maybe useful in some rare cases when you're dependant on DOM changes, defaults to ``false``. Use it in module's config as provider instance:
+
+```javascript
+var app = angular.module('exampleApp', ['ngDialog']);
+
+app.config(function (ngDialogProvider) {
+	ngDialogProvider.setForceBodyReload(true);
+});
+```
 
 ## Directive
 
