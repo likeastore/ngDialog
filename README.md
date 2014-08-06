@@ -92,9 +92,9 @@ ngDialog.open({
 </script>
 ```
 
-##### ``scope.closeThisDialog()``
+##### ``scope.closeThisDialog(value)``
 
-In addition ``.closeThisDialog()`` method get injected to passed ``$scope``. This allows you to close dialog straight from handler in a popup element, for example:
+In addition ``.closeThisDialog(value)`` method gets injected to passed ``$scope``. This allows you to close dialog straight from handler in a popup element, for example:
 
 ```html
 <div class="dialog-contents">
@@ -102,6 +102,8 @@ In addition ``.closeThisDialog()`` method get injected to passed ``$scope``. Thi
 	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog()"/>
 </div>
 ```
+
+Any value passed to this function will be attached to the object which resolves on the close promise for this dialog.
 
 ##### ``data {String}``
 
@@ -154,7 +156,7 @@ This is a function which will close the dialog which was opened by the current c
 
 ##### ``closePromise {Promise}``
 
-A promise which will resolve when the dialog is closed. It is resolved with an object containing: ``id`` - the ID of the closed dialog, ``$dialog`` - the dialog element which at this point has been removed from the DOM and ``remainingDialogs`` - the number of dialogs still open.
+A promise which will resolve when the dialog is closed. It is resolved with an object containing: ``id`` - the ID of the closed dialog, ``value`` - any value passed to `closeThisDialog` in the scope, ``$dialog`` - the dialog element which at this point has been removed from the DOM and ``remainingDialogs`` - the number of dialogs still open.
 
 This allows you do to something like this:
 

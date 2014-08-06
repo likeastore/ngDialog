@@ -63,7 +63,7 @@
 						}
 					},
 
-					closeDialog: function ($dialog) {
+					closeDialog: function ($dialog, value) {
 						var id = $dialog.attr('id');
 						if (typeof window.Hammer !== 'undefined') {
 							window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
@@ -99,6 +99,7 @@
 						if (defers[id]) {
 							defers[id].resolve({
 								id: id,
+								value: value,
 								$dialog: $dialog,
 								remainingDialogs: dialogsCount
 							});
@@ -174,8 +175,8 @@
 								$dialogParent = $body;
 							}
 
-							scope.closeThisDialog = function() {
-								privateMethods.closeDialog($dialog);
+							scope.closeThisDialog = function (value) {
+								privateMethods.closeDialog($dialog, value);
 							};
 
 							$timeout(function () {
