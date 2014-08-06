@@ -22,7 +22,8 @@
 			plain: false,
 			showClose: true,
 			closeByDocument: true,
-			closeByEscape: true
+			closeByEscape: true,
+			appendTo: false
 		};
 
 		this.setForceBodyReload = function (_useIt) {
@@ -167,10 +168,9 @@
 								scope.ngDialogData = options.data.replace(/^\s*/, '')[0] === '{' ? angular.fromJson(options.data) : options.data;
 							}
 
-							if (options.id && angular.isString(options.id)) {
-								$dialogParent = angular.element(document.querySelector('#' + options.id));
-							}
-							else {
+							if (options.appendTo && angular.isString(options.appendTo)) {
+								$dialogParent = angular.element(document.querySelector(options.appendTo));
+							} else {
 								$dialogParent = $body;
 							}
 
