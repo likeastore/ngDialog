@@ -54,6 +54,17 @@
 		</div>
 	</script>
 
+	<script type="text/ng-template" id="withInlineController">
+		<div class="ngdialog-message">
+			<h3>ngDialog template</h3>
+			<p ng-show="theme">Test content for <code>{{theme}}</code></p>
+			<p ng-show="exampleExternalData">Example data from external service: <code>{{exampleExternalData}}</code></p>
+		</div>
+		<div class="ngdialog-buttons">
+			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close</button>
+		</div>
+	</script>
+
 	<script type="text/ng-template" id="secondDialogId">
 		<h3><a href="" ng-click="closeSecond()">Close all by click here!</a></h3>
 	</script>
@@ -118,22 +129,20 @@
 				$rootScope.theme = 'ngdialog-theme-plain';
 
 				ngDialog.open({
-					template: 'firstDialogId',
-					controller: ['$scope', 'ngDialog', function ($scope, ngDialog) {
-						$scope.dialogModel = {
-							message : 'message from passed scope'
-						};
-						$scope.openSecond = function () {
-							ngDialog.open({
-								template: '<h3><a href="" ng-click="closeSecond()">Close all by click here!</a></h3>',
-								plain: true,
-								closeByEscape: false,
-								controller: 'SecondModalCtrl'
-							});
-						};
+					template: 'withInlineController',
+					controller: ['$scope', '$timeout', function ($scope, $timeout) {
+						var counter = 0;
+						var timeout;
+						function count() {
+							$scope.exampleExternalData = 'Counter ' + (counter++);
+							timeout = $timeout(count, 450);
+						}
+						count();
+						$scope.$on('$destroy', function () {
+							$timeout.cancel(timeout);
+						});
 					}],
-					className: 'ngdialog-theme-plain',
-					closeByDocument: false
+					className: 'ngdialog-theme-plain'
 				});
 			};
 
