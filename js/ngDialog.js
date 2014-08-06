@@ -267,8 +267,11 @@
 						};
 
 						var openResult = publicMethods.open(options);
-						openResult.closePromise.then(function () {
-							defer.reject();
+						openResult.closePromise.then(function (data) {
+							if (data)
+								defer.reject(data.value);
+							else
+								defer.reject();
 						});
 
 						return defer.promise;

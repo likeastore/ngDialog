@@ -99,11 +99,11 @@ In addition ``.closeThisDialog(value)`` method gets injected to passed ``$scope`
 ```html
 <div class="dialog-contents">
 	<input type="text"/>
-	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog()"/>
+	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog('Some value')"/>
 </div>
 ```
 
-Any value passed to this function will be attached to the object which resolves on the close promise for this dialog.
+Any value passed to this function will be attached to the object which resolves on the close promise for this dialog. For dialogs opened with the ``openConfirm()`` method the value is used as the reject reason.
 
 ##### ``data {String}``
 
@@ -196,7 +196,7 @@ The function accepts a single optional parameter which is used as the value of t
 
 ### Returns:
 
-An Angular promise object that is resolved if the ``.confirm()`` function is used to close the dialog, otherwise the promise is rejected.
+An Angular promise object that is resolved if the ``.confirm()`` function is used to close the dialog, otherwise the promise is rejected. The resolve value and the reject reason is defined by the value passed to the ``confirm()`` or ``closeThisDialog()`` call respectively.
 
 ===
 
