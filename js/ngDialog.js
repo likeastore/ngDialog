@@ -202,7 +202,7 @@
 								var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
 
 								if (isOverlay || isCloseBtn) {
-									publicMethods.close($dialog.attr('id'), '$document');
+									publicMethods.close($dialog.attr('id'), isCloseBtn ? '$closeButton' : '$document');
 								}
 							};
 
