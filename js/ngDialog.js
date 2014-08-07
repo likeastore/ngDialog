@@ -44,7 +44,7 @@
 				var privateMethods = {
 					onDocumentKeydown: function (event) {
 						if (event.keyCode === 27) {
-							publicMethods.close();
+							publicMethods.close('$escape');
 						}
 					},
 
@@ -202,7 +202,7 @@
 								var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
 
 								if (isOverlay || isCloseBtn) {
-									publicMethods.close($dialog.attr('id'));
+									publicMethods.close($dialog.attr('id'), '$document');
 								}
 							};
 
@@ -220,8 +220,8 @@
 						return {
 							id: 'ngdialog' + globalID,
 							closePromise: defer.promise,
-							close: function() {
-								privateMethods.closeDialog($dialog);
+							close: function(value) {
+								privateMethods.closeDialog($dialog, value);
 							}
 						};
 
@@ -263,7 +263,7 @@
 						options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
 						options.scope.confirm = function (value) {
 							defer.resolve(value);
-							openResult.close();
+							openResult.close(value);
 						};
 
 						var openResult = publicMethods.open(options);
@@ -281,23 +281,23 @@
 					 * @param {String} id
 					 * @return {Object} dialog
 					 */
-					close: function (id) {
+					close: function (id, value) {
 						var $dialog = $el(document.getElementById(id));
 
 						if ($dialog.length) {
-							privateMethods.closeDialog($dialog);
+							privateMethods.closeDialog($dialog, value);
 						} else {
-							publicMethods.closeAll();
+							publicMethods.closeAll(value);
 						}
 
 						return publicMethods;
 					},
 
-					closeAll: function () {
+					closeAll: function (value) {
 						var $all = document.querySelectorAll('.ngdialog');
 
 						angular.forEach($all, function (dialog) {
-							privateMethods.closeDialog($el(dialog));
+							privateMethods.closeDialog($el(dialog), value);
 						});
 					}
 				};
