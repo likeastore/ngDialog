@@ -87,6 +87,18 @@
 	<script>
 		var app = angular.module('exampleDialog', ['ngDialog']);
 
+		// Example of how to set default values for all dialogs
+		app.config(['ngDialogProvider', function (ngDialogProvider) {
+			ngDialogProvider.setDefaults({
+				className: 'ngdialog-theme-default',
+				plain: false,
+				showClose: true,
+				closeByDocument: true,
+				closeByEscape: true,
+				appendTo: false
+			});
+		}]);
+
 		app.controller('MainCtrl', function ($scope, $rootScope, ngDialog) {
 			$rootScope.jsonData = '{"foo": "bar"}';
 			$rootScope.theme = 'ngdialog-theme-default';
