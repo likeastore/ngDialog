@@ -35,7 +35,7 @@
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller',
 			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller) {
 				var $body = $document.find('body');
-				if (defaults.forceBodyReload) {
+				if (forceBodyReload) {
 					$rootScope.$on('$locationChangeSuccess', function () {
 						$body = $document.find('body');
 					});
