@@ -30,6 +30,10 @@
 			forceBodyReload = _useIt || false;
 		};
 
+		this.setDefaults = function (newDefaults) {
+			angular.extend(defaults, newDefaults);
+		};
+
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
 		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller',
