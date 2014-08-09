@@ -1,9 +1,9 @@
-.ngdialog.ngdialog-theme-plain {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog {
   padding-bottom: 160px;
   padding-top: 160px;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-content {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content {
   background: #fff;
   color: #444;
   font-family: 'Helvetica Neue',sans-serif;
@@ -16,26 +16,26 @@
   width: 450px;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-content h1,
-.ngdialog.ngdialog-theme-plain .ngdialog-content h2,
-.ngdialog.ngdialog-theme-plain .ngdialog-content h3,
-.ngdialog.ngdialog-theme-plain .ngdialog-content h4,
-.ngdialog.ngdialog-theme-plain .ngdialog-content h5,
-.ngdialog.ngdialog-theme-plain .ngdialog-content h6,
-.ngdialog.ngdialog-theme-plain .ngdialog-content p,
-.ngdialog.ngdialog-theme-plain .ngdialog-content ul,
-.ngdialog.ngdialog-theme-plain .ngdialog-content li {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content h1,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content h2,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content h3,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content h4,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content h5,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content h6,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content p,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content ul,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-content li {
   color: inherit;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-close {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-close {
   cursor: pointer;
   position: absolute;
   right: 0;
   top: 0;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-close:before {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-close:before {
   background: transparent;
   color: #bbb;
   content: "\00D7";
@@ -50,24 +50,24 @@
   width: 30px;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-close:hover:before,
-.ngdialog.ngdialog-theme-plain .ngdialog-close:active:before {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-close:hover:before,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-close:active:before {
   color: #777;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-message {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-message {
   margin-bottom: .5em;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-input {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input {
   margin-bottom: 1em;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-input textarea,
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="text"],
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="password"],
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="email"],
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="url"] {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input textarea,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="text"],
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="password"],
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="email"],
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="url"] {
   background: #f0f0f0;
   border: 0;
   font-family: inherit;
@@ -79,23 +79,23 @@
   width: 100%;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-input textarea:focus,
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="text"]:focus,
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="password"]:focus,
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="email"]:focus,
-.ngdialog.ngdialog-theme-plain .ngdialog-input input[type="url"]:focus {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input textarea:focus,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="text"]:focus,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="password"]:focus,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="email"]:focus,
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-input input[type="url"]:focus {
   -webkit-box-shadow: inset 0 0 0 2px rgba(0,0,0,0.2);
   box-shadow: inset 0 0 0 2px rgba(0,0,0,0.2);
   outline: none;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-buttons:after {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-buttons:after {
   clear: both;
   content: '';
   display: table;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-button {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-button {
   border: 0;
   cursor: pointer;
   float: right;
@@ -108,25 +108,25 @@
   text-transform: uppercase;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-button:focus {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-button:focus {
   -webkit-animation: ngdialog-pulse 1.1s infinite;
   animation: ngdialog-pulse 1.1s infinite;
   outline: none;
 }
 
 @media (max-width: 568px) {
-  .ngdialog.ngdialog-theme-plain .ngdialog-button:focus {
+  .ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-button:focus {
     -webkit-animation: none;
     animation: none;
   }
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-button.ngdialog-button-primary {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-button.ngdialog-button-primary {
   background: #3288e6;
   color: #fff;
 }
 
-.ngdialog.ngdialog-theme-plain .ngdialog-button.ngdialog-button-secondary {
+.ngdialog-wrapper.ngdialog-theme-plain .ngdialog .ngdialog-button.ngdialog-button-secondary {
   background: #e0e0e0;
   color: #777;
 }
