@@ -157,6 +157,25 @@ It allows to close modals by clicking on overlay background, default ``true``. I
 
 Specify your element where to append dialog instance, accepts selector string (e.g. ``#yourId``, ``.yourClass``). If not specified appends dialog to ``body`` as default behavior.
 
+### Defaults:
+
+##### ``setDefaults(options)``
+
+You're able to set default settings through ``ngDialogProvider``:
+
+```javascript
+var app = angular.module('myApp', ['ngDialog']);
+app.config(['ngDialogProvider', function (ngDialogProvider) {
+	ngDialogProvider.setDefaults({
+		className: 'ngdialog-theme-default',
+		plain: true,
+		showClose: true,
+		closeByDocument: true,
+		closeByEscape: true
+	});
+}]);
+```
+
 ### Returns:
 
 The ``open()`` method returns an object with some useful properties.
