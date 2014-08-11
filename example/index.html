@@ -182,7 +182,8 @@
 
 			$scope.openNotify = function () {
 				var dialog = ngDialog.open({
-					template: '<p>You can do whatever you want when I close, however that happens.</p><button ng-click="closeThisDialog(1)">Close Me</button>',
+					template: '<p>You can do whatever you want when I close, however that happens.</p>' +
+						'<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',
 					plain: true
 				});
 				dialog.closePromise.then(function (data) {
