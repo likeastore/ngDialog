@@ -85,6 +85,7 @@ or
 ngDialog.open({
 	template: 'externalTemplate.html',
 	controller: ['$scope', 'otherService', function($scope, otherService) {
+		// controller logic
 	}]
 });
 ```

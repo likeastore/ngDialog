@@ -163,11 +163,10 @@
 							$dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
 
 							if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
-								var locals = {
+								var controllerInstance = $controller(options.controller, {
 									$scope: scope,
 									$element: $dialog
-								}
-								var controllerInstance = $controller(options.controller, locals);
+								});
 								$dialog.data('$ngDialogControllerController', controllerInstance);
 							}
 
