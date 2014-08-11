@@ -175,7 +175,10 @@
 							}
 
 							if (options.data && angular.isString(options.data)) {
-								scope.ngDialogData = options.data.replace(/^\s*/, '')[0] === '{' ? angular.fromJson(options.data) : options.data;
+								var firstLetter = options.data.replace(/^\s*/, '')[0];
+								scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : options.data;
+							} else if (options.data && angular.isObject(options.data)) {
+								scope.ngDialogData = angular.fromJson(angular.toJson(options.data));
 							}
 
 							if (options.appendTo && angular.isString(options.appendTo)) {

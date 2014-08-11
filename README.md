@@ -68,7 +68,7 @@ ngDialog.open({
 });
 ```
 
-##### ``controller {String} | {array} | {object}``
+##### ``controller {String} | {Array} | {Object}``
 
 Controller that will be used for dialog window if necessary. The controller can be specified either by referring it by name or directly inline.
 
@@ -123,7 +123,7 @@ In addition ``.closeThisDialog(value)`` method gets injected to passed ``$scope`
 
 Any value passed to this function will be attached to the object which resolves on the close promise for this dialog. For dialogs opened with the ``openConfirm()`` method the value is used as the reject reason.
 
-##### ``data {String}``
+##### ``data {String | Object | Array}``
 
 Any data that you want to be stored in controller's ``$parent`` scope, it could be stringified JSON as well.
 
@@ -160,7 +160,7 @@ It allows to close modals by clicking on overlay background, default ``true``. I
 
 Specify your element where to append dialog instance, accepts selector string (e.g. ``#yourId``, ``.yourClass``). If not specified appends dialog to ``body`` as default behavior.
 
-### Defaults:
+### Defaults
 
 ##### ``setDefaults(options)``
 
