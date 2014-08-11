@@ -110,16 +110,18 @@ ngDialog.open({
 </script>
 ```
 
-##### ``scope.closeThisDialog()``
+##### ``scope.closeThisDialog(value)``
 
-In addition ``.closeThisDialog()`` method get injected to passed ``$scope``. This allows you to close dialog straight from handler in a popup element, for example:
+In addition ``.closeThisDialog(value)`` method gets injected to passed ``$scope``. This allows you to close dialog straight from handler in a popup element, for example:
 
 ```html
 <div class="dialog-contents">
 	<input type="text"/>
-	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog()"/>
+	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog('Some value')"/>
 </div>
 ```
+
+Any value passed to this function will be attached to the object which resolves on the close promise for this dialog. For dialogs opened with the ``openConfirm()`` method the value is used as the reject reason.
 
 ##### ``data {String}``
 
@@ -185,13 +187,15 @@ The ``open()`` method returns an object with some useful properties.
 
 This is the ID of the dialog which was just created. It is the ID on the dialog's DOM element.
 
-##### ``close() {Function}``
+##### ``close(value) {Function}``
 
-This is a function which will close the dialog which was opened by the current call to ``open()``.
+This is a function which will close the dialog which was opened by the current call to ``open()``. It takes an optional value to pass to the close promise.
 
 ##### ``closePromise {Promise}``
 
-A promise which will resolve when the dialog is closed. It is resolved with an object containing: ``id`` - the ID of the closed dialog, ``$dialog`` - the dialog element which at this point has been removed from the DOM and ``remainingDialogs`` - the number of dialogs still open.
+A promise which will resolve when the dialog is closed. It is resolved with an object containing: ``id`` - the ID of the closed dialog, ``value`` - the value the dialog was closed with, ``$dialog`` - the dialog element which at this point has been removed from the DOM and ``remainingDialogs`` - the number of dialogs still open.
+
+The value property will be a special string if the dialog is dismissed by one of the built in mechanisms: `'$escape'`, `'$closeButton'` or `'$document'`.
 
 This allows you do to something like this:
 
@@ -231,19 +235,19 @@ The function accepts a single optional parameter which is used as the value of t
 
 ### Returns:
 
-An Angular promise object that is resolved if the ``.confirm()`` function is used to close the dialog, otherwise the promise is rejected.
+An Angular promise object that is resolved if the ``.confirm()`` function is used to close the dialog, otherwise the promise is rejected. The resolve value and the reject reason is defined by the value passed to the ``confirm()`` or ``closeThisDialog()`` call respectively.
 
 ===
 
-### ``.close(id)``
+### ``.close(id, value)``
 
-Method accepts dialog's ``id`` as string argument to close specific dialog window, if ``id`` is not specified it will close all currently active modals (same behavior as ``.closeAll()``).
+Method accepts dialog's ``id`` as string argument to close specific dialog window, if ``id`` is not specified it will close all currently active modals (same behavior as ``.closeAll()``). Takes an optional value to resolve the dialog promise with (or all dialog promises).
 
 ===
 
-### ``.closeAll()``
+### ``.closeAll(value)``
 
-Method manages closing all active modals on the page.
+Method manages closing all active modals on the page. Takes an optional value to resolve all of the dialog promises with.
 
 ===
 

@@ -77,7 +77,7 @@
 		</div>
 		<div class="ngdialog-buttons">
 			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(confirmValue)">Confirm</button>
-			<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()">Cancel</button>
+			<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
 		</div>
 	</script>
 
@@ -120,9 +120,9 @@
 					template: 'modalDialogId',
 					className: 'ngdialog-theme-default'
 				}).then(function (value) {
-					console.log('Modal promise resolved.', value);
-				}, function () {
-					console.log('Modal promise rejected.');
+					console.log('Modal promise resolved. Value: ', value);
+				}, function (reason) {
+					console.log('Modal promise rejected. Reason: ', reason);
 				});
 			};
 
@@ -182,11 +182,12 @@
 
 			$scope.openNotify = function () {
 				var dialog = ngDialog.open({
-					template: '<p>You can do whatever you want when I close, however that happens.</p>',
+					template: '<p>You can do whatever you want when I close, however that happens.</p>' +
+						'<div class="ngdialog-buttons"><button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog(1)">Close Me</button></div>',
 					plain: true
 				});
 				dialog.closePromise.then(function (data) {
-					console.log('ngDialog closed and notified by promise: ' + data.id);
+					console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
 				});
 			};
 
