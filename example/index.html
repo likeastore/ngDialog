@@ -31,6 +31,7 @@
 
 	<a href="" ng-click="openDefault()">Default theme</a>
 	<a href="" ng-click="openPlain()">Plain theme</a>
+	<a href="" ng-click="openInlineController()">Inline controller</a>
 	<a href="" ng-click="openTemplate()">Open with external template for modal</a>
 	<a href="" ng-click="openTimed()">Open and use return value to close later</a>
 	<a href="" ng-click="openNotify()">Open and use promise to know when closed</a>
@@ -50,6 +51,17 @@
 				ng-dialog-controller="SecondModalCtrl"
 				ng-dialog-close-previous>Close and open</button>
 			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
+		</div>
+	</script>
+
+	<script type="text/ng-template" id="withInlineController">
+		<div class="ngdialog-message">
+			<h3>ngDialog template</h3>
+			<p ng-show="theme">Test content for <code>{{theme}}</code></p>
+			<p ng-show="exampleExternalData">Example data from external service: <code>{{exampleExternalData}}</code></p>
+		</div>
+		<div class="ngdialog-buttons">
+			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close</button>
 		</div>
 	</script>
 
@@ -122,6 +134,27 @@
 					controller: 'InsideCtrl',
 					className: 'ngdialog-theme-plain',
 					closeByDocument: false
+				});
+			};
+
+			$scope.openInlineController = function () {
+				$rootScope.theme = 'ngdialog-theme-plain';
+
+				ngDialog.open({
+					template: 'withInlineController',
+					controller: ['$scope', '$timeout', function ($scope, $timeout) {
+						var counter = 0;
+						var timeout;
+						function count() {
+							$scope.exampleExternalData = 'Counter ' + (counter++);
+							timeout = $timeout(count, 450);
+						}
+						count();
+						$scope.$on('$destroy', function () {
+							$timeout.cancel(timeout);
+						});
+					}],
+					className: 'ngdialog-theme-plain'
 				});
 			};
 

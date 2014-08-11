@@ -36,8 +36,8 @@
 
 		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
-		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window',
-			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window) {
+		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller',
+			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller) {
 				var $body = $document.find('body');
 				if (forceBodyReload) {
 					$rootScope.$on('$locationChangeSuccess', function () {
@@ -91,6 +91,7 @@
 									$body.removeClass('ngdialog-open');
 									privateMethods.resetBodyPadding();
 								}
+								$rootScope.$broadcast('ngDialog.closed', $dialog);
 							}).addClass('ngdialog-closing');
 						} else {
 							$dialog.scope().$destroy();
@@ -99,6 +100,7 @@
 								$body.removeClass('ngdialog-open');
 								privateMethods.resetBodyPadding();
 							}
+							$rootScope.$broadcast('ngDialog.closed', $dialog);
 						}
 						if (defers[id]) {
 							defers[id].resolve({
@@ -108,7 +110,6 @@
 							});
 							delete defers[id];
 						}
-						$rootScope.$broadcast('ngDialog.closed', $dialog);
 					}
 				};
 
@@ -160,8 +161,12 @@
 							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
 							$dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
 
-							if (options.controller && angular.isString(options.controller)) {
-								$dialog.attr('ng-controller', options.controller);
+							if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
+								var controllerInstance = $controller(options.controller, {
+									$scope: scope,
+									$element: $dialog
+								});
+								$dialog.data('$ngDialogControllerController', controllerInstance);
 							}
 
 							if (options.className) {

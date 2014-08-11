@@ -68,9 +68,27 @@ ngDialog.open({
 });
 ```
 
-##### ``controller {String}``
+##### ``controller {String} | {array} | {object}``
 
-Name of controller that will be used for dialog window if necessary.
+Controller that will be used for dialog window if necessary. The controller can be specified either by referring it by name or directly inline.
+
+```javascript
+ngDialog.open({
+	template: 'externalTemplate.html',
+	controller: 'SomeController'
+});
+```
+
+or
+
+```javascript
+ngDialog.open({
+	template: 'externalTemplate.html',
+	controller: ['$scope', 'otherService', function($scope, otherService) {
+		// controller logic
+	}]
+});
+```
 
 ##### ``scope {Object}``
 
