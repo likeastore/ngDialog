@@ -169,6 +169,13 @@
 								});
 								$dialog.data('$ngDialogControllerController', controllerInstance);
 							}
+							
+							//if there are multiple dialogs opened it will be easy to have identity of a dialog
+							//for eg:
+							//$scope.$on('ngDialog.opened', function ($dialog) { if($dialog.name == "") { //do something}}
+							if (options.name) {
+							    $dialog.attr('name', options.name);
+							}
 
 							if (options.className) {
 								$dialog.addClass(options.className);
