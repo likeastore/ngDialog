@@ -201,7 +201,19 @@
 									privateMethods.setBodyPadding(scrollBarWidth);
 								}
 								$dialogParent.append($dialog);
-								$rootScope.$broadcast('ngDialog.opened', $dialog);
+								
+								//To be able to identify a dialog when multiple dialogs are opened
+								// for eg:
+								// $scope.$on('ngDialog.opened', function ($dialogElement, $dialogProps) {
+								//     if($dialogProps.name == 'showProgress') {
+								//     }
+								//});
+								if (options.name) {
+								    $rootScope.$broadcast('ngDialog.opened',
+                                        				{ dialog: $dialog, name: options.name });
+								} else {
+								    $rootScope.$broadcast('ngDialog.opened', $dialog);
+								}
 							});
 
 							if (options.closeByEscape) {
