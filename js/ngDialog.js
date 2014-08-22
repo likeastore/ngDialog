@@ -161,6 +161,13 @@
 
 							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
 							$dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
+							
+							if (options.data && angular.isString(options.data)) {
+								var firstLetter = options.data.replace(/^\s*/, '')[0];
+								scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : options.data;
+							} else if (options.data && angular.isObject(options.data)) {
+								scope.ngDialogData = angular.fromJson(angular.toJson(options.data));
+							}
 
 							if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
 								var controllerInstance = $controller(options.controller, {
@@ -172,13 +179,6 @@
 
 							if (options.className) {
 								$dialog.addClass(options.className);
-							}
-
-							if (options.data && angular.isString(options.data)) {
-								var firstLetter = options.data.replace(/^\s*/, '')[0];
-								scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : options.data;
-							} else if (options.data && angular.isObject(options.data)) {
-								scope.ngDialogData = angular.fromJson(angular.toJson(options.data));
 							}
 
 							if (options.appendTo && angular.isString(options.appendTo)) {
