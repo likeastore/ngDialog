@@ -68,7 +68,15 @@
 					},
 
 					closeDialog: function ($dialog, value) {
-						var id = $dialog.attr('id');
+						var id = $dialog.attr('id'),
+                            preCloseCallback = $dialog.data('$ngDialogPreCloseCallback');
+
+                        if(preCloseCallback && angular.isFunction(preCloseCallback)) {
+                            if(preCloseCallback.call($dialog, value) === false) {
+                                return;
+                            }
+                        }
+
 						if (typeof window.Hammer !== 'undefined') {
 							window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
 						} else {
@@ -186,6 +194,28 @@
 							} else {
 								$dialogParent = $body;
 							}
+
+                            if(options.preCloseCallback) {
+                                var preCloseCallback = null;
+
+                                if(angular.isFunction(options.preCloseCallback)) {
+                                    preCloseCallback = options.preCloseCallback;
+                                } else if(angular.isString(options.preCloseCallback)) {
+                                    if(scope) {
+                                        if(angular.isFunction(scope[options.preCloseCallback])) {
+                                            preCloseCallback = scope[options.preCloseCallback];
+                                        } else if(scope.$parent && angular.isFunction(scope.$parent[options.preCloseCallback])) {
+                                            preCloseCallback = scope.$parent[options.preCloseCallback];
+                                        } else if($rootScope && angular.isFunction($rootScope[options.preCloseCallback])) {
+                                            preCloseCallback = $rootScope[options.preCloseCallback];
+                                        }
+                                    }
+                                }
+
+                                if(preCloseCallback) {
+                                    $dialog.data('$ngDialogPreCloseCallback', preCloseCallback);
+                                }
+                            }
 
 							scope.closeThisDialog = function (value) {
 								privateMethods.closeDialog($dialog, value);
@@ -338,7 +368,8 @@
 						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
-						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true
+						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true,
+                        preCloseCallback: attrs.ngDialogPreCloseCallback
 					});
 				});
 			}
