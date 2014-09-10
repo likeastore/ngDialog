@@ -169,6 +169,13 @@
 								scope.ngDialogData = angular.fromJson(angular.toJson(options.data));
 							}
 
+                            if (options.data && angular.isString(options.data)) {
+                                var firstLetter = options.data.replace(/^\s*/, '')[0];
+                                scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : options.data;
+                            } else if (options.data && angular.isObject(options.data)) {
+                                scope.ngDialogData = angular.fromJson(angular.toJson(options.data));
+                            }
+
 							if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
 								var controllerInstance = $controller(options.controller, {
 									$scope: scope,

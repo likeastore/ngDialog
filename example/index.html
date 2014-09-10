@@ -58,6 +58,7 @@
 		<div class="ngdialog-message">
 			<h3>ngDialog template</h3>
 			<p ng-show="theme">Test content for <code>{{theme}}</code></p>
+			<p ng-show="item">Test content for <code>{{item}}</code></p>
 			<p ng-show="exampleExternalData">Example data from external service: <code>{{exampleExternalData}}</code></p>
 		</div>
 		<div class="ngdialog-buttons">
@@ -142,6 +143,11 @@
 
 				ngDialog.open({
 					template: 'withInlineController',
+                    data: {
+                        item: {
+                            name: "This is a test."
+                        }
+                    },
 					controller: ['$scope', '$timeout', function ($scope, $timeout) {
 						var counter = 0;
 						var timeout;
@@ -150,6 +156,9 @@
 							timeout = $timeout(count, 450);
 						}
 						count();
+
+                        $scope.item = $scope.ngDialogData.item;
+
 						$scope.$on('$destroy', function () {
 							$timeout.cancel(timeout);
 						});
