@@ -67,59 +67,81 @@
 						}
 					},
 
-					closeDialog: function ($dialog, value) {
-						var id = $dialog.attr('id'),
+                    performCloseDialog: function ($dialog, value) {
+                        var id = $dialog.attr('id');
+
+                        if (typeof window.Hammer !== 'undefined') {
+                            window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
+                        } else {
+                            $dialog.unbind('click');
+                        }
+
+                        if (dialogsCount === 1) {
+                            $body.unbind('keydown');
+                        }
+
+                        if (!$dialog.hasClass("ngdialog-closing")){
+                            dialogsCount -= 1;
+                        }
+
+                        if (animationEndSupport) {
+                            $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
+                                $dialog.scope().$destroy();
+                                $dialog.remove();
+                                if (dialogsCount === 0) {
+                                    $body.removeClass('ngdialog-open');
+                                    privateMethods.resetBodyPadding();
+                                }
+                                $rootScope.$broadcast('ngDialog.closed', $dialog);
+                            }).addClass('ngdialog-closing');
+                        } else {
+                            $dialog.scope().$destroy();
+                            $dialog.remove();
+                            if (dialogsCount === 0) {
+                                $body.removeClass('ngdialog-open');
+                                privateMethods.resetBodyPadding();
+                            }
+                            $rootScope.$broadcast('ngDialog.closed', $dialog);
+                        }
+                        if (defers[id]) {
+                            defers[id].resolve({
+                                id: id,
+                                value: value,
+                                $dialog: $dialog,
+                                remainingDialogs: dialogsCount
+                            });
+                            delete defers[id];
+                        }
+                    },
+
+                    closeDialog: function ($dialog, value) {
+                        var id = $dialog.attr('id'),
                             preCloseCallback = $dialog.data('$ngDialogPreCloseCallback');
 
                         if(preCloseCallback && angular.isFunction(preCloseCallback)) {
-                            if(preCloseCallback.call($dialog, value) === false) {
-                                return;
+
+                            var preCloseCallbackResult = preCloseCallback.call($dialog, value);
+
+                            if(angular.isObject(preCloseCallbackResult)) {
+                                if(preCloseCallbackResult.closePromise) {
+                                    preCloseCallbackResult.closePromise.then(function(){
+                                        privateMethods.performCloseDialog($dialog, value);
+                                    });
+                                } else {
+                                    preCloseCallbackResult.then(function(){
+                                        privateMethods.performCloseDialog($dialog, value);
+                                    }, function(){
+                                        return;
+                                    });
+                                }
+                            } else if(preCloseCallbackResult !== false) {
+                                privateMethods.performCloseDialog($dialog, value);
                             }
+                        } else {
+                            privateMethods.performCloseDialog($dialog, value);
                         }
+                    }
 
-						if (typeof window.Hammer !== 'undefined') {
-							window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
-						} else {
-							$dialog.unbind('click');
-						}
-
-						if (dialogsCount === 1) {
-							$body.unbind('keydown');
-						}
-
-						if (!$dialog.hasClass("ngdialog-closing")){
-							dialogsCount -= 1;
-						}
-
-						if (animationEndSupport) {
-							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
-								$dialog.scope().$destroy();
-								$dialog.remove();
-								if (dialogsCount === 0) {
-									$body.removeClass('ngdialog-open');
-									privateMethods.resetBodyPadding();
-								}
-								$rootScope.$broadcast('ngDialog.closed', $dialog);
-							}).addClass('ngdialog-closing');
-						} else {
-							$dialog.scope().$destroy();
-							$dialog.remove();
-							if (dialogsCount === 0) {
-								$body.removeClass('ngdialog-open');
-								privateMethods.resetBodyPadding();
-							}
-							$rootScope.$broadcast('ngDialog.closed', $dialog);
-						}
-						if (defers[id]) {
-							defers[id].resolve({
-								id: id,
-								value: value,
-								$dialog: $dialog,
-								remainingDialogs: dialogsCount
-							});
-							delete defers[id];
-						}
-					}
 				};
 
 				var publicMethods = {
@@ -134,6 +156,7 @@
 					 * - showClose {Boolean} - show close button, default true
 					 * - closeByEscape {Boolean} - default true
 					 * - closeByDocument {Boolean} - default true
+					 * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set)
 					 *
 					 * @return {Object} dialog
 					 */
@@ -289,6 +312,7 @@
 					 * - showClose {Boolean} - show close button, default true
 					 * - closeByEscape {Boolean} - default false
 					 * - closeByDocument {Boolean} - default false
+					 * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set); not called on confirm
 					 *
 					 * @return {Object} dialog
 					 */
@@ -304,11 +328,12 @@
 						options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
 						options.scope.confirm = function (value) {
 							defer.resolve(value);
-							openResult.close(value);
-						};
+                            var $dialog = $el(document.getElementById(openResult.id));
+                            privateMethods.performCloseDialog($dialog, value);
+                        };
 
 						var openResult = publicMethods.open(options);
-						openResult.closePromise.then(function (data) {
+                        openResult.closePromise.then(function (data) {
 							if (data) {
 								return defer.reject(data.value);
 							}
