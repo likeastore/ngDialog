@@ -98,3 +98,52 @@
 body.ngdialog-open {
   overflow: hidden;
 }
+
+.ngdialog-buttons-container {
+  height: 60px;
+  line-height: 60px;
+  display: block;
+}
+
+.ngdialog-buttons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ngdialog-buttons li {
+  float: right;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.ngdialog-roller {
+  width: 1000px;
+  position: absolute;
+  top: 15%;
+  left: -75%;
+  transform-origin: bottom left;
+}
+
+.ngdialog-roller {
+  -webkit-animation: ngdialog-roller-move 1s 1s ease-out forwards;
+  animation: ngdialog-roller-move 1s 1s ease-out forwards;
+  -webkit-animation-duration: 10s;
+  animation-duration: 10s;
+}
+@-webkit-keyframes ngdialog-roller-move {
+  100% {
+    left: 100%;
+    transform: scale(2);
+  }
+}
+@keyframes ngdialog-roller-move {
+  100% {
+    left:100%;
+    transform: scale(2);
+  }
+}
+

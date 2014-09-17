@@ -5,344 +5,406 @@
  */
 
 (function (window, angular, undefined) {
-	'use strict';
+  'use strict';
 
-	var module = angular.module('ngDialog', []);
+  var module = angular.module('ngDialog', []);
 
-	var $el = angular.element;
-	var isDef = angular.isDefined;
-	var style = (document.body || document.documentElement).style;
-	var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
-	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
-	var forceBodyReload = false;
+  var $el = angular.element;
+  var isDef = angular.isDefined;
+  var style = (document.body || document.documentElement).style;
+  var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
+  var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
+  var forceBodyReload = false;
 
-	module.provider('ngDialog', function () {
-		var defaults = this.defaults = {
-			className: 'ngdialog-theme-default',
-			plain: false,
-			showClose: true,
-			closeByDocument: true,
-			closeByEscape: true,
-			appendTo: false
-		};
+  module.provider('ngDialog', function () {
+    var defaults = this.defaults = {
+      className: 'ngdialog-theme-default',
+      plain: false,
+      showClose: true,
+      closeByDocument: true,
+      closeByEscape: true,
+      appendTo: false
+    };
 
-		this.setForceBodyReload = function (_useIt) {
-			forceBodyReload = _useIt || false;
-		};
+    this.setForceBodyReload = function (_useIt) {
+      forceBodyReload = _useIt || false;
+    };
 
-		this.setDefaults = function (newDefaults) {
-			angular.extend(defaults, newDefaults);
-		};
+    this.setDefaults = function (newDefaults) {
+      angular.extend(defaults, newDefaults);
+    };
 
-		var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
+    var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
-		this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller',
-			function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller) {
-				var $body = $document.find('body');
-				if (forceBodyReload) {
-					$rootScope.$on('$locationChangeSuccess', function () {
-						$body = $document.find('body');
-					});
-				}
+    this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller',
+      function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller) {
+        var $body = $document.find('body');
+        if (forceBodyReload) {
+          $rootScope.$on('$locationChangeSuccess', function () {
+            $body = $document.find('body');
+          });
+        }
 
-				var privateMethods = {
-					onDocumentKeydown: function (event) {
-						if (event.keyCode === 27) {
-							publicMethods.close('$escape');
-						}
-					},
+        var privateMethods = {
+          onDocumentKeydown: function (event) {
+            if (event.keyCode === 27) {
+              publicMethods.close('$escape');
+            }
+          },
 
-					setBodyPadding: function (width) {
-						var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10);
-						$body.css('padding-right', (originalBodyPadding + width) + 'px');
-						$body.data('ng-dialog-original-padding', originalBodyPadding);
-					},
+          setBodyPadding: function (width) {
+            var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10);
+            $body.css('padding-right', (originalBodyPadding + width) + 'px');
+            $body.data('ng-dialog-original-padding', originalBodyPadding);
+          },
 
-					resetBodyPadding: function () {
-						var originalBodyPadding = $body.data('ng-dialog-original-padding');
-						if (originalBodyPadding) {
-							$body.css('padding-right', originalBodyPadding + 'px');
-						} else {
-							$body.css('padding-right', '');
-						}
-					},
+          resetBodyPadding: function () {
+            var originalBodyPadding = $body.data('ng-dialog-original-padding');
+            if (originalBodyPadding) {
+              $body.css('padding-right', originalBodyPadding + 'px');
+            } else {
+              $body.css('padding-right', '');
+            }
+          },
 
-					closeDialog: function ($dialog, value) {
-						var id = $dialog.attr('id');
-						if (typeof window.Hammer !== 'undefined') {
-							window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
-						} else {
-							$dialog.unbind('click');
-						}
+          closeDialog: function ($dialog, value) {
+            var id = $dialog.attr('id');
+            if (typeof window.Hammer !== 'undefined') {
+              window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
+            } else {
+              $dialog.unbind('click');
+            }
 
-						if (dialogsCount === 1) {
-							$body.unbind('keydown');
-						}
+            if (dialogsCount === 1) {
+              $body.unbind('keydown');
+            }
 
-						if (!$dialog.hasClass("ngdialog-closing")){
-							dialogsCount -= 1;
-						}
+            if (!$dialog.hasClass("ngdialog-closing")) {
+              dialogsCount -= 1;
+            }
 
-						if (animationEndSupport) {
-							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
-								$dialog.scope().$destroy();
-								$dialog.remove();
-								if (dialogsCount === 0) {
-									$body.removeClass('ngdialog-open');
-									privateMethods.resetBodyPadding();
-								}
-								$rootScope.$broadcast('ngDialog.closed', $dialog);
-							}).addClass('ngdialog-closing');
-						} else {
-							$dialog.scope().$destroy();
-							$dialog.remove();
-							if (dialogsCount === 0) {
-								$body.removeClass('ngdialog-open');
-								privateMethods.resetBodyPadding();
-							}
-							$rootScope.$broadcast('ngDialog.closed', $dialog);
-						}
-						if (defers[id]) {
-							defers[id].resolve({
-								id: id,
-								value: value,
-								$dialog: $dialog,
-								remainingDialogs: dialogsCount
-							});
-							delete defers[id];
-						}
-					}
-				};
+            if (animationEndSupport) {
+              $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
+                $dialog.scope().$destroy();
+                $dialog.remove();
+                if (dialogsCount === 0) {
+                  $body.removeClass('ngdialog-open');
+                  privateMethods.resetBodyPadding();
+                }
+                $rootScope.$broadcast('ngDialog.closed', $dialog);
+              }).addClass('ngdialog-closing');
+            } else {
+              $dialog.scope().$destroy();
+              $dialog.remove();
+              if (dialogsCount === 0) {
+                $body.removeClass('ngdialog-open');
+                privateMethods.resetBodyPadding();
+              }
+              $rootScope.$broadcast('ngDialog.closed', $dialog);
+            }
+            if (defers[id]) {
+              defers[id].resolve({
+                id: id,
+                value: value,
+                $dialog: $dialog,
+                remainingDialogs: dialogsCount
+              });
+              delete defers[id];
+            }
+          }
+        };
 
-				var publicMethods = {
+        var publicMethods = {
 
-					/*
-					 * @param {Object} options:
-					 * - template {String} - id of ng-template, url for partial, plain string (if enabled)
-					 * - plain {Boolean} - enable plain string templates, default false
-					 * - scope {Object}
-					 * - controller {String}
-					 * - className {String} - dialog theme class
-					 * - showClose {Boolean} - show close button, default true
-					 * - closeByEscape {Boolean} - default true
-					 * - closeByDocument {Boolean} - default true
-					 *
-					 * @return {Object} dialog
-					 */
-					open: function (opts) {
-						var self = this;
-						var options = angular.copy(defaults);
+          getNext: function (options) {
+            var self = this;
 
-						opts = opts || {};
-						angular.extend(options, opts);
+          },
 
-						globalID += 1;
+          /*
+           * @param {Object} options:
+           * - template {String} - id of ng-template, url for partial, plain string (if enabled)
+           * - plain {Boolean} - enable plain string templates, default false
+           * - scope {Object}
+           * - controller {String}
+           * - className {String} - dialog theme class
+           * - showClose {Boolean} - show close button, default true
+           * - closeByEscape {Boolean} - default true
+           * - closeByDocument {Boolean} - default true
+           *
+           * @return {Object} dialog
+           */
+          open: function (opts) {
 
-						self.latestID = 'ngdialog' + globalID;
+            var self = this;
+            var options = angular.copy(defaults);
 
-						var defer;
-						defers[self.latestID] = defer = $q.defer();
+            function loadTemplate(tmpl) {
+              if (!tmpl) {
+                return 'Empty template';
+              }
 
-						var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
-						var $dialog, $dialogParent;
+              if (angular.isString(tmpl) && options.plain) {
+                return tmpl;
+              }
 
-						$q.when(loadTemplate(options.template)).then(function (template) {
-							template = angular.isString(template) ?
-								template :
-								template.data && angular.isString(template.data) ?
-									template.data :
-									'';
+              return $templateCache.get(tmpl) || $http.get(tmpl, { cache: true });
+            }
 
-							$templateCache.put(options.template, template);
+            function loader(options, isInit) {
+              if (options.multiple) {
+                options.currentTemplate = options.template[options.currentPage];
+              }
 
-							if (options.showClose) {
-								template += '<div class="ngdialog-close"></div>';
-							}
+              return $q.when(loadTemplate(options.currentTemplate)).then(function (template) {
+                template = angular.isString(template) ?
+                  template :
+                    template.data && angular.isString(template.data) ?
+                  template.data :
+                  '';
 
-							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
-							$dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
-							
-							if (options.data && angular.isString(options.data)) {
-								var firstLetter = options.data.replace(/^\s*/, '')[0];
-								scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : options.data;
-							} else if (options.data && angular.isObject(options.data)) {
-								scope.ngDialogData = angular.fromJson(angular.toJson(options.data));
-							}
+                $templateCache.put(options.currentTemplate, template);
 
-							if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
-								var controllerInstance = $controller(options.controller, {
-									$scope: scope,
-									$element: $dialog
-								});
-								$dialog.data('$ngDialogControllerController', controllerInstance);
-							}
+                if (options.showClose) {
+                  template += '<div class="ngdialog-close"></div>';
+                }
 
-							if (options.className) {
-								$dialog.addClass(options.className);
-							}
+                if (options.multiple) {
+                  template += options.buttonTemplates;
+                }
 
-							if (options.appendTo && angular.isString(options.appendTo)) {
-								$dialogParent = angular.element(document.querySelector(options.appendTo));
-							} else {
-								$dialogParent = $body;
-							}
+                if (isInit) {
 
-							scope.closeThisDialog = function (value) {
-								privateMethods.closeDialog($dialog, value);
-							};
+                  self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
+                  $dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
 
-							$timeout(function () {
-								$compile($dialog)(scope);
+                  if (options.data && angular.isString(options.data)) {
+                    var firstLetter = options.data.replace(/^\s*/, '')[0];
+                    scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : options.data;
+                  } else if (options.data && angular.isObject(options.data)) {
+                    scope.ngDialogData = angular.fromJson(angular.toJson(options.data));
+                  }
 
-								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
-								$body.addClass('ngdialog-open');
-								var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
-								if (scrollBarWidth > 0) {
-									privateMethods.setBodyPadding(scrollBarWidth);
-								}
-								$dialogParent.append($dialog);
-								$rootScope.$broadcast('ngDialog.opened', $dialog);
-							});
+                  if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
+                    var controllerInstance = $controller(options.controller, {
+                      $scope: scope,
+                      $element: $dialog
+                    });
+                    $dialog.data('$ngDialogControllerController', controllerInstance);
+                  }
 
-							if (options.closeByEscape) {
-								$body.bind('keydown', privateMethods.onDocumentKeydown);
-							}
+                  if (options.className) {
+                    $dialog.addClass(options.className);
+                  }
 
-							closeByDocumentHandler = function (event) {
-								var isOverlay = options.closeByDocument ? $el(event.target).hasClass('ngdialog-overlay') : false;
-								var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
+                  if (options.appendTo && angular.isString(options.appendTo)) {
+                    $dialogParent = angular.element(document.querySelector(options.appendTo));
+                  } else {
+                    $dialogParent = $body;
+                  }
 
-								if (isOverlay || isCloseBtn) {
-									publicMethods.close($dialog.attr('id'), isCloseBtn ? '$closeButton' : '$document');
-								}
-							};
+                } else {
+                  // Wizard call
 
-							if (typeof window.Hammer !== 'undefined') {
-								window.Hammer($dialog[0]).on('tap', closeByDocumentHandler);
-							} else {
-								$dialog.bind('click', closeByDocumentHandler);
-							}
+                  var dialogItem = angular.element(document.querySelector('.ngdialog-content'));
 
-							dialogsCount += 1;
+                  if (dialogItem && dialogItem.length > 0) {
+                    dialogItem.empty();
+                    dialogItem.append(template);
+                  }
+                }
 
-							return publicMethods;
-						});
+                scope.closeThisDialog = function (value) {
+                  privateMethods.closeDialog($dialog, value);
+                };
 
-						return {
-							id: 'ngdialog' + globalID,
-							closePromise: defer.promise,
-							close: function(value) {
-								privateMethods.closeDialog($dialog, value);
-							}
-						};
+                scope.nextPage = function () {
+                  ++options.currentPage;
+                  scope.isLastPage = (options.currentPage + 1) === options.template.length;
+                  scope.isFirstPage = options.currentPage === 0;
+                  loader(options, false);
+                };
 
-						function loadTemplate (tmpl) {
-							if (!tmpl) {
-								return 'Empty template';
-							}
+                scope.previousPage = function () {
+                  --options.currentPage;
+                  scope.isLastPage = (options.currentPage + 1) === options.template.length;
+                  scope.isFirstPage = options.currentPage === 0;
+                  loader(options, false);
+                };
 
-							if (angular.isString(tmpl) && options.plain) {
-								return tmpl;
-							}
+                $timeout(function () {
+                  $compile($dialog)(scope);
 
-							return $templateCache.get(tmpl) || $http.get(tmpl, { cache: true });
-						}
-					},
+                  var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
+                  $body.addClass('ngdialog-open');
+                  var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
+                  if (scrollBarWidth > 0) {
+                    privateMethods.setBodyPadding(scrollBarWidth);
+                  }
+                  $dialogParent.append($dialog);
+                  $rootScope.$broadcast('ngDialog.opened', $dialog);
+                });
 
-					/*
-					 * @param {Object} options:
-					 * - template {String} - id of ng-template, url for partial, plain string (if enabled)
-					 * - plain {Boolean} - enable plain string templates, default false
-					 * - scope {Object}
-					 * - controller {String}
-					 * - className {String} - dialog theme class
-					 * - showClose {Boolean} - show close button, default true
-					 * - closeByEscape {Boolean} - default false
-					 * - closeByDocument {Boolean} - default false
-					 *
-					 * @return {Object} dialog
-					 */
-					openConfirm: function (opts) {
-						var defer = $q.defer();
+                if (options.closeByEscape) {
+                  $body.bind('keydown', privateMethods.onDocumentKeydown);
+                }
 
-						var options = {
-							closeByEscape: false,
-							closeByDocument: false
-						};
-						angular.extend(options, opts);
+                closeByDocumentHandler = function (event) {
+                  var isOverlay = options.closeByDocument ? $el(event.target).hasClass('ngdialog-overlay') : false;
+                  var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
 
-						options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
-						options.scope.confirm = function (value) {
-							defer.resolve(value);
-							openResult.close(value);
-						};
+                  if (isOverlay || isCloseBtn) {
+                    publicMethods.close($dialog.attr('id'), isCloseBtn ? '$closeButton' : '$document');
+                  }
+                };
 
-						var openResult = publicMethods.open(options);
-						openResult.closePromise.then(function (data) {
-							if (data) {
-								return defer.reject(data.value);
-							}
-							return defer.reject();
-						});
+                if (typeof window.Hammer !== 'undefined') {
+                  window.Hammer($dialog[0]).on('tap', closeByDocumentHandler);
+                } else {
+                  $dialog.bind('click', closeByDocumentHandler);
+                }
 
-						return defer.promise;
-					},
+                dialogsCount += 1;
 
-					/*
-					 * @param {String} id
-					 * @return {Object} dialog
-					 */
-					close: function (id, value) {
-						var $dialog = $el(document.getElementById(id));
+                return publicMethods;
+              });
+            };
 
-						if ($dialog.length) {
-							privateMethods.closeDialog($dialog, value);
-						} else {
-							publicMethods.closeAll(value);
-						}
+            opts = opts || {};
+            angular.extend(options, opts);
 
-						return publicMethods;
-					},
+            globalID += 1;
 
-					closeAll: function (value) {
-						var $all = document.querySelectorAll('.ngdialog');
+            self.latestID = 'ngdialog' + globalID;
 
-						angular.forEach($all, function (dialog) {
-							privateMethods.closeDialog($el(dialog), value);
-						});
-					}
-				};
+            var defer;
+            defers[self.latestID] = defer = $q.defer();
 
-				return publicMethods;
-			}];
-	});
+            var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
+            var $dialog, $dialogParent;
 
-	module.directive('ngDialog', ['ngDialog', function (ngDialog) {
-		return {
-			restrict: 'A',
-			scope : {
-				ngDialogScope : '='
-			},
-			link: function (scope, elem, attrs) {
-				elem.on('click', function (e) {
-					e.preventDefault();
+            if (options.template && angular.isArray(options.template)) {
+              options.multiple = true;
+              options.currentPage = options.currentPage === undefined ? 0 : options.currentPage;
 
-					var ngDialogScope = angular.isDefined(scope.ngDialogScope) ? scope.ngDialogScope : 'noScope';
-					angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
+              scope.isFirstPage = options.currentPage === 0;
 
-					ngDialog.open({
-						template: attrs.ngDialog,
-						className: attrs.ngDialogClass,
-						controller: attrs.ngDialogController,
-						scope: ngDialogScope ,
-						data: attrs.ngDialogData,
-						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
-						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
-						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true
-					});
-				});
-			}
-		};
-	}]);
+              options.buttonTemplates = options.buttonTemplates ||
+                '<div class="ngdialog-buttons-container"><ul class="ngdialog-buttons" id="ngdialog-buttons">' +
+                '<li ng-hide="isLastPage" class="ngdialog-button ngdialog-button-primary ngdialog-button-next" ng-click=\"nextPage()\">Next &#8250;</li>' +
+                '<li ng-hide="isFirstPage" class="ngdialog-button ngdialog-button-secondary ngdialog-button-previous" ng-click=\"previousPage()\">&#8249; Previous</li>' +
+                '<li class="ngdialog-button ngdialog-button-close" ng-click=\"closeThisDialog()\">Close</li></ul></div>';
+            } else {
+              options.multiple = false;
+              options.currentTemplate = options.template || '';
+            }
+
+            loader(options, true);
+
+            return {
+              id: 'ngdialog' + globalID,
+              closePromise: defer.promise,
+              close: function (value) {
+                privateMethods.closeDialog($dialog, value);
+              }
+            };
+
+          },
+
+          /*
+           * @param {Object} options:
+           * - template {String} - id of ng-template, url for partial, plain string (if enabled)
+           * - plain {Boolean} - enable plain string templates, default false
+           * - scope {Object}
+           * - controller {String}
+           * - className {String} - dialog theme class
+           * - showClose {Boolean} - show close button, default true
+           * - closeByEscape {Boolean} - default false
+           * - closeByDocument {Boolean} - default false
+           *
+           * @return {Object} dialog
+           */
+          openConfirm: function (opts) {
+            var defer = $q.defer();
+
+            var options = {
+              closeByEscape: false,
+              closeByDocument: false
+            };
+            angular.extend(options, opts);
+
+            options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
+            options.scope.confirm = function (value) {
+              defer.resolve(value);
+              openResult.close(value);
+            };
+
+            var openResult = publicMethods.open(options);
+            openResult.closePromise.then(function (data) {
+              if (data) {
+                return defer.reject(data.value);
+              }
+              return defer.reject();
+            });
+
+            return defer.promise;
+          },
+
+          /*
+           * @param {String} id
+           * @return {Object} dialog
+           */
+          close: function (id, value) {
+            var $dialog = $el(document.getElementById(id));
+
+            if ($dialog.length) {
+              privateMethods.closeDialog($dialog, value);
+            } else {
+              publicMethods.closeAll(value);
+            }
+
+            return publicMethods;
+          },
+
+          closeAll: function (value) {
+            var $all = document.querySelectorAll('.ngdialog');
+
+            angular.forEach($all, function (dialog) {
+              privateMethods.closeDialog($el(dialog), value);
+            });
+          }
+        };
+
+        return publicMethods;
+      }];
+  });
+
+  module.directive('ngDialog', ['ngDialog', function (ngDialog) {
+    return {
+      restrict: 'A',
+      scope: {
+        ngDialogScope: '='
+      },
+      link: function (scope, elem, attrs) {
+        elem.on('click', function (e) {
+          e.preventDefault();
+
+          var ngDialogScope = angular.isDefined(scope.ngDialogScope) ? scope.ngDialogScope : 'noScope';
+          angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
+
+          ngDialog.open({
+            template: attrs.ngDialog,
+            className: attrs.ngDialogClass,
+            controller: attrs.ngDialogController,
+            scope: ngDialogScope,
+            data: attrs.ngDialogData,
+            showClose: attrs.ngDialogShowClose === 'false' ? false : true,
+            closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
+            closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true
+          });
+        });
+      }
+    };
+  }]);
 
 })(window, window.angular);

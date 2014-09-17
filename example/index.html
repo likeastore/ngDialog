@@ -36,6 +36,7 @@
 	<a href="" ng-click="openTimed()">Open and use return value to close later</a>
 	<a href="" ng-click="openNotify()">Open and use promise to know when closed</a>
 	<a href="" ng-click="openConfirm()">Open confirm modal</a>
+	<a href="" ng-click="openWizard()">Open wizard</a>
 
 	<script type="text/ng-template" id="firstDialogId">
 		<div class="ngdialog-message">
@@ -80,6 +81,18 @@
 			<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
 		</div>
 	</script>
+
+  <script type="text/ng-template" id="wizardPage1">
+    <h3><a href="">Wizard Page 1</a></h3>
+  </script>
+
+  <script type="text/ng-template" id="wizardPage2">
+    <h3><a href="">Wizard Page 2</a></h3>
+  </script>
+
+  <script type="text/ng-template" id="wizardPage3">
+    <h3><a href="">Wizard Page 3</a></h3>
+  </script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
 	<script>window.angular || document.write('<script src="../bower_components/angular/angular.min.js">\x3C/script>')</script>
@@ -190,6 +203,17 @@
 					console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
 				});
 			};
+
+      $scope.openWizard = function() {
+        var dialog = ngDialog.open({
+          template: ['wizardPage1', 'wizardPage2', 'wizardPage3'],
+          plain: true,
+          closeByEscape: false
+        });
+        dialog.closePromise.then(function (data) {
+          console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+        });
+      }
 
 			$rootScope.$on('ngDialog.opened', function (e, $dialog) {
 				console.log('ngDialog opened: ' + $dialog.attr('id'));
