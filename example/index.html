@@ -27,6 +27,7 @@
 		ng-dialog-data="{{jsonData}}"
 		ng-dialog-class="ngdialog-theme-default"
 		ng-dialog-scope="this"
+        ng-dialog-pre-close-callback="directivePreCloseCallback"
 		ng-dialog-show-close="false">Open via directive</button>
 
 	<a href="" ng-click="openDefault()">Default theme</a>
@@ -36,6 +37,10 @@
 	<a href="" ng-click="openTimed()">Open and use return value to close later</a>
 	<a href="" ng-click="openNotify()">Open and use promise to know when closed</a>
 	<a href="" ng-click="openConfirm()">Open confirm modal</a>
+    <a href="" ng-click="openDefaultWithPreCloseCallbackInlined()">Open default modal with pre-close callback inlined</a>
+    <a href="" ng-click="openConfirmWithPreCloseCallbackOnScope()">Open confirm modal with pre-close callback on scope</a>
+    <a href="" ng-click="openConfirmWithPreCloseCallbackInlinedWithNestedConfirm()">Open confirm modal with pre-close inlined with nested confirm.</a>
+
 
 	<script type="text/ng-template" id="firstDialogId">
 		<div class="ngdialog-message">
@@ -53,6 +58,19 @@
 			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
 		</div>
 	</script>
+
+    <script type="text/ng-template" id="dialogWithNestedConfirmDialogId">
+        <div class="ngdialog-message">
+            <h3>ngDialog template</h3>
+            <p>Dialog containing work in which a user has to perform a task (e.g. editing data).</p>
+            <p>'Save' would save the task's actions, while 'Cancel' would cause the task's actions to be lost.</p>
+            <p>...other controls here...</p>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('Cancel')">Cancel</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm('Save')">Save</button>
+        </div>
+    </script>
 
 	<script type="text/ng-template" id="withInlineController">
 		<div class="ngdialog-message">
@@ -103,6 +121,20 @@
 			$rootScope.jsonData = '{"foo": "bar"}';
 			$rootScope.theme = 'ngdialog-theme-default';
 
+            $scope.directivePreCloseCallback = function(value) {
+                if(confirm('Close it? MainCtrl.Directive. (Value = ' + value + ')')) {
+                    return true;
+                }
+                return false;
+            };
+
+            $scope.preCloseCallbackOnScope = function(value) {
+                if(confirm('Close it? MainCtrl.OnScope (Value = ' + value + ')')) {
+                    return true;
+                }
+                return false;
+            };
+
 			$scope.open = function () {
 				ngDialog.open({ template: 'firstDialogId', controller: 'InsideCtrl' });
 			};
@@ -115,6 +147,20 @@
 				});
 			};
 
+            $scope.openDefaultWithPreCloseCallbackInlined = function () {
+                ngDialog.open({
+                    template: 'firstDialogId',
+                    controller: 'InsideCtrl',
+                    className: 'ngdialog-theme-default',
+                    preCloseCallback: function(value) {
+                        if(confirm('Close it?  (Value = ' + value + ')')) {
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+            };
+
 			$scope.openConfirm = function () {
 				ngDialog.openConfirm({
 					template: 'modalDialogId',
@@ -126,7 +172,53 @@
 				});
 			};
 
-			$scope.openPlain = function () {
+            $scope.openConfirmWithPreCloseCallbackOnScope = function () {
+                ngDialog.openConfirm({
+                    template: 'modalDialogId',
+                    className: 'ngdialog-theme-default',
+                    preCloseCallback: 'preCloseCallbackOnScope',
+                    scope: $scope
+                }).then(function (value) {
+                    console.log('Modal promise resolved. Value: ', value);
+                }, function (reason) {
+                    console.log('Modal promise rejected. Reason: ', reason);
+                });
+            };
+
+            $scope.openConfirmWithPreCloseCallbackInlinedWithNestedConfirm = function () {
+                ngDialog.openConfirm({
+                    template: 'dialogWithNestedConfirmDialogId',
+                    className: 'ngdialog-theme-default',
+                    preCloseCallback: function(value) {
+
+                        var nestedConfirmDialog = ngDialog.openConfirm({
+                            template:
+                                    '<p>Are you sure you want to close the parent dialog?</p>' +
+                                    '<div class="ngdialog-buttons">' +
+                                        '<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">No' +
+                                        '<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(1)">Yes' +
+                                    '</button></div>',
+                            plain: true,
+                            className: 'ngdialog-theme-default'
+                        });
+
+                        return nestedConfirmDialog;
+                    },
+                    scope: $scope
+                })
+                .then(function(value){
+
+                    console.log('resolved:' + value);
+                    // Perform the save here
+
+                }, function(value){
+                    console.log('rejected:' + value);
+
+                });
+            };
+
+
+            $scope.openPlain = function () {
 				$rootScope.theme = 'ngdialog-theme-plain';
 
 				ngDialog.open({

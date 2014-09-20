@@ -129,9 +129,9 @@ Any data that you want to be stored in controller's ``$parent`` scope, it could 
 
 ##### ``className {String}``
 
-This option allows to controll dialog look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
+This option allows you to control the dialog's look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
 
-This example enables one of built-in ngDialog themes - ``ngdialog-theme-default`` (do not forget to include necessary css files):
+This example enables one of the built-in ngDialog themes - ``ngdialog-theme-default`` (do not forget to include necessary css files):
 
 ```javascript
 ngDialog.open({
@@ -159,6 +159,48 @@ It allows to close modals by clicking on overlay background, default ``true``. I
 ##### ``appendTo {String}``
 
 Specify your element where to append dialog instance, accepts selector string (e.g. ``#yourId``, ``.yourClass``). If not specified appends dialog to ``body`` as default behavior.
+
+##### ``preCloseCallback {String} | {Function}``
+
+Provide either the name of a function or a function to be called before the dialog is closed.  If the callback function specified in the option returns ``false`` then the dialog will not be closed.  Alternatively, if the callback function returns a promise that gets resolved the dialog will be closed. 
+
+The ``preCloseCallback`` function receives as a parameter (```value```) which is the same value sent to ``.close(id, value)``.
+  
+The primary use case for this feature is a dialog which contains user actions (e.g. editing data) for which you want the ability to confirm whether to discard unsaved changes upon exiting the dialog (e.g. via the escape button).  
+
+This example uses an inline function with a ```window.confirm``` call in the ``preCloseCallback`` function:
+
+```javascript
+ngDialog.open({
+    preCloseCallback: function(value) {
+        if(confirm('Are you sure you want to close without saving your changes?')) {
+            return true;
+        }       
+        return false;
+    }
+});
+``` 
+
+In another example, a callback function with a nested confirm ngDialog is used:
+
+```javascript
+ngDialog.open({
+    preCloseCallback: function(value) {
+        var nestedConfirmDialog = ngDialog.openConfirm({
+            template:
+                    '<p>Are you sure you want to close the parent dialog?</p>' +
+                    '<div class="ngdialog-buttons">' +
+                        '<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">No' +
+                        '<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(1)">Yes' +
+                    '</button></div>',
+            plain: true
+        });
+        return nestedConfirmDialog;     // NOTE: return the promise from openConfirm
+    }
+});
+```
+
+===
 
 ### Defaults
 
