@@ -170,7 +170,7 @@ Give a name for a dialog instance. It is useful for identifying specific dialog 
 
 ##### ``preCloseCallback {String} | {Function}``
 
-Provide either the name of a function or a function to be called before the dialog is closed.  If the callback function specified in the option returns ``false`` then the dialog will not be closed.  Alternatively, if the callback function returns a promise that gets resolved the dialog will be closed.
+Provide either the name of a function or a function to be called before the dialog is closed.  If the callback function specified in the option returns ``false`` then the dialog will not be closed. Alternatively, if the callback function returns a promise that gets resolved the dialog will be closed.
 
 The ``preCloseCallback`` function receives as a parameter (``value``) which is the same value sent to ``.close(id, value)``.
 

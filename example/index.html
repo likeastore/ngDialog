@@ -124,7 +124,10 @@
 				showClose: true,
 				closeByDocument: true,
 				closeByEscape: true,
-				appendTo: false
+				appendTo: false,
+				preCloseCallback: function () {
+					console.log('default pre-close callback');
+				}
 			});
 		}]);
 

@@ -24,6 +24,7 @@
 			closeByDocument: true,
 			closeByEscape: true,
 			appendTo: false,
+			preCloseCallback: false,
 			cache: true
 		};
 
@@ -373,6 +374,10 @@
 						angular.forEach($all, function (dialog) {
 							privateMethods.closeDialog($el(dialog), value);
 						});
+					},
+
+					getDefaults: function () {
+						return defaults;
 					}
 				};
 
@@ -393,16 +398,18 @@
 					var ngDialogScope = angular.isDefined(scope.ngDialogScope) ? scope.ngDialogScope : 'noScope';
 					angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
 
+					var defaults = ngDialog.getDefaults();
+
 					ngDialog.open({
 						template: attrs.ngDialog,
-						className: attrs.ngDialogClass,
+						className: attrs.ngDialogClass || defaults.className,
 						controller: attrs.ngDialogController,
 						scope: ngDialogScope ,
 						data: attrs.ngDialogData,
-						showClose: attrs.ngDialogShowClose === 'false' ? false : true,
-						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : true,
-						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : true,
-						preCloseCallback: attrs.ngDialogPreCloseCallback
+						showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
+						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
+						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
+						preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
 					});
 				});
 			}
