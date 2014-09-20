@@ -160,15 +160,23 @@ It allows to close modals by clicking on overlay background, default ``true``. I
 
 Specify your element where to append dialog instance, accepts selector string (e.g. ``#yourId``, ``.yourClass``). If not specified appends dialog to ``body`` as default behavior.
 
+##### ``cache {Boolean}``
+
+Pass ``false`` to disable template caching. Useful for developing purposes, default is ``true``.
+
+##### ``name {String} | {Number}``
+
+Give a name for a dialog instance. It is useful for identifying specific dialog if there are multiple dialog boxes opened. 
+
 ##### ``preCloseCallback {String} | {Function}``
 
 Provide either the name of a function or a function to be called before the dialog is closed.  If the callback function specified in the option returns ``false`` then the dialog will not be closed.  Alternatively, if the callback function returns a promise that gets resolved the dialog will be closed.
 
-The ``preCloseCallback`` function receives as a parameter (```value```) which is the same value sent to ``.close(id, value)``.
+The ``preCloseCallback`` function receives as a parameter (``value``) which is the same value sent to ``.close(id, value)``.
 
 The primary use case for this feature is a dialog which contains user actions (e.g. editing data) for which you want the ability to confirm whether to discard unsaved changes upon exiting the dialog (e.g. via the escape button).
 
-This example uses an inline function with a ```window.confirm``` call in the ``preCloseCallback`` function:
+This example uses an inline function with a ``window.confirm`` call in the ``preCloseCallback`` function:
 
 ```javascript
 ngDialog.open({

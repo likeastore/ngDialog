@@ -23,7 +23,8 @@
 			showClose: true,
 			closeByDocument: true,
 			closeByEscape: true,
-			appendTo: false
+			appendTo: false,
+			cache: true
 		};
 
 		this.setForceBodyReload = function (_useIt) {
@@ -123,7 +124,7 @@
 
 							if (angular.isObject(preCloseCallbackResult)) {
 								if (preCloseCallbackResult.closePromise) {
-									preCloseCallbackResult.closePromise.then(function(){
+									preCloseCallbackResult.closePromise.then(function () {
 										privateMethods.performCloseDialog($dialog, value);
 									});
 								} else {
@@ -216,24 +217,24 @@
 								$dialogParent = $body;
 							}
 
-							if(options.preCloseCallback) {
-								var preCloseCallback = null;
+							if (options.preCloseCallback) {
+								var preCloseCallback;
 
-								if(angular.isFunction(options.preCloseCallback)) {
+								if (angular.isFunction(options.preCloseCallback)) {
 									preCloseCallback = options.preCloseCallback;
-								} else if(angular.isString(options.preCloseCallback)) {
-									if(scope) {
-										if(angular.isFunction(scope[options.preCloseCallback])) {
+								} else if (angular.isString(options.preCloseCallback)) {
+									if (scope) {
+										if (angular.isFunction(scope[options.preCloseCallback])) {
 											preCloseCallback = scope[options.preCloseCallback];
-										} else if(scope.$parent && angular.isFunction(scope.$parent[options.preCloseCallback])) {
+										} else if (scope.$parent && angular.isFunction(scope.$parent[options.preCloseCallback])) {
 											preCloseCallback = scope.$parent[options.preCloseCallback];
-										} else if($rootScope && angular.isFunction($rootScope[options.preCloseCallback])) {
+										} else if ($rootScope && angular.isFunction($rootScope[options.preCloseCallback])) {
 											preCloseCallback = $rootScope[options.preCloseCallback];
 										}
 									}
 								}
 
-								if(preCloseCallback) {
+								if (preCloseCallback) {
 									$dialog.data('$ngDialogPreCloseCallback', preCloseCallback);
 								}
 							}
@@ -287,7 +288,7 @@
 						return {
 							id: 'ngdialog' + globalID,
 							closePromise: defer.promise,
-							close: function(value) {
+							close: function (value) {
 								privateMethods.closeDialog($dialog, value);
 							}
 						};
@@ -301,7 +302,11 @@
 								return tmpl;
 							}
 
-							return $templateCache.get(tmpl) || $http.get(tmpl, { cache: true });
+							if (typeof options.cache === 'boolean' && !options.cache) {
+								return $http.get(tmpl, {cache: false});
+							}
+
+							return $templateCache.get(tmpl) || $http.get(tmpl, {cache: true});
 						}
 					},
 
