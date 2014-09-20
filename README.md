@@ -353,12 +353,12 @@ Currently ngDialog contains two default themes that show how easily you can crea
 
 ## CDN
 
-ngDialog is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dialog). Please use following urls for version 0.1.6.
+ngDialog is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dialog). For example, please use following urls for version ``0.3.0``.
 
 ```html
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.1.6/ng-dialog.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.1.6/ng-dialog-theme-plain.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.1.6/ng-dialog.min.js
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.0/ng-dialog.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.0/ng-dialog-theme-plain.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.0/ng-dialog.min.js
 ```
 
 ## License
