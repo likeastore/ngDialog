@@ -361,7 +361,7 @@ _ngDialog_ is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dial
 //cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.0/ng-dialog.min.js
 ```
 
-### References
+## References
 
 _ngDialog_ default styles are heavily inspired by awesome [Hubspot/Vex](https://github.com/HubSpot/vex) jQuery modals.
 
