@@ -1,0 +1,76 @@
+<!doctype html>
+<html ng-app="exampleDialog">
+<head>
+	<meta charset="utf-8">
+	<title>ngDialog demo</title>
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../css/ngDialog.css">
+	<link rel="stylesheet" href="../css/ngDialog-theme-default.css">
+	<link rel="stylesheet" href="../css/ngDialog-theme-plain.css">
+
+	<style>
+		a, button {
+			font: 14px 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+			display: block;
+			color: #333;
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+<body ng-controller="MainCtrl">
+	<a href="" ng-click="open()">Open via service</a>
+
+	<script type="text/ng-template" id="firstDialogId">
+		<div class="ngdialog-message">
+			<h3>ngDialog template</h3>
+		</div>
+		<div class="ngdialog-buttons">
+			<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()">Close and open</button>
+			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="openSecond()">Open next</button>
+		</div>
+	</script>
+
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular.min.js"></script>
+	<script src="../js/ngDialog.js"></script>
+
+	<!-- App -->
+	<script>
+		var app = angular.module('exampleDialog', ['ngDialog']);
+
+		// Example of how to set default values for all dialogs
+		app.config(['ngDialogProvider', '$compileProvider', function (ngDialogProvider, $compileProvider) {
+			$compileProvider.debugInfoEnabled(false);
+			ngDialogProvider.setDefaults({
+				className: 'ngdialog-theme-plain',
+				plain: false,
+				showClose: true,
+				closeByDocument: false,
+				closeByEscape: false
+			});
+		}]);
+
+		app.controller('MainCtrl', function ($scope, $rootScope, ngDialog) {
+			$scope.open = function () {
+				ngDialog.open({
+					template: 'firstDialogId',
+					controller: 'InsideCtrl',
+					preCloseCallback: function () {
+					}
+				});
+			};
+		});
+
+		app.controller('InsideCtrl', function ($scope, ngDialog) {
+			$scope.openSecond = function () {
+				ngDialog.open({
+					template: '<h3>Boo!</h3>',
+					plain: true,
+					closeByEscape: true
+				});
+			};
+		});
+	</script>
+</body>
+</html>
