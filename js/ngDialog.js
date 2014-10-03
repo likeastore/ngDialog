@@ -177,14 +177,9 @@
 						var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
 						var $dialog, $dialogParent;
 
-						$q.when(loadTemplate(options.template)).then(function (template) {
-							template = angular.isString(template) ?
-								template :
-								template.data && angular.isString(template.data) ?
-									template.data :
-									'';
+						$q.when(loadTemplate(options.template || options.templateUrl)).then(function (template) {
 
-							$templateCache.put(options.template, template);
+							$templateCache.put(options.template || options.templateUrl, template);
 
 							if (options.showClose) {
 								template += '<div class="ngdialog-close"></div>';
@@ -294,6 +289,12 @@
 							}
 						};
 
+						function loadTemplateUrl (tmpl, config) {
+							return $http.get(tmpl, angular.extend({cache: false}, config || {})).then(function(res) {
+								return res.data || '';
+							});
+						}
+
 						function loadTemplate (tmpl) {
 							if (!tmpl) {
 								return 'Empty template';
@@ -304,10 +305,10 @@
 							}
 
 							if (typeof options.cache === 'boolean' && !options.cache) {
-								return $http.get(tmpl, {cache: false});
+								return loadTemplateUrl(tmpl, {cache: false});
 							}
 
-							return $templateCache.get(tmpl) || $http.get(tmpl, {cache: true});
+							return $templateCache.get(tmpl) || loadTemplateUrl(tmpl, {cache: false});
 						}
 					},
 
