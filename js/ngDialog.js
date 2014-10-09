@@ -23,6 +23,7 @@
 			showClose: true,
 			closeByDocument: true,
 			closeByEscape: true,
+			closeByNavigation: false,
 			appendTo: false,
 			preCloseCallback: false,
 			cache: true
@@ -259,6 +260,12 @@
 
 							if (options.closeByEscape) {
 								$body.bind('keydown', privateMethods.onDocumentKeydown);
+							}
+							
+							if (options.closeByNavigation) {
+								$rootScope.$on('$locationChangeSuccess', function () {
+									privateMethods.closeDialog($dialog);
+								});
 							}
 
 							closeByDocumentHandler = function (event) {
