@@ -176,7 +176,7 @@
 						defers[self.latestID] = defer = $q.defer();
 
 						var scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
-						var $dialog, $dialogParent;
+						var $dialog, $dialogContent, $dialogParent;
 
 						$q.when(loadTemplate(options.template || options.templateUrl)).then(function (template) {
 
@@ -186,8 +186,11 @@
 								template += '<div class="ngdialog-close"></div>';
 							}
 
-							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
-							$dialog.html('<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>');
+							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '"></div>');
+							$dialog.html('<div class="ngdialog-overlay"></div>');
+							$dialogContent = $el('<div class="ngdialog"></div>');
+							$dialog.append($dialogContent);
+							$dialogContent.html('<div class="ngdialog-content">' + template + '</div>');
 
 							if (options.data && angular.isString(options.data)) {
 								var firstLetter = options.data.replace(/^\s*/, '')[0];
@@ -205,7 +208,7 @@
 							}
 
 							if (options.className) {
-								$dialog.addClass(options.className);
+								$dialogContent.addClass(options.className);
 							}
 
 							if (options.appendTo && angular.isString(options.appendTo)) {
@@ -261,7 +264,7 @@
 							if (options.closeByEscape) {
 								$body.bind('keydown', privateMethods.onDocumentKeydown);
 							}
-							
+
 							if (options.closeByNavigation) {
 								$rootScope.$on('$locationChangeSuccess', function () {
 									privateMethods.closeDialog($dialog);
