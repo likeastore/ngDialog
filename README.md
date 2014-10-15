@@ -333,9 +333,11 @@ Directive contains one more additional but very useful option, it's an attribute
 
 ## Events
 
-Everytime when ngDialog is opened or closed we're broadcasting two events (dispatching events downwards to all child scopes):
+Everytime when ngDialog is opened or closed we're broadcasting three events (dispatching events downwards to all child scopes):
 
 - ``ngDialog.opened``
+
+- ``ngDialog.closing``
 
 - ``ngDialog.closed``
 
@@ -346,6 +348,8 @@ $rootScope.$on('ngDialog.opened', function (e, $dialog) {
 	console.log('ngDialog opened: ' + $dialog.attr('id'));
 });
 ```
+
+``ngDialog.closing`` is different than ``ngDialog.closed`` in that it is fired immediately when the dialog begins closing, whereas ``ngDialog.closed`` is fired after all animations are complete. Both will be fired even when animation end support is not detected.
 
 ## Themes
 
