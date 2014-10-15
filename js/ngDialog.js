@@ -87,6 +87,8 @@
 							dialogsCount -= 1;
 						}
 
+						$rootScope.$broadcast('ngDialog.closing', $dialog);
+
 						if (animationEndSupport) {
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
 								$dialog.scope().$destroy();

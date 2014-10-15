@@ -316,6 +316,10 @@
 			$rootScope.$on('ngDialog.closed', function (e, $dialog) {
 				console.log('ngDialog closed: ' + $dialog.attr('id'));
 			});
+
+			$rootScope.$on('ngDialog.closing', function (e, $dialog) {
+				console.log('ngDialog closing: ' + $dialog.attr('id'));
+			});
 		});
 
 		app.controller('InsideCtrl', function ($scope, ngDialog) {
