@@ -74,7 +74,10 @@
 						var id = $dialog.attr('id');
 
 						if (typeof window.Hammer !== 'undefined') {
-							window.Hammer($dialog[0]).off('tap', closeByDocumentHandler);
+							var hammerTime = angular.element($dialog).scope().hammerTime;
+							hammerTime.off('tap', closeByDocumentHandler);
+							hammerTime.destroy();
+							delete $dialog.scope().hammerTime;
 						} else {
 							$dialog.unbind('click');
 						}
@@ -263,7 +266,7 @@
 							if (options.closeByEscape) {
 								$body.bind('keydown', privateMethods.onDocumentKeydown);
 							}
-							
+
 							if (options.closeByNavigation) {
 								$rootScope.$on('$locationChangeSuccess', function () {
 									privateMethods.closeDialog($dialog);
@@ -280,7 +283,8 @@
 							};
 
 							if (typeof window.Hammer !== 'undefined') {
-								window.Hammer($dialog[0]).on('tap', closeByDocumentHandler);
+								var hammerTime = scope.hammerTime = window.Hammer($dialog[0]);
+								hammerTime.on('tap', closeByDocumentHandler);
 							} else {
 								$dialog.bind('click', closeByDocumentHandler);
 							}
