@@ -167,7 +167,7 @@
 					controller: 'InsideCtrl',
 					className: 'ngdialog-theme-default',
 					preCloseCallback: function(value) {
-						if(confirm('Close it?  (Value = ' + value + ')')) {
+						if (confirm('Close it?  (Value = ' + value + ')')) {
 							return true;
 						}
 						return false;
@@ -221,10 +221,8 @@
 					scope: $scope
 				})
 				.then(function(value){
-
 					console.log('resolved:' + value);
 					// Perform the save here
-
 				}, function(value){
 					console.log('rejected:' + value);
 

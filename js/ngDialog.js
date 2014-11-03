@@ -303,7 +303,7 @@
 						};
 
 						function loadTemplateUrl (tmpl, config) {
-							return $http.get(tmpl, angular.extend({cache: false}, config || {})).then(function(res) {
+							return $http.get(tmpl, (config || {})).then(function(res) {
 								return res.data || '';
 							});
 						}
@@ -321,7 +321,7 @@
 								return loadTemplateUrl(tmpl, {cache: false});
 							}
 
-							return $templateCache.get(tmpl) || loadTemplateUrl(tmpl, {cache: false});
+							return $templateCache.get(tmpl) || loadTemplateUrl(tmpl, {cache: true});
 						}
 					},
 
@@ -418,7 +418,7 @@
 						template: attrs.ngDialog,
 						className: attrs.ngDialogClass || defaults.className,
 						controller: attrs.ngDialogController,
-						scope: ngDialogScope ,
+						scope: ngDialogScope,
 						data: attrs.ngDialogData,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
