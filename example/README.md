@@ -17,6 +17,7 @@ Then go to examples folder and start server:
 ```bash
 $ ngDialog_folder: cd example
 $ ngDialog_folder/example: node server.js
+>> IP: 172.29.63.33
 >> Strata web server version 0.20.1
 >> Listening on 0.0.0.0:1982, CTRL+C to stop
 ```

@@ -7,4 +7,4 @@ var root = path.resolve('../');
 server.use(server.commonLogger);
 server.use(server.file, root);
 server.run();
-console.log(address());
+console.log('>> ' + address());
