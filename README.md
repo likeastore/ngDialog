@@ -142,6 +142,10 @@ ngDialog.open({
 
 Check [themes](https://github.com/likeastore/ngDialog#themes) block to learn more.
 
+##### ``overlay {Boolean}``
+
+If ``false`` it allows to hide overlay div behind the modals, default ``true``.
+
 ##### ``showClose {Boolean}``
 
 If ``false`` it allows to hide close button on modals, default ``true``.
