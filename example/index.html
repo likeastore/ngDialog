@@ -47,6 +47,7 @@
 		ng-dialog-show-close="false">Open via directive with pre-close callback</button>
 	<a href="" ng-click="openConfirmWithPreCloseCallbackOnScope()">Open confirm modal with pre-close callback on scope</a>
 	<a href="" ng-click="openConfirmWithPreCloseCallbackInlinedWithNestedConfirm()">Open confirm modal with pre-close inlined with nested confirm.</a>
+	<a href="" ng-click="openWithoutOverlay()">Open without overlay</a>
 
 	<!-- Templates -->
 
@@ -229,7 +230,6 @@
 				});
 			};
 
-
 			$scope.openPlain = function () {
 				$rootScope.theme = 'ngdialog-theme-plain';
 
@@ -304,6 +304,15 @@
 				});
 				dialog.closePromise.then(function (data) {
 					console.log('ngDialog closed' + (data.value === 1 ? ' using the button' : '') + ' and notified by promise: ' + data.id);
+				});
+			};
+
+			$scope.openWithoutOverlay = function () {
+				ngDialog.open({
+					template: '<h2>Notice that there is no overlay!</h2>',
+					className: 'ngdialog-theme-default',
+					plain: true,
+					overlay: false
 				});
 			};
 
