@@ -332,6 +332,7 @@
 					 * @param {Object} options:
 					 * - template {String} - id of ng-template, url for partial, plain string (if enabled)
 					 * - plain {Boolean} - enable plain string templates, default false
+					 * - name {String}
 					 * - scope {Object}
 					 * - controller {String}
 					 * - className {String} - dialog theme class

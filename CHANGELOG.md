@@ -18,18 +18,17 @@
 
 # 0.3.0
 
-- [x] `cache` option
-- [x] `preCloseCallback` option
 - [x] `.openConfirm()` method
 - [x] `.setForceBodyReload()` method
 - [x] add support for `.setDefaults()` method
+- [x] fix scroll jump bug 
 - [x] fix event broadcasting to occur at the times they should
-- [x] support for `options.name` 
 - [x] fix for `ngDialogData` being passed after controller instantiation
 - [x] allow objects for `ngDialogData`
+- [x] `cache` option
+- [x] `preCloseCallback` option
 - [x] `appendTo` option
+- [x] `name` option 
 - [x] minor code fixes and optimizations, examples improvements
 
 # 0.2.2
-
-# 0.1.0
