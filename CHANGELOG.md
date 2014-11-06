@@ -12,18 +12,24 @@
 
 # 0.3.1
 
-- [x] added `ngDialog.closing` event 
-- [x] added `closeByNavigation` option and `setForceBodyReload` method
-- [x] added `templateUrl` option
+- [x] `ngDialog.closing` event 
+- [x] `closeByNavigation` option
+- [x] `templateUrl` option
 
 # 0.3.0
 
-- [x] fix bug with `defaults` didn't work for directive
-- [x] added `cache` option
-- [x] added `preCloseCallback` option
-- [x] added `.openConfirm()` method
-- [x] support `.setDefaults()` method 
+- [x] `cache` option
+- [x] `preCloseCallback` option
+- [x] `.openConfirm()` method
+- [x] `.setForceBodyReload()` method
+- [x] add support for `.setDefaults()` method
+- [x] fix event broadcasting to occur at the times they should
+- [x] support for `options.name` 
+- [x] fix for `ngDialogData` being passed after controller instantiation
+- [x] allow objects for `ngDialogData`
+- [x] `appendTo` option
+- [x] minor code fixes and optimizations, examples improvements
 
-# 0.2.0
+# 0.2.2
 
 # 0.1.0
