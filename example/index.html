@@ -5,6 +5,7 @@
 	<title>ngDialog demo</title>
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="../css/ngDialog.css">
+	<link rel="stylesheet" href="scopeCss.css">
 	<link rel="stylesheet" href="../css/ngDialog-theme-default.css">
 	<link rel="stylesheet" href="../css/ngDialog-theme-plain.css">
 
@@ -29,6 +30,7 @@
 		ng-dialog-class="ngdialog-theme-default"
 		ng-dialog-show-close="false">Open via directive</button>
 	<a href="" ng-click="openDefault()">Default theme</a>
+	<a href="" ng-click="openCssScope()">Open with css scope MyNgDialog</a>
 	<a href="" ng-click="openPlain()">Plain theme</a>
 	<a href="" ng-click="openInlineController()">Inline controller</a>
 	<a href="" ng-click="openTemplate()">Open with external template for modal</a>
@@ -159,6 +161,15 @@
 					template: 'firstDialogId',
 					controller: 'InsideCtrl',
 					className: 'ngdialog-theme-default'
+				});
+			};
+
+			$scope.openCssScope = function () {
+				ngDialog.open({
+					template: 'firstDialogId',
+					controller: 'InsideCtrl',
+					className: 'ngdialog-theme-default',
+					cssScope: 'MyNgDialog'
 				});
 			};
 

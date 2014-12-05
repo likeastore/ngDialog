@@ -19,6 +19,7 @@
 	module.provider('ngDialog', function () {
 		var defaults = this.defaults = {
 			className: 'ngdialog-theme-default',
+			cssScope: 'ngdialog',
 			plain: false,
 			showClose: true,
 			closeByDocument: true,
@@ -72,7 +73,8 @@
 					},
 
 					performCloseDialog: function ($dialog, value) {
-						var id = $dialog.attr('id');
+						var id = $dialog.attr('id'),
+							cssScope = $dialog.data('cssScope');
 
 						if (typeof window.Hammer !== 'undefined') {
 							var hammerTime = angular.element($dialog).scope().hammerTime;
@@ -87,7 +89,7 @@
 							$body.unbind('keydown');
 						}
 
-						if (!$dialog.hasClass("ngdialog-closing")){
+						if (!$dialog.hasClass(cssScope + '-closing')){
 							dialogsCount -= 1;
 						}
 
@@ -98,16 +100,16 @@
 								$dialog.scope().$destroy();
 								$dialog.remove();
 								if (dialogsCount === 0) {
-									$body.removeClass('ngdialog-open');
+									$body.removeClass(cssScope + '-open');
 									privateMethods.resetBodyPadding();
 								}
 								$rootScope.$broadcast('ngDialog.closed', $dialog);
-							}).addClass('ngdialog-closing');
+							}).addClass(cssScope + '-closing');
 						} else {
 							$dialog.scope().$destroy();
 							$dialog.remove();
 							if (dialogsCount === 0) {
-								$body.removeClass('ngdialog-open');
+								$body.removeClass(cssScope + '-open');
 								privateMethods.resetBodyPadding();
 							}
 							$rootScope.$broadcast('ngDialog.closed', $dialog);
@@ -160,6 +162,8 @@
 					 * - scope {Object}
 					 * - controller {String}
 					 * - className {String} - dialog theme class
+					 * - cssScope {String} - css scope name
+					 * - closeBtnClass {String} - close button class name
 					 * - showClose {Boolean} - show close button, default true
 					 * - closeByEscape {Boolean} - default true
 					 * - closeByDocument {Boolean} - default true
@@ -176,7 +180,7 @@
 
 						globalID += 1;
 
-						self.latestID = 'ngdialog' + globalID;
+						self.latestID = options.cssScope + globalID;
 
 						var defer;
 						defers[self.latestID] = defer = $q.defer();
@@ -189,13 +193,17 @@
 							$templateCache.put(options.template || options.templateUrl, template);
 
 							if (options.showClose) {
-								template += '<div class="ngdialog-close"></div>';
+								if (options.closeBtnClass) {
+									template += '<div class="' + options.closeBtnClass + '"></div>';
+								} else {
+									template += '<div class="' + options.cssScope + '-close"></div>';
+								}
 							}
 
-							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
+							self.$result = $dialog = $el('<div id="' + options.cssScope + globalID + '" class="' + options.cssScope + ' ngdialog"></div>');
 							$dialog.html((options.overlay ?
-								'<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>' :
-								'<div class="ngdialog-content">' + template + '</div>'));
+								'<div class="' + options.cssScope + '-overlay"></div><div class="' + options.cssScope + '-content">' + template + '</div>' :
+								'<div class="' + options.cssScope + '-content">' + template + '</div>'));
 
 							if (options.data && angular.isString(options.data)) {
 								var firstLetter = options.data.replace(/^\s*/, '')[0];
@@ -214,6 +222,10 @@
 
 							if (options.className) {
 								$dialog.addClass(options.className);
+							}
+
+							if (options.cssScope) {
+								$dialog.data('cssScope', options.cssScope)
 							}
 
 							if (options.appendTo && angular.isString(options.appendTo)) {
@@ -252,7 +264,7 @@
 								$compile($dialog)(scope);
 
 								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
-								$body.addClass('ngdialog-open');
+								$body.addClass(options.cssScope + '-open');
 								var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
 								if (scrollBarWidth > 0) {
 									privateMethods.setBodyPadding(scrollBarWidth);
@@ -277,8 +289,8 @@
 							}
 
 							closeByDocumentHandler = function (event) {
-								var isOverlay = options.closeByDocument ? $el(event.target).hasClass('ngdialog-overlay') : false;
-								var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
+								var isOverlay = options.closeByDocument ? $el(event.target).hasClass(options.cssScope + '-overlay') : false;
+								var isCloseBtn = $el(event.target).hasClass(options.cssScope + '-close') || options.closeBtnClass && $el(event.target).hasClass(options.closeBtnClass);
 
 								if (isOverlay || isCloseBtn) {
 									publicMethods.close($dialog.attr('id'), isCloseBtn ? '$closeButton' : '$document');
@@ -298,7 +310,7 @@
 						});
 
 						return {
-							id: 'ngdialog' + globalID,
+							id: options.cssScope + globalID,
 							closePromise: defer.promise,
 							close: function (value) {
 								privateMethods.closeDialog($dialog, value);
@@ -336,6 +348,8 @@
 					 * - scope {Object}
 					 * - controller {String}
 					 * - className {String} - dialog theme class
+					 * - cssScope {String} - css scope name
+					 * - closeBtnClass {String} - close button class name
 					 * - showClose {Boolean} - show close button, default true
 					 * - closeByEscape {Boolean} - default false
 					 * - closeByDocument {Boolean} - default false
@@ -421,9 +435,11 @@
 					ngDialog.open({
 						template: attrs.ngDialog,
 						className: attrs.ngDialogClass || defaults.className,
+						cssScope: attrs.ngDialogCssScope || defaults.cssScope,
 						controller: attrs.ngDialogController,
 						scope: ngDialogScope,
 						data: attrs.ngDialogData,
+						closeBtnClass: attrs.ngDialogCloseBtnClass || defaults.closeBtnClass,
 						showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
 						closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
 						closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
