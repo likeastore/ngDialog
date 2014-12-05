@@ -77,7 +77,7 @@
 						if (typeof window.Hammer !== 'undefined') {
 							var hammerTime = angular.element($dialog).scope().hammerTime;
 							hammerTime.off('tap', closeByDocumentHandler);
-							hammerTime.destroy();
+							hammerTime.destroy && hammerTime.destroy();
 							delete $dialog.scope().hammerTime;
 						} else {
 							$dialog.unbind('click');
