@@ -1,3 +1,7 @@
+# 0.3.5
+
+- [x] fix for HammerJS 1.1 breaking dialog
+
 # 0.3.4
 
 - [x] add support for `overlay` option (https://github.com/likeastore/ngDialog/issues/117)
