@@ -1,3 +1,7 @@
+# 0.3.6
+
+- [x] finally (after many requests) `$scope.ngDialogData` holds reference to the objects passed instead of copying them.
+
 # 0.3.5
 
 - [x] fix for HammerJS 1.1 breaking dialog
