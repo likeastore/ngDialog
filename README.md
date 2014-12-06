@@ -125,7 +125,7 @@ Any value passed to this function will be attached to the object which resolves 
 
 ##### ``data {String | Object | Array}``
 
-Any serializable data that you want to be stored in controller's dialog scope. ( ``$scope.ngDialogData``).
+Any serializable data that you want to be stored in controller's dialog scope. (``$scope.ngDialogData``). From version `0.3.6` `$scope.ngDialogData` keeps references to the objects instead of copying them.
 
 ##### ``className {String}``
 
