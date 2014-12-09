@@ -1,6 +1,7 @@
 {
 	"predef": [
-		"angular"
+		"angular",
+		"define"
 	],
 
 	"asi" : false,

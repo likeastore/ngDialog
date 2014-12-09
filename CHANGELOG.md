@@ -1,3 +1,9 @@
+# 0.3.7
+
+- [x] support for [UMD pattern](https://github.com/umdjs/umd)
+- [x] get rid of `module` variable in source code
+- [x] get rid of `window` dependency in flavor of `$window`
+
 # 0.3.6
 
 - [x] finally (after many requests) `$scope.ngDialogData` holds reference to the objects passed instead of copying them.
