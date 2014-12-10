@@ -26,7 +26,7 @@
 	var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
 	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
 	var forceBodyReload = false;
-	var scope = null;
+	var scope = undefined;
 
 	m.provider('ngDialog', function () {
 		var defaults = this.defaults = {
