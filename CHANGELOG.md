@@ -1,3 +1,7 @@
+# 0.3.8
+
+- [x] Make ngDialog work with AngularJS 1.3 when `$compileProvider` debug info is disabled - `$compileProvider.debugInfoEnabled(false)`.
+
 # 0.3.7
 
 - [x] support for [UMD pattern](https://github.com/umdjs/umd)
