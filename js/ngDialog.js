@@ -106,8 +106,8 @@
 						$rootScope.$broadcast('ngDialog.closing', $dialog);
 
 						if (animationEndSupport) {
+							scope.$destroy();
 							$dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
-								scope.$destroy();
 								$dialog.remove();
 								if (dialogsCount === 0) {
 									$body.removeClass('ngdialog-open');

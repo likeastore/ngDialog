@@ -1,6 +1,6 @@
 {
   "name": "ngDialog",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "homepage": "https://github.com/likeastore/ngDialog",
   "description": "Modal dialogs and popups provider for Angular.js applications",
   "main": [

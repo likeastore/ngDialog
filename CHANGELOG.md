@@ -1,3 +1,6 @@
+# 0.3.9
+- [x] fix destroy scope with anumation for multiple dialog [ISSUE-125](https://github.com/likeastore/ngDialog/issues/125)
+
 # 0.3.8
 
 - [x] Make ngDialog work with AngularJS 1.3 when `$compileProvider` debug info is disabled - `$compileProvider.debugInfoEnabled(false)`.
@@ -30,7 +33,7 @@
 
 # 0.3.1
 
-- [x] `ngDialog.closing` event 
+- [x] `ngDialog.closing` event
 - [x] `closeByNavigation` option
 - [x] `templateUrl` option
 
@@ -39,14 +42,14 @@
 - [x] `.openConfirm()` method
 - [x] `.setForceBodyReload()` method
 - [x] add support for `.setDefaults()` method
-- [x] fix scroll jump bug 
+- [x] fix scroll jump bug
 - [x] fix event broadcasting to occur at the times they should
 - [x] fix for `ngDialogData` being passed after controller instantiation
 - [x] allow objects for `ngDialogData`
 - [x] `cache` option
 - [x] `preCloseCallback` option
 - [x] `appendTo` option
-- [x] `name` option 
+- [x] `name` option
 - [x] minor code fixes and optimizations, examples improvements
 
 # 0.2.2
