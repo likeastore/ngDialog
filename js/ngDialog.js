@@ -1,7 +1,7 @@
 /*
  * ngDialog - easy modals and popup windows
  * http://github.com/likeastore/ngDialog
- * (c) 2013-2014 MIT License, https://likeastore.com
+ * (c) 2013-2015 MIT License, https://likeastore.com
  */
 
 (function (root, factory) {
