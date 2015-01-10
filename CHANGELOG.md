@@ -1,5 +1,5 @@
 # 0.3.9
-- [x] fix destroy scope with anumation for multiple dialog [ISSUE-125](https://github.com/likeastore/ngDialog/issues/125)
+- [x] fix destroy scope with animation for multiple dialog [ISSUE-125](https://github.com/likeastore/ngDialog/issues/125)
 
 # 0.3.8
 
