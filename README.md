@@ -14,6 +14,12 @@ You can download all necessary ngDialog files manually or install it with bower:
 bower install ngDialog
 ```
 
+or npm:
+
+```bash
+npm install ng-dialog
+```
+
 ## Usage
 
 You need only to include ``ngDialog.js`` and  ``ngDialog.css`` (as minimal setup) to your project and then you can start using ``ngDialog`` provider in your directives, controllers and services. For example in controllers:
