@@ -1,3 +1,7 @@
+# 0.3.10
+- [x] prevent the modal from closing if preCloseCallback returns a falsy value
+- [x] fix negative dialogs count
+
 # 0.3.9
 - [x] fix destroy scope with animation for multiple dialog [ISSUE-125](https://github.com/likeastore/ngDialog/issues/125)
 
