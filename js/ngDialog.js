@@ -42,7 +42,13 @@
 			overlay: true,
 			cache: true,
 			trapFocus: true,
-			preserveFocus: true
+			preserveFocus: true,
+			ariaAuto: true,
+			ariaRole: null,
+			ariaLabelledById: null,
+			ariaLabelledBySelector: null,
+			ariaDescribedById: null,
+			ariaDescribedBySelector: null
 		};
 
 		this.setForceBodyReload = function (_useIt) {
@@ -266,8 +272,12 @@
 							return;
 						}
 
-						if (document.activeElement) {
-							document.activeElement.blur();
+						// We need to focus something for the screen readers to notice the dialog
+						var contentElement = dialogEl.querySelector('h1,h2,h3,h4,h5,h6,p');
+
+						if (contentElement) {
+							$el(contentElement).attr('tabindex', '0');
+							contentElement.focus();
 						}
 					},
 
@@ -285,6 +295,61 @@
 
 						// TODO: This might be incorrect if there are a mix of open dialogs with different 'appendTo' values
 						return $el(dialogs[dialogs.length - 1]);
+					},
+
+					applyAriaAttributes: function($dialog, options) {
+
+						if (options.ariaAuto) {
+							if (!options.ariaRole) {
+								var detectedRole = (privateMethods.getFocusableElements($dialog).length > 0)
+									? 'dialog'
+									: 'alertdialog';
+
+								options.ariaRole = detectedRole;
+							}
+
+							if (!options.ariaLabelledBySelector) {
+								options.ariaLabelledBySelector = 'h1,h2,h3,h4,h5,h6';
+							}
+
+							if (!options.ariaDescribedBySelector) {
+								options.ariaDescribedBySelector = 'article,section,p';
+							}
+						}
+
+						if (options.ariaRole) {
+							$dialog.attr('role', options.ariaRole);
+						}
+
+						privateMethods.applyAriaAttribute(
+							$dialog, 'aria-labelledby', options.ariaLabelledById, options.ariaLabelledBySelector);
+
+						privateMethods.applyAriaAttribute(
+							$dialog, 'aria-describedby', options.ariaDescribedById, options.ariaDescribedBySelector);
+					},
+
+					applyAriaAttribute: function($dialog, attr, id, selector) {
+						if (id) {
+							$dialog.attr(attr, id);
+						}
+
+						if (selector) {
+							var dialogId = $dialog.attr('id');
+
+							var firstMatch = $dialog[0].querySelector(selector);
+
+							if (!firstMatch) {
+								return;
+							}
+
+							var generatedId = dialogId + '-' + attr;
+
+							$el(firstMatch).attr('id', generatedId);
+
+							$dialog.attr(attr, generatedId);
+
+							return generatedId;
+						}
 					}
 				};
 
@@ -331,8 +396,8 @@
 
 							self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
 							$dialog.html((options.overlay ?
-								'<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>' :
-								'<div class="ngdialog-content">' + template + '</div>'));
+								'<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
+								'<div class="ngdialog-content" role="document">' + template + '</div>'));
 
 							$dialog.data('$ngDialogOptions', options);
 
@@ -360,6 +425,8 @@
 							} else {
 								$dialogParent = $body;
 							}
+
+							privateMethods.applyAriaAttributes($dialog, options);
 
 							if (options.preCloseCallback) {
 								var preCloseCallback;
