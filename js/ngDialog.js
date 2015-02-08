@@ -25,6 +25,7 @@
 	var style = (document.body || document.documentElement).style;
 	var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
 	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
+	var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
 	var forceBodyReload = false;
 	var scope;
 
@@ -39,7 +40,9 @@
 			appendTo: false,
 			preCloseCallback: false,
 			overlay: true,
-			cache: true
+			cache: true,
+			trapFocus: true,
+			preserveFocus: true
 		};
 
 		this.setForceBodyReload = function (_useIt) {
@@ -66,6 +69,29 @@
 						if (event.keyCode === 27) {
 							publicMethods.close('$escape');
 						}
+					},
+
+					activate: function($dialog) {
+						var options = $dialog.data('$ngDialogOptions');
+
+						if (options.trapFocus) {
+							$dialog.on('keydown', privateMethods.onTrapFocusKeydown);
+
+							// Catch rogue changes (eg. after unfocusing everything by clicking a non-focusable element)
+							$body.on('keydown', privateMethods.onTrapFocusKeydown);
+						}
+					},
+
+					deactivate: function($dialog) {
+						$dialog.off('keydown', privateMethods.onTrapFocusKeydown);
+						$body.off('keydown', privateMethods.onTrapFocusKeydown);
+					},
+
+					deactivateAll: function($all) {
+						angular.forEach(function(el) {
+							var $dialog = angular.element(el);
+							privateMethods.deactivate($dialog);
+						});
 					},
 
 					setBodyPadding: function (width) {
@@ -102,6 +128,9 @@
 						if (!$dialog.hasClass("ngdialog-closing")){
 							dialogsCount -= 1;
 						}
+
+						var previousFocus = $dialog.data('$ngDialogPreviousFocus');
+						if (previousFocus) previousFocus.focus();
 
 						$rootScope.$broadcast('ngDialog.closing', $dialog);
 						dialogsCount = dialogsCount < 0 ? 0: dialogsCount;
@@ -160,6 +189,102 @@
 						} else {
 							privateMethods.performCloseDialog($dialog, value);
 						}
+					},
+
+					onTrapFocusKeydown: function(ev) {
+						var el = angular.element(ev.currentTarget);
+						var $dialog;
+
+						if (el.hasClass('ngdialog')) {
+							$dialog = el;
+						} else {
+							$dialog = privateMethods.getActiveDialog();
+
+							if ($dialog === null)
+								return;
+						}
+
+						var isTab = (ev.keyCode === 9);
+						var backward = (ev.shiftKey === true);
+
+						if (isTab) {
+							privateMethods.handleTab($dialog, ev, backward);
+						}
+					},
+
+					handleTab: function($dialog, ev, backward) {
+						var focusableElements = privateMethods.getFocusableElements($dialog);
+
+						if (focusableElements.length === 0) {
+							if (document.activeElement) {
+								document.activeElement.blur();
+							}
+							return;
+						}
+
+						var currentFocus = document.activeElement;
+						var focusIndex = Array.prototype.indexOf.call(focusableElements, currentFocus);
+
+						var isFocusIndexUnknown = (focusIndex === -1);
+						var isFirstElementFocused = (focusIndex === 0);
+						var isLastElementFocused = (focusIndex === focusableElements.length - 1);
+
+						var cancelEvent = false;
+
+						if (backward) {
+							if (isFocusIndexUnknown || isFirstElementFocused) {
+								focusableElements[focusableElements.length - 1].focus();
+								cancelEvent = true;
+							}
+						} else {
+							if (isFocusIndexUnknown || isLastElementFocused) {
+								focusableElements[0].focus();
+								cancelEvent = true;
+							}
+						}
+
+						if (cancelEvent) {
+							ev.preventDefault();
+							ev.stopPropagation();
+						}
+					},
+
+					autoFocus: function($dialog) {
+						var dialogEl = $dialog[0];
+
+						// Browser's (Chrome 40, Forefix 37, IE 11) don't appear to honor autofocus on the dialog, but we should
+						var autoFocusEl = dialogEl.querySelector('*[autofocus]');
+						if (autoFocusEl !== null) {
+							autoFocusEl.focus();
+							return;
+						}
+
+						var focusableElements = privateMethods.getFocusableElements($dialog);
+
+						if (focusableElements.length > 0) {
+							focusableElements[0].focus();
+							return;
+						}
+
+						if (document.activeElement) {
+							document.activeElement.blur();
+						}
+					},
+
+					getFocusableElements : function($dialog) {
+						var dialogEl = $dialog[0];
+
+						return dialogEl.querySelectorAll(focusableElementSelector);
+					},
+
+					getActiveDialog: function() {
+						var dialogs = document.querySelectorAll('.ngdialog');
+
+						if (dialogs.length === 0)
+							return null;
+
+						// TODO: This might be incorrect if there are a mix of open dialogs with different 'appendTo' values
+						return $el(dialogs[dialogs.length - 1]);
 					}
 				};
 
@@ -208,6 +333,8 @@
 							$dialog.html((options.overlay ?
 								'<div class="ngdialog-overlay"></div><div class="ngdialog-content">' + template + '</div>' :
 								'<div class="ngdialog-content">' + template + '</div>'));
+
+							$dialog.data('$ngDialogOptions', options);
 
 							if (options.data && angular.isString(options.data)) {
 								var firstLetter = options.data.replace(/^\s*/, '')[0];
@@ -261,6 +388,9 @@
 							};
 
 							$timeout(function () {
+								var $activeDialogs = document.querySelectorAll('.ngdialog');
+								privateMethods.deactivateAll($activeDialogs);
+
 								$compile($dialog)(scope);
 								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
 								$body.addClass('ngdialog-open');
@@ -269,6 +399,12 @@
 									privateMethods.setBodyPadding(scrollBarWidth);
 								}
 								$dialogParent.append($dialog);
+
+								privateMethods.activate($dialog);
+
+								if (options.trapFocus) {
+									privateMethods.autoFocus($dialog);
+								}
 
 								if (options.name) {
 									$rootScope.$broadcast('ngDialog.opened', {dialog: $dialog, name: options.name});
@@ -285,6 +421,10 @@
 								$rootScope.$on('$locationChangeSuccess', function () {
 									privateMethods.closeDialog($dialog);
 								});
+							}
+
+							if (options.preserveFocus) {
+								$dialog.data('$ngDialogPreviousFocus', document.activeElement);
 							}
 
 							closeByDocumentHandler = function (event) {
@@ -400,9 +540,11 @@
 					closeAll: function (value) {
 						var $all = document.querySelectorAll('.ngdialog');
 
-						angular.forEach($all, function (dialog) {
+						// Reverse order to ensure focus restorationi works as expected
+						for (var i=$all.length; i>-1; i--) {
+							var dialog = $all[i];
 							privateMethods.closeDialog($el(dialog), value);
-						});
+						}
 					},
 
 					getDefaults: function () {
