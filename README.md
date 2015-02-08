@@ -220,6 +220,50 @@ ngDialog.open({
 });
 ```
 
+##### ``trapFocus {Boolean}``
+
+When ``true``, ensures that the focused element remains within the dialog to conform to accessibility recommendations. Default value is ``true``
+
+##### ``preserveFocus {Boolean}``
+
+When ``true``, closing the dialog restores focus to the element that launched it. Designed to improve keyboard accessibility. Default value is ``true``
+
+##### ``ariaAuto {Boolean}``
+
+When ``true``, automatically selects appropriate values for any unspecified accessibility attributes. Default value is ``true``
+
+See [Accessibility](#Accessibility) for more information.
+
+##### ``ariaRole {String}``
+
+Specifies the value for the ``role`` attribute that should be applied to the dialog element. Default value is ``null`` (unspecified)
+
+See [Accessibility](#Accessibility) for more information.
+
+##### ``ariaLaballedById {String}``
+
+Specifies the value for the ``aria-labelledby`` attribute that should be applied to the dialog element. Default value is ``null`` (unspecified)
+
+If specified, the value is not validated against the DOM. See [Accessibility](#Accessibility) for more information.
+
+##### ``ariaLaballedBySelector {String}``
+
+Specifies the CSS selector for the element to be referenced by the ``aria-labelledby`` attribute on the dialog element. Default value is ``null`` (unspecified)
+
+If specified, the first matching element is used. See [Accessibility](#Accessibility) for more information.
+
+##### ``ariaDescribedById {String}``
+
+Specifies the value for the ``aria-describedby`` attribute that should be applied to the dialog element. Default value is ``null`` (unspecified)
+
+If specified, the value is not validated against the DOM. See [Accessibility](#Accessibility) for more information.
+
+##### ``ariaDescribedBySelector {String}``
+
+Specifies the CSS selector for the element to be referenced by the ``aria-describedby`` attribute on the dialog element. Default value is ``null`` (unspecified)
+
+If specified, the first matching element is used. See [Accessibility](#Accessibility) for more information.
+
 ===
 
 ### ``.setDefaults(options)``
@@ -364,6 +408,34 @@ $rootScope.$on('ngDialog.opened', function (e, $dialog) {
 ## Themes
 
 Currently _ngDialog_ contains two default themes that show how easily you can create your own. Check ``example`` folder for demonstration purposes.
+
+## Accessibility
+
+ngDialog supports accessible keyboard navigation via the ``trapFocus`` and ``preserveFocus`` options.
+
+The ``role``, ``aria-labelledby`` and ``aria-describedby`` attributes are also supported, and are rendered as follows.
+
+Dialog ``role`` attribute:
+
+* ``options.ariaRole``, if specified
+* "dialog" if ``options.ariaAuto`` is ``true`` and the dialog contains any focusable elements
+* "alertdialog" is ``options.ariaAuto`` is ``true`` and the dialog does *not* contain any focusable elements
+
+Dialog ``aria-labelledby`` attribute:
+
+* ``options.ariaLabelledById``, if specified
+* If ``options.ariaLabelledBySelector`` is specified, the first matching element will be found and assigned an id (if required) and that id will be used
+* If ``options.ariaAuto`` is ``true``, the first heading element in the dialog (h1-6) will be found and processed as per ``ariaLabelledBySelector``
+
+Dialog ``aria-describedby`` attribute:
+
+* ``options.ariaDescribedById``, if specified
+* If ``options.ariaDescribedBySelector`` is specified, the first matching element will be found and assigned an id (if required) and that id will be used
+* If ``options.ariaAuto`` is ``true``, the first content element in the dialog (article,section,p) will be found and processed as per ``ariaDescribedBySelector``
+
+Dialog Content ``role`` attribute:
+
+* Always assigned a value of "document"
 
 ## CDN
 
