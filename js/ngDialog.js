@@ -262,7 +262,11 @@
 						var autoFocusEl = dialogEl.querySelector('*[autofocus]');
 						if (autoFocusEl !== null) {
 							autoFocusEl.focus();
-							return;
+
+							if (document.activeElement === autoFocusEl)
+								return;
+
+							// Autofocus element might was display: none, so let's continue
 						}
 
 						var focusableElements = privateMethods.getFocusableElements($dialog);
@@ -273,9 +277,10 @@
 						}
 
 						// We need to focus something for the screen readers to notice the dialog
-						var contentElement = dialogEl.querySelector('h1,h2,h3,h4,h5,h6,p');
+						var contentElements = privateMethods.filterVisibleElements(dialogEl.querySelectorAll('h1,h2,h3,h4,h5,h6,p,span'));
 
-						if (contentElement) {
+						if (contentElements.length > 0) {
+							var contentElement = contentElements[0];
 							$el(contentElement).attr('tabindex', '0');
 							contentElement.focus();
 						}
@@ -284,7 +289,22 @@
 					getFocusableElements : function($dialog) {
 						var dialogEl = $dialog[0];
 
-						return dialogEl.querySelectorAll(focusableElementSelector);
+						var rawElements = dialogEl.querySelectorAll(focusableElementSelector);
+
+						return privateMethods.filterVisibleElements(rawElements);
+					},
+
+					filterVisibleElements: function(els) {
+						var visibleFocusableElements = [];
+
+						for (var i=0; i<els.length; i++) {
+							var el = els[i];
+
+							if (el.offsetWidth > 0 || el.offsetHeight > 0)
+								visibleFocusableElements.push(el);
+						}
+
+						return visibleFocusableElements;
 					},
 
 					getActiveDialog: function() {
