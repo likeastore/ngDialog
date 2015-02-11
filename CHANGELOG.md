@@ -1,5 +1,7 @@
-# 0.3.10
+# 0.3.11
 - [x] prevent the modal from closing if preCloseCallback returns a falsy value
+
+# 0.3.10
 - [x] fix negative dialogs count
 
 # 0.3.9
