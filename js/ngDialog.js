@@ -154,7 +154,7 @@
 										return;
 									});
 								}
-							} else if (!preCloseCallbackResult) {
+							} else if (preCloseCallbackResult) {
 								privateMethods.performCloseDialog($dialog, value);
 							}
 						} else {
