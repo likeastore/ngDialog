@@ -1,3 +1,7 @@
+# 0.3.12
+
+- [x] better `box-sizing` policy
+
 # 0.3.11
 - [x] prevent the modal from closing if preCloseCallback returns a falsy value
 

@@ -17,9 +17,14 @@
 		opacity: 1;
 	}
 }
-
-.ngdialog, .ngdialog *, .ngdialog *:before, .ngdialog *:after {
+.ngdialog {
 	box-sizing: border-box;
+}
+
+.ngdialog *,
+.ngdialog *:before,
+.ngdialog *:after {
+	box-sizing: inherit;
 }
 
 .ngdialog {
