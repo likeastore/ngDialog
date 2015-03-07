@@ -96,6 +96,34 @@ ngDialog.open({
 });
 ```
 
+##### ``resolve {Object.<string, function>=}``
+An optional map of dependencies which should be injected into the controller.
+If any of these dependencies are promises, ngDialog will wait for them all to be resolved
+or one to be rejected before the controller is instantiated.
+
+If all the promises are resolved successfully, the values of the resolved promises are
+injected.
+
+The map object
+is:
+- `key` – `{string}`: a name of a dependency to be injected into the controller.
+- `factory` - `{string|function}`: If `string` then it is an alias for a service.
+  Otherwise if function, then it is injected using `$injector.invoke` and the return
+  value is treated as the dependency. If the result is a promise, it is resolved
+  before its value is injected into the controller.
+
+
+```javascript
+ngDialog.open({
+	controller: function Ctrl(dep) {/*...*/},
+	resolve: {
+		dep: function depFactory() {
+			return 'dep value';
+		}
+	}
+});
+```
+
 ##### ``scope {Object}``
 
 Scope object that will be passed to dialog. If you use controller with separate ``$scope`` service this object will be passed to ``$scope.$parent`` param:
@@ -176,7 +204,7 @@ Pass ``false`` to disable template caching. Useful for developing purposes, defa
 
 ##### ``name {String} | {Number}``
 
-Give a name for a dialog instance. It is useful for identifying specific dialog if there are multiple dialog boxes opened. 
+Give a name for a dialog instance. It is useful for identifying specific dialog if there are multiple dialog boxes opened.
 
 ##### ``preCloseCallback {String} | {Function}``
 
