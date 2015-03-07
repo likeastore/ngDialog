@@ -61,8 +61,8 @@
 
         var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
-        this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller',
-            function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller) {
+        this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller', '$injector',
+            function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller, $injector) {
                 var $body = $document.find('body');
                 if (forceBodyReload) {
                     $rootScope.$on('$locationChangeSuccess', function () {
@@ -417,7 +417,18 @@
                         // promise is resolved. Accessing globalID from the below callback would cause weird and buggy behavior (e.g. all dialogs
                         // looking like the last one opened).
                         var localID = globalID;
-                        $q.when(loadTemplate(options.template || options.templateUrl)).then(function (template) {
+                        var resolve = angular.extend({}, options.resolve);
+
+                        angular.forEach(resolve, function (value, key) {
+                            resolve[key] = angular.isString(value) ? $injector.get(value) : $injector.invoke(value, null, null, key);
+                        });
+
+                        $q.all({
+                            template: loadTemplate(options.template || options.templateUrl),
+                            locals: $q.all(resolve)
+                        }).then(function (setup) {
+                            var template = setup.template,
+                                locals = setup.locals;
 
                             $templateCache.put(options.template || options.templateUrl, template);
 
@@ -440,16 +451,19 @@
                             }
 
                             if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
-                                
+
                                 var ctrl = options.controller;
                                 if (options.controllerAs && angular.isString(options.controllerAs)) {
                                     ctrl += ' as ' + options.controllerAs;
                                 }
-                                
-                                var controllerInstance = $controller(ctrl, {
-                                    $scope: scope,
-                                    $element: $dialog
-                                });
+
+                                var controllerInstance = $controller(options.controller, angular.extend(
+                                    locals,
+                                    {
+                                        $scope: scope,
+                                        $element: $dialog
+                                    }
+                                ));
                                 $dialog.data('$ngDialogControllerController', controllerInstance);
                             }
 
@@ -646,7 +660,7 @@
                         var $all = document.querySelectorAll('.ngdialog');
 
                         // Reverse order to ensure focus restorationi works as expected
-                        for (var i=$all.length; i>-1; i--) {
+                        for (var i = $all.length - 1; i >= 0; i--) {
                             var dialog = $all[i];
                             privateMethods.closeDialog($el(dialog), value);
                         }

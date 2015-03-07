@@ -79,4 +79,56 @@ describe("ngDialog", function () {
       expect(elm.textContent).toEqual('some text 2');
     }));
   });
+
+  describe("controller instantiation", function () {
+    var Ctrl;
+    beforeEach(inject(function (ngDialog, $timeout, $q) {
+      Ctrl = spy('DialogCtrl');
+      Ctrl.$inject = ['$scope', '$element', '$log', 'myLocal', 'localPromise'];
+      ngDialog.open({
+        controller: Ctrl,
+        resolve: {
+          myLocal: function () {
+            return "local";
+          },
+          localPromise: function () {
+            return $q.when('async local!');
+          }
+        }
+      });
+      $timeout.flush();
+    }));
+
+    it('should have instantiated the controller', function() {
+      expect(Ctrl).toHaveBeenCalled();
+    });
+
+    describe("dependencies", function () {
+      var injected;
+      beforeEach(function () {
+        injected = Ctrl.calls.mostRecent().args;
+      });
+
+      it('should inject a scope', function() {
+        expect(injected[0].$watch).toEqual(any(Function));
+      });
+
+      it('should inject the root dialog html element', function() {
+        expect(injected[1].prop('id')).toEqual('ngdialog1');
+      });
+
+      it('should inject another angular service', inject(function($log) {
+        expect(injected[2]).toBe($log);
+      }));
+
+      it('should inject a local value', function() {
+        expect(injected[3]).toEqual('local');
+      });
+
+      it('should inject an asynchronous local value', function() {
+        expect(injected[4]).toEqual('async local!');
+      });
+    });
+
+  });
 });
