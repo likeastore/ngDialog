@@ -38,7 +38,7 @@ describe("ngDialog", function () {
       expect(inst.id).toEqual('ngdialog1');
     });
 
-    it('should add an id to the DOM with ', function() {
+    it('should have created an element on the DOM', function() {
       expect(elm).toBeDefined();
     });
 
@@ -49,7 +49,7 @@ describe("ngDialog", function () {
 
   describe("with a plain template", function () {
     var elm
-    beforeEach(inject(function (ngDialog, $timeout, $document, $rootScope) {
+    beforeEach(inject(function (ngDialog, $timeout, $document) {
       var id = ngDialog.open({
         template: "<div><p>some text {{1 + 1}}</p></div>",
         plain: true
@@ -65,7 +65,7 @@ describe("ngDialog", function () {
 
   describe("with a plain template URL", function () {
     var elm;
-    beforeEach(inject(function (ngDialog, $timeout, $document, $rootScope, $httpBackend) {
+    beforeEach(inject(function (ngDialog, $timeout, $document, $httpBackend) {
       $httpBackend.whenGET('test.html').respond("<div><p>some text {{1 + 1}}</p></div>");
       var id = ngDialog.open({
         templateUrl: "test.html"
