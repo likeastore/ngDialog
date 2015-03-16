@@ -383,7 +383,7 @@ Some imaginary button, for example, will look like:
 </button>
 ```
 
-Directive contains one more additional but very useful option, it's an attribute named ``ng-dialog-close-previous``. It allows you to close previously opened dialogs automaticly.
+Directive contains one more additional but very useful option, it's an attribute named ``ng-dialog-close-previous``. It allows you to close previously opened dialogs automatically.
 
 ## Events
 
