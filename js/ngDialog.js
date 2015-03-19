@@ -119,10 +119,12 @@
 						var id = $dialog.attr('id');
 
 						if (typeof $window.Hammer !== 'undefined') {
-							var hammerTime = scope.hammerTime;
-							hammerTime.off('tap', closeByDocumentHandler);
-							hammerTime.destroy && hammerTime.destroy();
-							delete scope.hammerTime;
+							if(scope.hammerTime) {
+								var hammerTime = scope.hammerTime;
+								hammerTime.off('tap', closeByDocumentHandler);
+								hammerTime.destroy && hammerTime.destroy();
+								delete scope.hammerTime;
+							}
 						} else {
 							$dialog.unbind('click');
 						}
