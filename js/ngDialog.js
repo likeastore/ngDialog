@@ -26,6 +26,12 @@
 	var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
 	var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
 	var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
+	var reqAnimationFrame = window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame    ||
+		function( callback ){
+			window.setTimeout(callback, 1000 / 60);
+		};
 	var forceBodyReload = false;
 	var scope;
 
@@ -474,10 +480,9 @@
 								privateMethods.closeDialog($dialog, value);
 							};
 
-							$timeout(function () {
+							reqAnimationFrame(function () {
 								var $activeDialogs = document.querySelectorAll('.ngdialog');
 								privateMethods.deactivateAll($activeDialogs);
-
 								$compile($dialog)(scope);
 								var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
 								$body.addClass('ngdialog-open');
@@ -498,6 +503,7 @@
 								} else {
 									$rootScope.$broadcast('ngDialog.opened', $dialog);
 								}
+								$rootScope.$apply();
 							});
 
 							if (options.closeByEscape) {
