@@ -78,10 +78,8 @@
   font-size: 1.1em;
   line-height: 1.5em;
   margin: 0 auto;
-  max-width: 100%;
   padding: 1em;
   position: relative;
-  width: 450px;
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-close {
