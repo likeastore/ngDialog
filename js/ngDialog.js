@@ -524,7 +524,7 @@
 							};
 
 							if (typeof $window.Hammer !== 'undefined') {
-								var hammerTime = scope.hammerTime = $window.Hammer($dialog[0]);
+								var hammerTime = scope.hammerTime = $window.Hammer($dialog[0], {touchAction: 'auto' });
 								hammerTime.on('tap', closeByDocumentHandler);
 							} else {
 								$dialog.bind('click', closeByDocumentHandler);
