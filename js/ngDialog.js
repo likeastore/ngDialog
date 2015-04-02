@@ -119,6 +119,11 @@
                         var id = $dialog.attr('id');
                         var scope = scopes[id];
 
+                        if (!scope) {
+                            // Already closed
+                            return;
+                        }
+
                         if (typeof $window.Hammer !== 'undefined') {
                             var hammerTime = scope.hammerTime;
                             hammerTime.off('tap', closeByDocumentHandler);
