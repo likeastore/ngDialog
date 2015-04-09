@@ -412,6 +412,10 @@
                         scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
                         var $dialog, $dialogParent;
 
+                        // if the user attempts to open multiple dialogs consecutively then globalID will increase more than once before $q.when()'s
+                        // promise is resolved. Accessing globalID from the below callback would cause weird and buggy behavior (e.g. all dialogs
+                        // looking like the last one opened).
+                        var localID = globalID;
                         $q.when(loadTemplate(options.template || options.templateUrl)).then(function (template) {
 
                             $templateCache.put(options.template || options.templateUrl, template);
@@ -420,7 +424,7 @@
                                 template += '<div class="ngdialog-close"></div>';
                             }
 
-                            self.$result = $dialog = $el('<div id="ngdialog' + globalID + '" class="ngdialog"></div>');
+                            self.$result = $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog"></div>');
                             $dialog.html((options.overlay ?
                                 '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
                                 '<div class="ngdialog-content" role="document">' + template + '</div>'));
