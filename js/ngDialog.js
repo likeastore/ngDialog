@@ -387,6 +387,7 @@
                      * - plain {Boolean} - enable plain string templates, default false
                      * - scope {Object}
                      * - controller {String}
+                     * - controllerAs {String}
                      * - className {String} - dialog theme class
                      * - showClose {Boolean} - show close button, default true
                      * - closeByEscape {Boolean} - default true
@@ -439,7 +440,13 @@
                             }
 
                             if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
-                                var controllerInstance = $controller(options.controller, {
+                                
+                                var ctrl = options.controller;
+                                if (options.controllerAs && angular.isString(options.controllerAs)) {
+                                    ctrl += ' as ' + options.controllerAs;
+                                }
+                                
+                                var controllerInstance = $controller(ctrl, {
                                     $scope: scope,
                                     $element: $dialog
                                 });
@@ -583,6 +590,7 @@
                      * - name {String}
                      * - scope {Object}
                      * - controller {String}
+                     * - controllerAs {String}
                      * - className {String} - dialog theme class
                      * - showClose {Boolean} - show close button, default true
                      * - closeByEscape {Boolean} - default false
@@ -672,6 +680,7 @@
                         template: attrs.ngDialog,
                         className: attrs.ngDialogClass || defaults.className,
                         controller: attrs.ngDialogController,
+                        controllerAs: attrs.ngDialogControllerAs,
                         scope: ngDialogScope,
                         data: attrs.ngDialogData,
                         showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
