@@ -1,3 +1,13 @@
+var testMinified = process.argv.indexOf('--min') > -1,
+    subject;
+
+if (testMinified) {
+    subject = 'js/ngDialog.min.js';
+    console.log("Testing minifed ngDialog")
+} else {
+    subject = 'js/ngDialog.js';
+}
+
 module.exports = function(config) {
   config.set({
 
@@ -14,7 +24,7 @@ module.exports = function(config) {
     files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'js/ngDialog.js',
+      subject,
       'tests/ngDialog.spec.js'
     ],
 
@@ -37,7 +47,7 @@ module.exports = function(config) {
 
 
     // web server port
-    port: 9876,
+    port: 9877,
 
 
     // enable / disable colors in the output (reporters and logs)
