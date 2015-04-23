@@ -37,7 +37,6 @@
 
   100% {
     opacity: 0;
-    display:none;
     -webkit-transform: translateY(-40px);
     transform: translateY(-40px);
   }
@@ -53,7 +52,6 @@
 
   100% {
     opacity: 0;
-    display:none;
     -webkit-transform: translateY(-40px);
     -ms-transform: translateY(-40px);
     transform: translateY(-40px);
@@ -66,8 +64,8 @@
 }
 
 .ngdialog.ngdialog-theme-default.ngdialog-closing .ngdialog-content {
-  -webkit-animation: ngdialog-flyout .5s forwards;
-  animation: ngdialog-flyout .5s forwards;
+  -webkit-animation: ngdialog-flyout .5s;
+  animation: ngdialog-flyout .5s;
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-content {

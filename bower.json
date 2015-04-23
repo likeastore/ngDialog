@@ -1,12 +1,12 @@
 {
   "name": "ngDialog",
-  "version": "0.3.12",
+  "version": "0.3.13",
   "homepage": "https://github.com/likeastore/ngDialog",
   "description": "Modal dialogs and popups provider for Angular.js applications",
   "main": [
-      "js/ngDialog.js",
-      "css/ngDialog.css",
-      "css/ngDialog-theme-default.css"
+    "js/ngDialog.js",
+    "css/ngDialog.css",
+    "css/ngDialog-theme-default.css"
   ],
   "keywords": [
     "angular.js",
@@ -34,5 +34,8 @@
   ],
   "dependencies": {
     "angular": "~1"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.3.14"
   }
 }
