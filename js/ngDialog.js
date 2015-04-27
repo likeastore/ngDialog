@@ -639,6 +639,11 @@
 
                         return defer.promise;
                     },
+                    
+                    isOpen: function(id) {
+                        var $dialog = $el(document.getElementById(id));
+                        return $dialog.length > 0;
+                    },
 
                     /*
                      * @param {String} id
