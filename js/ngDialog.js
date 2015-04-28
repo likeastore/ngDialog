@@ -27,7 +27,7 @@
     var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
     var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
     var forceBodyReload = false;
-    var scope;
+    var scopes = {};
 
     m.provider('ngDialog', function () {
         var defaults = this.defaults = {
@@ -117,6 +117,7 @@
 
                     performCloseDialog: function ($dialog, value) {
                         var id = $dialog.attr('id');
+                        var scope = scopes[id];
 
                         if (typeof $window.Hammer !== 'undefined') {
                             var hammerTime = scope.hammerTime;
@@ -169,6 +170,9 @@
                                 remainingDialogs: dialogsCount
                             });
                             delete defers[id];
+                        }
+                        if (scopes[id]) {
+                            delete scopes[id];
                         }
                     },
 
@@ -399,24 +403,20 @@
                     open: function (opts) {
                         var self = this;
                         var options = angular.copy(defaults);
+                        var localID = ++globalID;
+                        var dialogID = 'ngdialog' + localID;
 
                         opts = opts || {};
                         angular.extend(options, opts);
 
-                        globalID += 1;
-
-                        self.latestID = 'ngdialog' + globalID;
-
                         var defer;
-                        defers[self.latestID] = defer = $q.defer();
+                        defers[dialogID] = defer = $q.defer();
 
-                        scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
+                        var scope;
+                        scopes[dialogID] = scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
+
                         var $dialog, $dialogParent;
 
-                        // if the user attempts to open multiple dialogs consecutively then globalID will increase more than once before $q.when()'s
-                        // promise is resolved. Accessing globalID from the below callback would cause weird and buggy behavior (e.g. all dialogs
-                        // looking like the last one opened).
-                        var localID = globalID;
                         var resolve = angular.extend({}, options.resolve);
 
                         angular.forEach(resolve, function (value, key) {
@@ -436,7 +436,7 @@
                                 template += '<div class="ngdialog-close"></div>';
                             }
 
-                            self.$result = $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog"></div>');
+                            $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog"></div>');
                             $dialog.html((options.overlay ?
                                 '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
                                 '<div class="ngdialog-content" role="document">' + template + '</div>'));
@@ -567,7 +567,7 @@
                         });
 
                         return {
-                            id: 'ngdialog' + globalID,
+                            id: dialogID,
                             closePromise: defer.promise,
                             close: function (value) {
                                 privateMethods.closeDialog($dialog, value);
