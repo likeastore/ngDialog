@@ -28,6 +28,7 @@
     var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
     var forceBodyReload = false;
     var scopes = {};
+    var openIdStack = [];
 
     m.provider('ngDialog', function () {
         var defaults = this.defaults = {
@@ -174,6 +175,7 @@
                         if (scopes[id]) {
                             delete scopes[id];
                         }
+                        openIdStack.splice(openIdStack.indexOf(id), 1);
                     },
 
                     closeDialog: function ($dialog, value) {
@@ -405,6 +407,7 @@
                         var options = angular.copy(defaults);
                         var localID = ++globalID;
                         var dialogID = 'ngdialog' + localID;
+                        openIdStack.push(dialogID);
 
                         opts = opts || {};
                         angular.extend(options, opts);
@@ -655,7 +658,11 @@
                         if ($dialog.length) {
                             privateMethods.closeDialog($dialog, value);
                         } else {
-                            publicMethods.closeAll(value);
+                            if (id === '$escape') {
+                                var topDialogId = openIdStack[openIdStack.length-1];
+                                $dialog = $el(document.getElementById(topDialogId));
+                                privateMethods.closeDialog($dialog, value);
+                            }
                         }
 
                         return publicMethods;
