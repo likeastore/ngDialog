@@ -145,7 +145,7 @@
 			});
 		}]);
 
-		app.controller('MainCtrl', function ($scope, $rootScope, ngDialog) {
+		app.controller('MainCtrl', function ($scope, $rootScope, ngDialog, $timeout) {
 			$rootScope.jsonData = '{"foo": "bar"}';
 			$rootScope.theme = 'ngdialog-theme-default';
 
@@ -164,7 +164,12 @@
 			};
 
 			$scope.open = function () {
-				ngDialog.open({ template: 'firstDialogId', controller: 'InsideCtrl', data: {foo: 'some data'} });
+				var new_dialog = ngDialog.open({ template: 'firstDialogId', controller: 'InsideCtrl', data: {foo: 'some data'} });
+                                
+                                // example on checking whether created `new_dialog` is open
+                                $timeout(function() {
+                                    console.log(ngDialog.isOpen(new_dialog.id));
+                                }, 2000)
 			};
 
 			$scope.openDefault = function () {

@@ -131,4 +131,18 @@ describe("ngDialog", function () {
     });
 
   });
+  
+  describe("public functions checking", function () {
+    var inst, elm;
+    beforeEach(inject(function (ngDialog, $document, $timeout) {
+      inst = ngDialog.open();
+      $timeout.flush();
+      elm = $document[0].getElementById(inst.id);
+    }));
+
+    it('should be able to check if a dialog is open', inject(function(ngDialog) {
+        expect(ngDialog.isOpen(inst.id)).toBe(true);
+    }));
+    
+  });
 });
