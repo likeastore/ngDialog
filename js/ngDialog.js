@@ -29,6 +29,7 @@
     var forceBodyReload = false;
     var scopes = {};
     var openIdStack = [];
+    var keydownIsBound = false;
 
     m.provider('ngDialog', function () {
         var defaults = this.defaults = {
@@ -176,6 +177,10 @@
                             delete scopes[id];
                         }
                         openIdStack.splice(openIdStack.indexOf(id), 1);
+                        if (!openIdStack.length) {
+                            $body.unbind('keydown', privateMethods.onDocumentKeydown);
+                            keydownIsBound = false;
+                        }
                     },
 
                     closeDialog: function ($dialog, value) {
@@ -534,8 +539,9 @@
                                 }
                             });
 
-                            if (options.closeByEscape) {
+                            if (!keydownIsBound) {
                                 $body.bind('keydown', privateMethods.onDocumentKeydown);
+                                keydownIsBound = true;
                             }
 
                             if (options.closeByNavigation) {
@@ -661,7 +667,9 @@
                             if (id === '$escape') {
                                 var topDialogId = openIdStack[openIdStack.length-1];
                                 $dialog = $el(document.getElementById(topDialogId));
-                                privateMethods.closeDialog($dialog, value);
+                                if ($dialog.data('$ngDialogOptions').closeByEscape) {
+                                    privateMethods.closeDialog($dialog, value);
+                                }
                             }
                         }
 
