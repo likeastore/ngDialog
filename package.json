@@ -45,6 +45,7 @@
     "jasmine-core": "^2.2.0",
     "karma": "^0.12.31",
     "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4",
     "myth": "~0.1.6",
     "network-address": "0.0.4",
     "strata": "~0.20.1"
