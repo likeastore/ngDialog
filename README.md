@@ -371,6 +371,12 @@ An Angular promise object that is resolved if the ``.confirm()`` function is use
 
 ===
 
+### ``.isOpen(id)``
+
+Method accepts dialog's ``id`` and returns a ``Boolean`` value indicating whether the specified dialog is open. 
+
+===
+
 ### ``.close(id, value)``
 
 Method accepts dialog's ``id`` as string argument to close specific dialog window, if ``id`` is not specified it will close all currently active modals (same behavior as ``.closeAll()``). Takes an optional value to resolve the dialog promise with (or all dialog promises).
