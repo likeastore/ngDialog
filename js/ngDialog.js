@@ -457,7 +457,7 @@
                                     ctrl += ' as ' + options.controllerAs;
                                 }
 
-                                var controllerInstance = $controller(options.controller, angular.extend(
+                                var controllerInstance = $controller(ctrl, angular.extend(
                                     locals,
                                     {
                                         $scope: scope,
