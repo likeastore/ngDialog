@@ -10,7 +10,7 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 
 [package.json]
-indent_style = space
+[*.spec.js]
 indent_size = 2
 
 [*.md]
