@@ -22,7 +22,7 @@ describe('ngDialog', function () {
     expect(ngDialog).toBeDefined();
   }));
 
-  describe("no options", function () {
+  describe('no options', function () {
     var inst, elm;
     beforeEach(inject(function (ngDialog, $document, $timeout) {
       inst = ngDialog.open();
@@ -47,35 +47,35 @@ describe('ngDialog', function () {
     });
   });
 
-  describe("with a plain template", function () {
-    var elm
+  describe('with a plain template', function () {
+    var elm;
     beforeEach(inject(function (ngDialog, $timeout, $document) {
       var id = ngDialog.open({
-        template: "<div><p>some text {{1 + 1}}</p></div>",
+        template: '<div><p>some text {{1 + 1}}</p></div>',
         plain: true
       }).id;
       $timeout.flush();
       elm = $document[0].getElementById(id);
     }));
 
-    it('should have compiled the html', inject(function($document) {
+    it('should have compiled the html', inject(function () {
       expect(elm.textContent).toEqual('some text 2');
     }));
   });
 
-  describe("with a plain template URL", function () {
+  describe('with a plain template URL', function () {
     var elm;
     beforeEach(inject(function (ngDialog, $timeout, $document, $httpBackend) {
-      $httpBackend.whenGET('test.html').respond("<div><p>some text {{1 + 1}}</p></div>");
+      $httpBackend.whenGET('test.html').respond('<div><p>some text {{1 + 1}}</p></div>');
       var id = ngDialog.open({
-        templateUrl: "test.html"
+        templateUrl: 'test.html'
       }).id;
       $httpBackend.flush();
       $timeout.flush();
       elm = $document[0].getElementById(id);
     }));
 
-    it('should have compiled the html', inject(function($document) {
+    it('should have compiled the html', inject(function () {
       expect(elm.textContent).toEqual('some text 2');
     }));
   });
@@ -89,7 +89,7 @@ describe('ngDialog', function () {
         controller: Ctrl,
         resolve: {
           myLocal: function () {
-            return "local";
+            return 'local';
           },
           localPromise: function () {
             return $q.when('async local!');
@@ -129,11 +129,12 @@ describe('ngDialog', function () {
         expect(injected[4]).toEqual('async local!');
       });
     });
-
   });
 
   describe('public functions checking', function () {
-    var inst, elm;
+    var inst;
+    var elm;
+
     beforeEach(inject(function (ngDialog, $document, $timeout) {
       inst = ngDialog.open();
       $timeout.flush();

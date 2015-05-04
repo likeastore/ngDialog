@@ -2,11 +2,9 @@
 {
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
-  "plugins": [
-    "jasmine"
-  ],
   "rules": {
     "strict": 0,
     "no-extra-strict": 0,
@@ -21,6 +19,9 @@
   },
   "globals": {
     "angular": true,
-    "define": true
+    "define": true,
+    "expect": true,
+    "inject": true,
+    "jasmine": true
   }
 }
