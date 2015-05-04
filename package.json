@@ -4,6 +4,14 @@
   "homepage": "https://github.com/likeastore/ngDialog",
   "description": "Modal dialogs and popups provider for Angular.js applications",
   "main": "./js/ngDialog.js",
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
+    "build": "grunt build",
+    "prepublish": "npm run build"
+  },
+  "directories": {
+    "test": "tests"
+  },
   "keywords": [
     "angular.js",
     "modals",
@@ -28,6 +36,7 @@
   "readmeFilename": "README.md",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^0.20.0",
     "grunt": "~0.4.2",
     "grunt-contrib-cssmin": "^0.9.0",
     "grunt-contrib-jshint": "~0.7.2",

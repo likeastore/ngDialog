@@ -15,7 +15,7 @@
         // Global Variables
         factory(root.angular);
     }
-}(this, function (angular, undefined) {
+}(this, function (angular) {
     'use strict';
 
     var m = angular.module('ngDialog', []);
@@ -88,12 +88,12 @@
                         }
                     },
 
-                    deactivate: function($dialog) {
+                    deactivate: function ($dialog) {
                         $dialog.off('keydown', privateMethods.onTrapFocusKeydown);
                         $body.off('keydown', privateMethods.onTrapFocusKeydown);
                     },
 
-                    deactivateAll: function($all) {
+                    deactivateAll: function () {
                         angular.forEach(function(el) {
                             var $dialog = angular.element(el);
                             privateMethods.deactivate($dialog);
@@ -132,7 +132,7 @@
                             $body.unbind('keydown');
                         }
 
-                        if (!$dialog.hasClass("ngdialog-closing")){
+                        if (!$dialog.hasClass('ngdialog-closing')){
                             dialogsCount -= 1;
                         }
 
@@ -294,7 +294,7 @@
                         }
                     },
 
-                    getFocusableElements : function($dialog) {
+                    getFocusableElements: function ($dialog) {
                         var dialogEl = $dialog[0];
 
                         var rawElements = dialogEl.querySelectorAll(focusableElementSelector);
@@ -302,10 +302,10 @@
                         return privateMethods.filterVisibleElements(rawElements);
                     },
 
-                    filterVisibleElements: function(els) {
+                    filterVisibleElements: function (els) {
                         var visibleFocusableElements = [];
 
-                        for (var i=0; i<els.length; i++) {
+                        for (var i = 0; i < els.length; i++) {
                             var el = els[i];
 
                             if (el.offsetWidth > 0 || el.offsetHeight > 0) {
@@ -316,7 +316,7 @@
                         return visibleFocusableElements;
                     },
 
-                    getActiveDialog: function() {
+                    getActiveDialog: function () {
                         var dialogs = document.querySelectorAll('.ngdialog');
 
                         if (dialogs.length === 0) {
@@ -327,8 +327,7 @@
                         return $el(dialogs[dialogs.length - 1]);
                     },
 
-                    applyAriaAttributes: function($dialog, options) {
-
+                    applyAriaAttributes: function ($dialog, options) {
                         if (options.ariaAuto) {
                             if (!options.ariaRole) {
                                 var detectedRole = (privateMethods.getFocusableElements($dialog).length > 0) ?
@@ -401,7 +400,6 @@
                      * @return {Object} dialog
                      */
                     open: function (opts) {
-                        var self = this;
                         var options = angular.copy(defaults);
                         var localID = ++globalID;
                         var dialogID = 'ngdialog' + localID;
@@ -639,7 +637,7 @@
 
                         return defer.promise;
                     },
-                    
+
                     isOpen: function(id) {
                         var $dialog = $el(document.getElementById(id));
                         return $dialog.length > 0;
@@ -683,8 +681,8 @@
     m.directive('ngDialog', ['ngDialog', function (ngDialog) {
         return {
             restrict: 'A',
-            scope : {
-                ngDialogScope : '='
+            scope: {
+                ngDialogScope: '='
             },
             link: function (scope, elem, attrs) {
                 elem.on('click', function (e) {

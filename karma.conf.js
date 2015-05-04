@@ -3,7 +3,7 @@ var testMinified = process.argv.indexOf('--min') > -1,
 
 if (testMinified) {
     subject = 'js/ngDialog.min.js';
-    console.log("Testing minifed ngDialog")
+    console.log('Testing minifed ngDialog');
 } else {
     subject = 'js/ngDialog.js';
 }

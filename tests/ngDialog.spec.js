@@ -1,4 +1,4 @@
-describe("ngDialog", function () {
+describe('ngDialog', function () {
   var any = jasmine.any,
       spy = jasmine.createSpy;
 
@@ -80,7 +80,7 @@ describe("ngDialog", function () {
     }));
   });
 
-  describe("controller instantiation", function () {
+  describe('controller instantiation', function () {
     var Ctrl;
     beforeEach(inject(function (ngDialog, $timeout, $q) {
       Ctrl = spy('DialogCtrl');
@@ -103,7 +103,7 @@ describe("ngDialog", function () {
       expect(Ctrl).toHaveBeenCalled();
     });
 
-    describe("dependencies", function () {
+    describe('dependencies', function () {
       var injected;
       beforeEach(function () {
         injected = Ctrl.calls.mostRecent().args;
@@ -131,8 +131,8 @@ describe("ngDialog", function () {
     });
 
   });
-  
-  describe("public functions checking", function () {
+
+  describe('public functions checking', function () {
     var inst, elm;
     beforeEach(inject(function (ngDialog, $document, $timeout) {
       inst = ngDialog.open();
@@ -143,6 +143,6 @@ describe("ngDialog", function () {
     it('should be able to check if a dialog is open', inject(function(ngDialog) {
         expect(ngDialog.isOpen(inst.id)).toBe(true);
     }));
-    
+
   });
 });
