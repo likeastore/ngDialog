@@ -31,7 +31,7 @@ module.exports = function (grunt) {
             options: {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> (<%= pkg.homepage %>) */\n'
             },
-            minify:{
+            minify: {
                 files: {
                     'css/ngDialog.min.css': ['css/ngDialog.css'],
                     'css/ngDialog-theme-default.min.css': ['css/ngDialog-theme-default.css'],
