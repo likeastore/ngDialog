@@ -121,6 +121,11 @@
                         var id = $dialog.attr('id');
                         var scope = scopes[id];
 
+                        if (!scope) {
+                            // Already closed
+                            return;
+                        }
+
                         if (typeof $window.Hammer !== 'undefined') {
                             var hammerTime = scope.hammerTime;
                             hammerTime.off('tap', closeByDocumentHandler);
@@ -296,7 +301,7 @@
 
                         if (contentElements.length > 0) {
                             var contentElement = contentElements[0];
-                            $el(contentElement).attr('tabindex', '0');
+                            $el(contentElement).attr('tabindex', '-1').css('outline', '0');
                             contentElement.focus();
                         }
                     },
@@ -677,8 +682,8 @@
                     closeAll: function (value) {
                         var $all = document.querySelectorAll('.ngdialog');
 
-                        // Reverse order to ensure focus restorationi works as expected
-                        for (var i = $all.length - 1; i >= 0; i--) {
+                        // Reverse order to ensure focus restoration works as expected
+                        for (var i=$all.length-1; i>=0; i--) {
                             var dialog = $all[i];
                             privateMethods.closeDialog($el(dialog), value);
                         }
