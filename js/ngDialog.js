@@ -668,7 +668,7 @@
                             privateMethods.closeDialog($dialog, value);
                         } else {
                             if (id === '$escape') {
-                                var topDialogId = openIdStack[openIdStack.length-1];
+                                var topDialogId = openIdStack[openIdStack.length - 1];
                                 $dialog = $el(document.getElementById(topDialogId));
                                 if ($dialog.data('$ngDialogOptions').closeByEscape) {
                                     privateMethods.closeDialog($dialog, value);
@@ -683,7 +683,7 @@
                         var $all = document.querySelectorAll('.ngdialog');
 
                         // Reverse order to ensure focus restoration works as expected
-                        for (var i=$all.length-1; i>=0; i--) {
+                        for (var i = $all.length - 1; i >= 0; i--) {
                             var dialog = $all[i];
                             privateMethods.closeDialog($el(dialog), value);
                         }
