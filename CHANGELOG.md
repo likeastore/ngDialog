@@ -1,12 +1,12 @@
 # 0.4.0
 
-- [x] new `resolve` option for defining locals for ngDialog controller by [@rur](https://github.com/rur) (https://github.com/likeastore/ngDialog/pull/182)
-- [x] support for `controllerAs` pattern by [@andrewogburn](https://github.com/andrewogburn) and [@sprbikkel](https://github.com/sprbikkel) (https://github.com/likeastore/ngDialog/pull/205, https://github.com/likeastore/ngDialog/pull/224)
-- [x] added accessibility improvements (keyboard focus management / ARIA attribute) by [@richardszalay](https://github.com/richardszalay) (https://github.com/likeastore/ngDialog/pull/166)
-- [x] added `isOpen(id)` public method by [@kasimoglou](https://github.com/kasimoglou) (https://github.com/likeastore/ngDialog/pull/219) 
-- [x] fix for `esc` should only close top dialog by [@jemise111](https://github.com/jemise111) (https://github.com/likeastore/ngDialog/pull/226)
-- [x] fix for flickering dialogs in Internet Explorer by [@MvHMontySCOUT](https://github.com/MvHMontySCOUT) (https://github.com/likeastore/ngDialog/issues/142)
-- [x] fix issue when opening multiple dialogs simultaneously by [@bchelli](https://github.com/bchelli) (https://github.com/likeastore/ngDialog/pull/221)
+- [x] new `resolve` option for defining locals for ngDialog controller by [@rur](https://github.com/rur) ([PR-182](https://github.com/likeastore/ngDialog/pull/182))
+- [x] support for `controllerAs` pattern by [@andrewogburn](https://github.com/andrewogburn) and [@sprbikkel](https://github.com/sprbikkel) ([PR-205](https://github.com/likeastore/ngDialog/pull/205), [PR-224](https://github.com/likeastore/ngDialog/pull/224))
+- [x] added accessibility improvements (keyboard focus management / ARIA attribute) by [@richardszalay](https://github.com/richardszalay) ([PR-166](https://github.com/likeastore/ngDialog/pull/166))
+- [x] added `isOpen(id)` public method by [@kasimoglou](https://github.com/kasimoglou) ([PR-219](https://github.com/likeastore/ngDialog/pull/219)) 
+- [x] fix for `esc` should only close top dialog by [@jemise111](https://github.com/jemise111) ([PR-226](https://github.com/likeastore/ngDialog/pull/226))
+- [x] fix for flickering dialogs in Internet Explorer by [@MvHMontySCOUT](https://github.com/MvHMontySCOUT) ([PR-207](https://github.com/likeastore/ngDialog/pull/207), discussion - [ISSUE-142](https://github.com/likeastore/ngDialog/issues/142))
+- [x] fix issue when opening multiple dialogs simultaneously by [@bchelli](https://github.com/bchelli) ([PR-221](https://github.com/likeastore/ngDialog/pull/221))
 - [x] various minor bug fixes, general improvements and examples updates
 
 Thanks everybody, you're awesome! :dancer: :+1:
