@@ -30,16 +30,6 @@
     var scopes = {};
     var openIdStack = [];
     var keydownIsBound = false;
-    var reqAnimationFrame = (
-        window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(callback, 1000 / 60);
-        }
-    );
 
     m.provider('ngDialog', function () {
         var defaults = this.defaults = {
@@ -73,8 +63,8 @@
 
         var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
 
-        this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$window', '$controller', '$injector',
-            function ($document, $templateCache, $compile, $q, $http, $rootScope, $window, $controller, $injector) {
+        this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller', '$injector',
+            function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller, $injector) {
                 var $body = $document.find('body');
                 if (forceBodyReload) {
                     $rootScope.$on('$locationChangeSuccess', function () {
@@ -526,7 +516,7 @@
                                 privateMethods.closeDialog($dialog, value);
                             };
 
-                            reqAnimationFrame(function () {
+                            $timeout(function () {
                                 var $activeDialogs = document.querySelectorAll('.ngdialog');
                                 privateMethods.deactivateAll($activeDialogs);
 
@@ -550,8 +540,6 @@
                                 } else {
                                     $rootScope.$broadcast('ngDialog.opened', $dialog);
                                 }
-
-                                $rootScope.$apply();
                             });
 
                             if (!keydownIsBound) {
