@@ -5,6 +5,8 @@
 [![github tag](https://img.shields.io/github/tag/likeastore/ngDialog.svg)](https://github.com/likeastore/ngDialog/tags)
 [![Download Count](https://img.shields.io/npm/dm/ng-dialog.svg)](http://www.npmjs.com/package/ng-dialog)
 
+**LOOKING FOR MAINTAINER. If you're up ping [@voronianski](https://github.com/voronianski) please!** 
+
 > Modal dialogs and popups provider for [Angular.js](http://angularjs.org/) applications.
 
 ngDialog is small (~2Kb), has minimalistic API, highly customizable through themes and has only Angular.js as dependency.
