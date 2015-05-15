@@ -1,3 +1,5 @@
+### LOOKING FOR MAINTAINER. IF YOU'RE UP PLEASE PING [@voronianski](https://github.com/voronianski)!
+
 # ngDialog
 
 [![build status](http://img.shields.io/travis/likeastore/ngDialog.svg)](https://travis-ci.org/likeastore/ngDialog)
@@ -5,7 +7,6 @@
 [![github tag](https://img.shields.io/github/tag/likeastore/ngDialog.svg)](https://github.com/likeastore/ngDialog/tags)
 [![Download Count](https://img.shields.io/npm/dm/ng-dialog.svg)](http://www.npmjs.com/package/ng-dialog)
 
-**LOOKING FOR MAINTAINER. If you're up ping [@voronianski](https://github.com/voronianski) please!** 
 
 > Modal dialogs and popups provider for [Angular.js](http://angularjs.org/) applications.
 
