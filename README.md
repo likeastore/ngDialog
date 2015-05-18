@@ -1,4 +1,4 @@
-### LOOKING FOR MAINTAINER. PLEASE PING [@voronianski](https://github.com/voronianski)!
+### LOOKING FOR MAINTAINER. PLEASE PING [@voronianski](https://twitter.com/voronianski)!
 
 # ngDialog
 
