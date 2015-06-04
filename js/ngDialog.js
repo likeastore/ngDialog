@@ -441,8 +441,6 @@
                             var template = setup.template,
                                 locals = setup.locals;
 
-                            $templateCache.put(options.template || options.templateUrl, template);
-
                             if (options.showClose) {
                                 template += '<div class="ngdialog-close"></div>';
                             }
@@ -605,7 +603,7 @@
                                 return loadTemplateUrl(tmpl, {cache: false});
                             }
 
-                            return $templateCache.get(tmpl) || loadTemplateUrl(tmpl, {cache: true});
+                            return loadTemplateUrl(tmpl, {cache: $templateCache});
                         }
                     },
 

@@ -80,6 +80,29 @@ describe('ngDialog', function () {
     }));
   });
 
+  describe('with already cached template URL', function () {
+    var elm;
+    beforeEach(inject(function (ngDialog, $timeout, $document, $httpBackend, $compile, $rootScope) {
+      $httpBackend.whenGET('cached.html').respond('<div><p>some text {{1 + 1}}</p></div>');
+      $compile('<div><div ng-include src="\'cached.html\'"></div></div>')($rootScope);
+
+      $rootScope.$digest();
+      $httpBackend.flush();
+
+      var id = ngDialog.open({
+        templateUrl: 'cached.html'
+      }).id;
+
+      $timeout.flush();
+
+      elm = $document[0].getElementById(id);
+    }));
+
+    it('should have compiled the html', inject(function () {
+      expect(elm.textContent).toEqual('some text 2');
+    }));
+  });
+
   describe('controller instantiation', function () {
     var Ctrl;
     beforeEach(inject(function (ngDialog, $timeout, $q) {
