@@ -276,13 +276,13 @@ Specifies the value for the ``role`` attribute that should be applied to the dia
 
 See [Accessibility](#Accessibility) for more information.
 
-##### ``ariaLaballedById {String}``
+##### ``ariaLabelledById {String}``
 
 Specifies the value for the ``aria-labelledby`` attribute that should be applied to the dialog element. Default value is ``null`` (unspecified)
 
 If specified, the value is not validated against the DOM. See [Accessibility](#Accessibility) for more information.
 
-##### ``ariaLaballedBySelector {String}``
+##### ``ariaLabelledBySelector {String}``
 
 Specifies the CSS selector for the element to be referenced by the ``aria-labelledby`` attribute on the dialog element. Default value is ``null`` (unspecified)
 
