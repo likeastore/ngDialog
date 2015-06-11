@@ -148,7 +148,7 @@
                             previousFocus.focus();
                         }
 
-                        $rootScope.$broadcast('ngDialog.closing', $dialog);
+                        $rootScope.$broadcast('ngDialog.closing', $dialog, value);
                         dialogsCount = dialogsCount < 0 ? 0 : dialogsCount;
                         if (animationEndSupport) {
                             scope.$destroy();
@@ -158,7 +158,7 @@
                                     $body.removeClass('ngdialog-open');
                                     privateMethods.resetBodyPadding();
                                 }
-                                $rootScope.$broadcast('ngDialog.closed', $dialog);
+                                $rootScope.$broadcast('ngDialog.closed', $dialog, value);
                             }).addClass('ngdialog-closing');
                         } else {
                             scope.$destroy();
@@ -167,7 +167,7 @@
                                 $body.removeClass('ngdialog-open');
                                 privateMethods.resetBodyPadding();
                             }
-                            $rootScope.$broadcast('ngDialog.closed', $dialog);
+                            $rootScope.$broadcast('ngDialog.closed', $dialog, value);
                         }
                         if (defers[id]) {
                             defers[id].resolve({
