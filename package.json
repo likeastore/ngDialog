@@ -34,7 +34,7 @@
   "readmeFilename": "README.md",
   "license": "MIT",
   "dependencies": {
-    "angular": "1.3.x"
+    "angular": "^1.3.x"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
