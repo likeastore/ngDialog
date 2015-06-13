@@ -44,6 +44,7 @@
     <a href="" ng-click="openPlain()">Plain theme</a>
     <a href="" ng-click="openPlainCustomWidth()">Plain theme with custom width</a>
     <a href="" ng-click="openInlineController()">Inline controller</a>
+    <a href="" ng-click="openControllerAsController()">Controller with usage of ControllerAs syntax</a>
     <a href="" ng-click="openTemplate()">Open with external template for modal</a>
     <a href="" ng-click="openTemplateNoCache()">Open with external template for modal (disabled cache)</a>
     <a href="" ng-click="openTimed()">Open and use return value to close later</a>
@@ -99,6 +100,17 @@
             <h3>ngDialog template</h3>
             <p ng-show="theme">Test content for <code>{{theme}}</code></p>
             <p ng-show="exampleExternalData">Example data from external service: <code>{{exampleExternalData}}</code></p>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="controllerAsDialog">
+        <div class="ngdialog-message">
+            <h3>ngDialog template</h3>
+            <p>This template uses controllerAs syntax</p>
+            <p>Value from controller {{ctrl.value}}</p>
         </div>
         <div class="ngdialog-buttons">
             <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Close</button>
@@ -291,6 +303,17 @@
                 });
             };
 
+            $scope.openControllerAsController = function () {
+                $rootScope.theme = 'ngdialog-theme-plain';
+
+                ngDialog.open({
+                    template: 'controllerAsDialog',
+                    controller: 'InsideCtrlAs',
+                    controllerAs: 'ctrl',
+                    className: 'ngdialog-theme-plain'
+                });
+            };
+
             $scope.openTemplate = function () {
                 $scope.value = true;
 
@@ -370,6 +393,10 @@
                     controller: 'SecondModalCtrl'
                 });
             };
+        });
+
+        app.controller('InsideCtrlAs', function () {
+            this.value = 'value from controller';
         });
 
         app.controller('SecondModalCtrl', function ($scope, ngDialog) {
