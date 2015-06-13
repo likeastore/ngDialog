@@ -38,6 +38,10 @@
 	left: 0;
 }
 
+.ngdialog.ngdialog-disabled-animation * {
+    animation: none !important;
+}
+
 .ngdialog-overlay {
 	position: fixed;
 	background: rgba(0, 0, 0, 0.4);
