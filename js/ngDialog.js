@@ -26,6 +26,7 @@
     var animationEndSupport = isDef(style.animation) || isDef(style.WebkitAnimation) || isDef(style.MozAnimation) || isDef(style.MsAnimation) || isDef(style.OAnimation);
     var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
     var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
+    var disabledAnimationClass = 'ngdialog-disabled-animation';
     var forceBodyReload = false;
     var scopes = {};
     var openIdStack = [];
@@ -34,6 +35,7 @@
     m.provider('ngDialog', function () {
         var defaults = this.defaults = {
             className: 'ngdialog-theme-default',
+            disableAnimation: false,
             plain: false,
             showClose: true,
             closeByDocument: true,
@@ -404,6 +406,7 @@
                      * - controller {String}
                      * - controllerAs {String}
                      * - className {String} - dialog theme class
+                     * - disableAnimation {Boolean} - set to true to disable animation
                      * - showClose {Boolean} - show close button, default true
                      * - closeByEscape {Boolean} - default true
                      * - closeByDocument {Boolean} - default true
@@ -478,6 +481,10 @@
 
                             if (options.className) {
                                 $dialog.addClass(options.className);
+                            }
+
+                            if (options.disableAnimation) {
+                                $dialog.addClass(disabledAnimationClass);
                             }
 
                             if (options.appendTo && angular.isString(options.appendTo)) {
