@@ -190,6 +190,10 @@ ngDialog.open({
 
 Check [themes](https://github.com/likeastore/ngDialog#themes) block to learn more.
 
+##### ``disableAnimation {Boolean}``
+
+If ``true`` then animation for the dialog will be disabled, default ``false``.
+
 ##### ``overlay {Boolean}``
 
 If ``false`` it allows to hide overlay div behind the modals, default ``true``.
