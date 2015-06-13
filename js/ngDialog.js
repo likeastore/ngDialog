@@ -120,6 +120,7 @@
                     },
 
                     performCloseDialog: function ($dialog, value) {
+                        var options = $dialog.data('$ngDialogOptions');
                         var id = $dialog.attr('id');
                         var scope = scopes[id];
 
@@ -152,7 +153,7 @@
 
                         $rootScope.$broadcast('ngDialog.closing', $dialog, value);
                         dialogsCount = dialogsCount < 0 ? 0 : dialogsCount;
-                        if (animationEndSupport) {
+                        if (animationEndSupport && !options.disableAnimation) {
                             scope.$destroy();
                             $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
                                 $dialog.remove();
