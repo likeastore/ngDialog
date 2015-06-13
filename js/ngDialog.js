@@ -671,6 +671,8 @@
                                 if ($dialog.data('$ngDialogOptions').closeByEscape) {
                                     privateMethods.closeDialog($dialog, value);
                                 }
+                            } else {
+                                publicMethods.closeAll(value);
                             }
                         }
 
