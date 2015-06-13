@@ -104,6 +104,12 @@ ngDialog.open({
 });
 ```
 
+##### ``controllerAs {String} ``
+
+You could optionally specify `controllerAs` parameter for your controller. Then inside your template it will be possible to refer this controller by value specified by `controllerAs`.
+
+Usage of `controllerAs` syntax is currently recommended by Angular team.
+
 ##### ``resolve {Object.<string, function>=}``
 An optional map of dependencies which should be injected into the controller.
 If any of these dependencies are promises, ngDialog will wait for them all to be resolved
