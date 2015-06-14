@@ -726,6 +726,7 @@
                         className: attrs.ngDialogClass || defaults.className,
                         controller: attrs.ngDialogController,
                         controllerAs: attrs.ngDialogControllerAs,
+                        bindToController: attrs.ngDialogBindToController,
                         scope: ngDialogScope,
                         data: attrs.ngDialogData,
                         showClose: attrs.ngDialogShowClose === 'false' ? false : (attrs.ngDialogShowClose === 'true' ? true : defaults.showClose),
