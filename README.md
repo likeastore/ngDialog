@@ -1,5 +1,4 @@
-### LOOKING FOR MAINTAINER. PLEASE PING [@voronianski](https://twitter.com/voronianski)!
-
+<!-- ### LOOKING FOR MAINTAINER. PLEASE PING [@voronianski](https://twitter.com/voronianski)! -->
 # ngDialog
 
 [![build status](http://img.shields.io/travis/likeastore/ngDialog.svg)](https://travis-ci.org/likeastore/ngDialog)
