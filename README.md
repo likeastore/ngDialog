@@ -434,6 +434,9 @@ Some imaginary button, for example, will look like:
 </button>
 ```
 
+You could optionally use ``ng-dialog-bind-to-controller`` to bind scope you've defined via parameter of directive to controller.
+More information about bindToController is available [here](http://blog.thoughtram.io/angularjs/2015/01/02/exploring-angular-1.3-bindToController.html).
+
 Directive contains one more additional but very useful option, it's an attribute named ``ng-dialog-close-previous``. It allows you to close previously opened dialogs automatically.
 
 ## Events
