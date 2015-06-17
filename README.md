@@ -21,10 +21,22 @@ You can download all necessary ngDialog files manually or install it with bower:
 bower install ngDialog
 ```
 
+Then add `ngDialog` as a dependency for your app:
+
+```javascript
+var app = angular.module('exampleApp', ['ngDialog']);
+```
+
 or npm:
 
 ```bash
 npm install ng-dialog
+```
+
+Then add `ngDialog` as a dependency for your app:
+
+```javascript
+var app = angular.module('exampleApp', [require('ngDialog')]);
 ```
 
 ## Usage
@@ -32,8 +44,6 @@ npm install ng-dialog
 You need only to include ``ngDialog.js`` and  ``ngDialog.css`` (as minimal setup) to your project and then you can start using ``ngDialog`` provider in your directives, controllers and services. For example in controllers:
 
 ```javascript
-var app = angular.module('exampleApp', ['ngDialog']);
-
 app.controller('MainCtrl', function ($scope, ngDialog) {
     $scope.clickToOpen = function () {
         ngDialog.open({ template: 'popupTmpl.html' });
@@ -390,7 +400,7 @@ An Angular promise object that is resolved if the ``.confirm()`` function is use
 
 ### ``.isOpen(id)``
 
-Method accepts dialog's ``id`` and returns a ``Boolean`` value indicating whether the specified dialog is open. 
+Method accepts dialog's ``id`` and returns a ``Boolean`` value indicating whether the specified dialog is open.
 
 ===
 
