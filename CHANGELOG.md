@@ -1,14 +1,30 @@
+# 0.4.0
+
+- [x] new `resolve` option for defining locals for ngDialog controller by [@rur](https://github.com/rur) ([PR-182](https://github.com/likeastore/ngDialog/pull/182))
+- [x] support for `controllerAs` pattern by [@andrewogburn](https://github.com/andrewogburn) and [@sprbikkel](https://github.com/sprbikkel) ([PR-205](https://github.com/likeastore/ngDialog/pull/205), [PR-224](https://github.com/likeastore/ngDialog/pull/224))
+- [x] added accessibility improvements (keyboard focus management / ARIA attribute) by [@richardszalay](https://github.com/richardszalay) ([PR-166](https://github.com/likeastore/ngDialog/pull/166))
+- [x] added `isOpen(id)` public method by [@kasimoglou](https://github.com/kasimoglou) ([PR-219](https://github.com/likeastore/ngDialog/pull/219)) 
+- [x] fix for `esc` should only close top dialog by [@jemise111](https://github.com/jemise111) ([PR-226](https://github.com/likeastore/ngDialog/pull/226))
+- [x] fix for flickering dialogs in Internet Explorer by [@MvHMontySCOUT](https://github.com/MvHMontySCOUT) ([PR-207](https://github.com/likeastore/ngDialog/pull/207), discussion - [ISSUE-142](https://github.com/likeastore/ngDialog/issues/142))
+- [x] fix issue when opening multiple dialogs simultaneously by [@bchelli](https://github.com/bchelli) ([PR-221](https://github.com/likeastore/ngDialog/pull/221))
+- [x] various minor bug fixes, general improvements and examples updates
+
+Thanks everybody, you're awesome! :dancer: :+1:
+
 # 0.3.12
 
 - [x] better `box-sizing` policy
 
 # 0.3.11
+
 - [x] prevent the modal from closing if preCloseCallback returns a falsy value
 
 # 0.3.10
+
 - [x] fix negative dialogs count
 
 # 0.3.9
+
 - [x] fix destroy scope with animation for multiple dialog [ISSUE-125](https://github.com/likeastore/ngDialog/issues/125)
 
 # 0.3.8

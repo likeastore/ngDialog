@@ -1,6 +1,13 @@
+<!-- ### LOOKING FOR MAINTAINER. PLEASE PING [@voronianski](https://twitter.com/voronianski)! -->
 # ngDialog
 
-Modal dialogs and popups provider for [Angular.js](http://angularjs.org/) applications.
+[![build status](http://img.shields.io/travis/likeastore/ngDialog.svg)](https://travis-ci.org/likeastore/ngDialog)
+[![npm version](http://badge.fury.io/js/ng-dialog.svg)](http://badge.fury.io/js/ng-dialog)
+[![github tag](https://img.shields.io/github/tag/likeastore/ngDialog.svg)](https://github.com/likeastore/ngDialog/tags)
+[![Download Count](https://img.shields.io/npm/dm/ng-dialog.svg)](http://www.npmjs.com/package/ng-dialog)
+
+
+> Modal dialogs and popups provider for [Angular.js](http://angularjs.org/) applications.
 
 ngDialog is small (~2Kb), has minimalistic API, highly customizable through themes and has only Angular.js as dependency.
 
@@ -28,9 +35,9 @@ You need only to include ``ngDialog.js`` and  ``ngDialog.css`` (as minimal setup
 var app = angular.module('exampleApp', ['ngDialog']);
 
 app.controller('MainCtrl', function ($scope, ngDialog) {
-	$scope.clickToOpen = function () {
-		ngDialog.open({ template: 'popupTmpl.html' });
-	};
+    $scope.clickToOpen = function () {
+        ngDialog.open({ template: 'popupTmpl.html' });
+    };
 });
 ```
 
@@ -52,8 +59,8 @@ Dialog template can be loaded through ``path`` to external html template or ``<s
 
 ```html
 <script type="text/ng-template" id="templateId">
-	<h1>Template heading</h1>
-	<p>Content goes here</p>
+    <h1>Template heading</h1>
+    <p>Content goes here</p>
 </script>
 ```
 
@@ -69,8 +76,8 @@ If ``true`` allows to use plain string as template, default ``false``:
 
 ```javascript
 ngDialog.open({
-	template: '<p>my template</p>',
-	plain: true
+    template: '<p>my template</p>',
+    plain: true
 });
 ```
 
@@ -80,8 +87,8 @@ Controller that will be used for dialog window if necessary. The controller can 
 
 ```javascript
 ngDialog.open({
-	template: 'externalTemplate.html',
-	controller: 'SomeController'
+    template: 'externalTemplate.html',
+    controller: 'SomeController'
 });
 ```
 
@@ -89,10 +96,44 @@ or
 
 ```javascript
 ngDialog.open({
-	template: 'externalTemplate.html',
-	controller: ['$scope', 'otherService', function($scope, otherService) {
-		// controller logic
-	}]
+    template: 'externalTemplate.html',
+    controller: ['$scope', 'otherService', function($scope, otherService) {
+        // controller logic
+    }]
+});
+```
+
+##### ``controllerAs {String} ``
+
+You could optionally specify `controllerAs` parameter for your controller. Then inside your template it will be possible to refer this controller by value specified by `controllerAs`.
+
+Usage of `controllerAs` syntax is currently recommended by Angular team.
+
+##### ``resolve {Object.<string, function>=}``
+An optional map of dependencies which should be injected into the controller.
+If any of these dependencies are promises, ngDialog will wait for them all to be resolved
+or one to be rejected before the controller is instantiated.
+
+If all the promises are resolved successfully, the values of the resolved promises are
+injected.
+
+The map object
+is:
+- `key` – `{string}`: a name of a dependency to be injected into the controller.
+- `factory` - `{string|function}`: If `string` then it is an alias for a service.
+  Otherwise if function, then it is injected using `$injector.invoke` and the return
+  value is treated as the dependency. If the result is a promise, it is resolved
+  before its value is injected into the controller.
+
+
+```javascript
+ngDialog.open({
+    controller: function Ctrl(dep) {/*...*/},
+    resolve: {
+        dep: function depFactory() {
+            return 'dep value';
+        }
+    }
 });
 ```
 
@@ -104,9 +145,9 @@ Scope object that will be passed to dialog. If you use controller with separate 
 $scope.value = true;
 
 ngDialog.open({
-	template: 'externalTemplate.html',
-	className: 'ngdialog-theme-plain',
-	scope: $scope
+    template: 'externalTemplate.html',
+    className: 'ngdialog-theme-plain',
+    scope: $scope
 });
 ```
 
@@ -122,8 +163,8 @@ In addition ``.closeThisDialog(value)`` method gets injected to passed ``$scope`
 
 ```html
 <div class="dialog-contents">
-	<input type="text"/>
-	<input type="button" value="OK" ng-click="checkInput() && closeThisDialog('Some value')"/>
+    <input type="text"/>
+    <input type="button" value="OK" ng-click="checkInput() && closeThisDialog('Some value')"/>
 </div>
 ```
 
@@ -141,12 +182,16 @@ This example enables one of the built-in ngDialog themes - ``ngdialog-theme-defa
 
 ```javascript
 ngDialog.open({
-	template: 'templateId',
-	className: 'ngdialog-theme-default'
+    template: 'templateId',
+    className: 'ngdialog-theme-default'
 });
 ```
 
 Check [themes](https://github.com/likeastore/ngDialog#themes) block to learn more.
+
+##### ``disableAnimation {Boolean}``
+
+If ``true`` then animation for the dialog will be disabled, default ``false``.
 
 ##### ``overlay {Boolean}``
 
@@ -176,7 +221,7 @@ Pass ``false`` to disable template caching. Useful for developing purposes, defa
 
 ##### ``name {String} | {Number}``
 
-Give a name for a dialog instance. It is useful for identifying specific dialog if there are multiple dialog boxes opened. 
+Give a name for a dialog instance. It is useful for identifying specific dialog if there are multiple dialog boxes opened.
 
 ##### ``preCloseCallback {String} | {Function}``
 
@@ -190,12 +235,12 @@ This example uses an inline function with a ``window.confirm`` call in the ``pre
 
 ```javascript
 ngDialog.open({
-	preCloseCallback: function(value) {
-		if(confirm('Are you sure you want to close without saving your changes?')) {
-			return true;
-		}
-		return false;
-	}
+    preCloseCallback: function(value) {
+        if(confirm('Are you sure you want to close without saving your changes?')) {
+            return true;
+        }
+        return false;
+    }
 });
 ```
 
@@ -203,20 +248,20 @@ In another example, a callback function with a nested confirm ngDialog is used:
 
 ```javascript
 ngDialog.open({
-	preCloseCallback: function(value) {
-		var nestedConfirmDialog = ngDialog.openConfirm({
-			template:'\
-				<p>Are you sure you want to close the parent dialog?</p>\
-				<div class="ngdialog-buttons">\
-					<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">No</button>\
-					<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(1)">Yes</button>\
-				</div>',
-			plain: true
-		});
+    preCloseCallback: function(value) {
+        var nestedConfirmDialog = ngDialog.openConfirm({
+            template:'\
+                <p>Are you sure you want to close the parent dialog?</p>\
+                <div class="ngdialog-buttons">\
+                    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">No</button>\
+                    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(1)">Yes</button>\
+                </div>',
+            plain: true
+        });
 
-		// NOTE: return the promise from openConfirm
-		return nestedConfirmDialog;
-	}
+        // NOTE: return the promise from openConfirm
+        return nestedConfirmDialog;
+    }
 });
 ```
 
@@ -240,13 +285,13 @@ Specifies the value for the ``role`` attribute that should be applied to the dia
 
 See [Accessibility](#Accessibility) for more information.
 
-##### ``ariaLaballedById {String}``
+##### ``ariaLabelledById {String}``
 
 Specifies the value for the ``aria-labelledby`` attribute that should be applied to the dialog element. Default value is ``null`` (unspecified)
 
 If specified, the value is not validated against the DOM. See [Accessibility](#Accessibility) for more information.
 
-##### ``ariaLaballedBySelector {String}``
+##### ``ariaLabelledBySelector {String}``
 
 Specifies the CSS selector for the element to be referenced by the ``aria-labelledby`` attribute on the dialog element. Default value is ``null`` (unspecified)
 
@@ -273,13 +318,13 @@ You're able to set default settings through ``ngDialogProvider``:
 ```javascript
 var app = angular.module('myApp', ['ngDialog']);
 app.config(['ngDialogProvider', function (ngDialogProvider) {
-	ngDialogProvider.setDefaults({
-		className: 'ngdialog-theme-default',
-		plain: true,
-		showClose: true,
-		closeByDocument: true,
-		closeByEscape: true
-	});
+    ngDialogProvider.setDefaults({
+        className: 'ngdialog-theme-default',
+        plain: true,
+        showClose: true,
+        closeByDocument: true,
+        closeByEscape: true
+    });
 }]);
 ```
 
@@ -305,11 +350,11 @@ This allows you do to something like this:
 
 ```javascript
 var dialog = ngDialog.open({
-	template: 'templateId'
+    template: 'templateId'
 });
 
 dialog.closePromise.then(function (data) {
-	console.log(data.id + ' has been dismissed.');
+    console.log(data.id + ' has been dismissed.');
 });
 ```
 
@@ -331,15 +376,21 @@ The function accepts a single optional parameter which is used as the value of t
 
 ```html
 <div class="dialog-contents">
-	Some message
-	<button ng-click="closeThisDialog()">Cancel</button>
-	<button ng-click="confirm()">Confirm</button>
+    Some message
+    <button ng-click="closeThisDialog()">Cancel</button>
+    <button ng-click="confirm()">Confirm</button>
 </div>
 ```
 
 ### Returns:
 
 An Angular promise object that is resolved if the ``.confirm()`` function is used to close the dialog, otherwise the promise is rejected. The resolve value and the reject reason is defined by the value passed to the ``confirm()`` or ``closeThisDialog()`` call respectively.
+
+===
+
+### ``.isOpen(id)``
+
+Method accepts dialog's ``id`` and returns a ``Boolean`` value indicating whether the specified dialog is open. 
 
 ===
 
@@ -363,7 +414,7 @@ Adds additional listener on every ``$locationChangeSuccess`` event and gets upda
 var app = angular.module('exampleApp', ['ngDialog']);
 
 app.config(function (ngDialogProvider) {
-	ngDialogProvider.setForceBodyReload(true);
+    ngDialogProvider.setForceBodyReload(true);
 });
 ```
 
@@ -375,13 +426,16 @@ Some imaginary button, for example, will look like:
 
 ```html
 <button type="button"
-	ng-dialog="templateId.html"
-	ng-dialog-class="ngdialog-theme-flat"
-	ng-dialog-controller="ModalCtrl"
-	ng-dialog-close-previous>
-	Open modal text
+    ng-dialog="templateId.html"
+    ng-dialog-class="ngdialog-theme-flat"
+    ng-dialog-controller="ModalCtrl"
+    ng-dialog-close-previous>
+    Open modal text
 </button>
 ```
+
+You could optionally use ``ng-dialog-bind-to-controller`` to bind scope you've defined via parameter of directive to controller.
+More information about bindToController is available [here](http://blog.thoughtram.io/angularjs/2015/01/02/exploring-angular-1.3-bindToController.html).
 
 Directive contains one more additional but very useful option, it's an attribute named ``ng-dialog-close-previous``. It allows you to close previously opened dialogs automatically.
 
@@ -399,7 +453,7 @@ This allows you to register your own listeners, example:
 
 ```javascript
 $rootScope.$on('ngDialog.opened', function (e, $dialog) {
-	console.log('ngDialog opened: ' + $dialog.attr('id'));
+    console.log('ngDialog opened: ' + $dialog.attr('id'));
 });
 ```
 
@@ -439,13 +493,13 @@ Dialog Content ``role`` attribute:
 
 ## CDN
 
-_ngDialog_ is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dialog). For example, please use following urls for version ``0.3.7``.
+_ngDialog_ is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dialog). For example, please use following urls for version ``0.3.12``.
 
 ```html
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-default.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/css/ngDialog-theme-plain.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.7/js/ngDialog.min.js
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog-theme-default.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog-theme-plain.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/js/ngDialog.min.js
 ```
 
 ## References
