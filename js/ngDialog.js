@@ -465,18 +465,21 @@
 
                             if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
 
-                                var ctrl = options.controller;
+                                var label;
+
                                 if (options.controllerAs && angular.isString(options.controllerAs)) {
-                                    ctrl += ' as ' + options.controllerAs;
+                                    label = options.controllerAs;
                                 }
 
-                                var controllerInstance = $controller(ctrl, angular.extend(
+                                var controllerInstance = $controller(options.controller, angular.extend(
                                     locals,
                                     {
                                         $scope: scope,
                                         $element: $dialog
-                                    }
-                                ));
+                                    }),
+                                    null,
+                                    label
+                                );
                                 $dialog.data('$ngDialogControllerController', controllerInstance);
                             }
 
