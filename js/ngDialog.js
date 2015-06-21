@@ -700,6 +700,10 @@
                         }
                     },
 
+                    getOpenDialogs: function() {
+                        return openIdStack;
+                    },
+
                     getDefaults: function () {
                         return defaults;
                     }
