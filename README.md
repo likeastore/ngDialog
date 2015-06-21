@@ -406,6 +406,12 @@ Method manages closing all active modals on the page. Takes an optional value to
 
 ===
 
+### ``.getOpenDialogs()``
+
+Method that returns array which includes ids of opened dialogs.
+
+===
+
 ### ``.setForceBodyReload({Boolean})``
 
 Adds additional listener on every ``$locationChangeSuccess`` event and gets update version of ``body`` into dialog. Maybe useful in some rare cases when you're dependant on DOM changes, defaults to ``false``. Use it in module's config as provider instance:
