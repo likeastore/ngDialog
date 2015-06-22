@@ -596,7 +596,9 @@
                         };
 
                         function loadTemplateUrl (tmpl, config) {
+                            $rootScope.$broadcast('ngDialog.templateLoading', tmpl);
                             return $http.get(tmpl, (config || {})).then(function(res) {
+                                $rootScope.$broadcast('ngDialog.templateLoaded', tmpl);
                                 return res.data || '';
                             });
                         }
