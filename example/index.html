@@ -389,6 +389,14 @@
             $rootScope.$on('ngDialog.closing', function (e, $dialog) {
                 console.log('ngDialog closing: ' + $dialog.attr('id'));
             });
+
+            $rootScope.$on('ngDialog.templateLoading', function (e, template) {
+                console.log('ngDialog template is loading: ' + template);
+            });
+
+            $rootScope.$on('ngDialog.templateLoaded', function (e, template) {
+                console.log('ngDialog template loaded: ' + template);
+            });
         });
 
         app.controller('InsideCtrl', function ($scope, ngDialog) {
