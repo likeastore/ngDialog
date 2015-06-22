@@ -70,6 +70,28 @@ ngDialog.open({ template: 'templateId' });
 
 Also it is possible to use simple string as template together with ``plain`` option.
 
+##### Pro Tip about templates
+
+It's not always necessary to place your external html template inside ``<script>`` tag. You could put these templates into ``$templateCache`` like this:
+
+```javascript
+angular.module('dialog.templates').run([$templateCache, function($templateCache) {
+    $templateCache.put('templateId', 'template content');
+}]);
+```
+
+Then you it would be possible to include ``dialog.templates`` module into dependencies of your main module and start using this template as ``templateId``.
+
+There is no need to do these actions manually. 
+You could use one of the plugins specifically for these purposes. They are available for different build systems including most popular Gulp / Grunt:
+
+- [gulp-angular-templatecache](https://github.com/miickel/gulp-angular-templatecache)
+- [gulp-ng-html2js](https://www.npmjs.com/package/gulp-ng-html2js)
+- [grunt-html2js](https://github.com/karlgoldstein/grunt-html2js)
+- [grunt-html2js](https://www.npmjs.com/package/broccoli-html2js)
+
+You could find more detailed examples on each of these pages.
+
 ##### ``plain {Boolean}``
 
 If ``true`` allows to use plain string as template, default ``false``:
