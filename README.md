@@ -465,6 +465,14 @@ $rootScope.$on('ngDialog.opened', function (e, $dialog) {
 
 ``ngDialog.closing`` is different than ``ngDialog.closed`` in that it is fired immediately when the dialog begins closing, whereas ``ngDialog.closed`` is fired after all animations are complete. Both will be fired even when animation end support is not detected.
 
+Additionally we trigger following 2 events related to loading of template for dialog:
+
+- ``ngDialog.templateLoading``
+
+- ``ngDialog.templateLoaded``
+
+In case you are loading your templates from external location, you could use above events to show some kind of loader.
+
 ## Themes
 
 Currently _ngDialog_ contains two default themes that show how easily you can create your own. Check ``example`` folder for demonstration purposes.
