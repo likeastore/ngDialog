@@ -103,6 +103,73 @@ describe('ngDialog', function () {
     }));
   });
 
+  describe('using multiple panes', function() {
+    var elm;
+    var scope;
+
+    beforeEach(inject(function (ngDialog, $timeout, $document, $httpBackend) {
+      $httpBackend.whenGET('main.html').respond('<div><p>main template: {{1 + 0}}</p></div>');
+      $httpBackend.whenGET('pane02.html').respond('<div><p>pane: {{1 + 1}}</p></div>');
+      $httpBackend.whenGET('pane03.html').respond('<div><p>pane: {{1 + 2}}</p></div>');
+
+      var id = ngDialog.open({
+        templateUrl: 'main.html',
+        panes      : {
+          'pane02': 'pane02.html',
+          'pane03': 'pane03.html'
+        }
+      }).id;
+
+      $httpBackend.flush();
+      $timeout.flush();
+
+      elm = $document[0].getElementById(id);
+      scope = angular.element(elm).scope();
+    }));
+
+    it('should have compiled the main template', inject(function () {
+      expect(elm.textContent).toEqual('main template: 1');
+    }));
+
+    it('should not transition if there is no pane identifier specified', inject(function ($httpBackend, $timeout) {
+      scope.loadPane();
+      expect(elm.textContent).toEqual('main template: 1');
+    }));
+
+    it('should not transition if there is not a valid pane template', inject(function ($httpBackend, $timeout) {
+      scope.loadPane('badPane');
+      expect(elm.textContent).toEqual('main template: 1');
+    }));
+
+    it('should transition to the second pane', inject(function ($httpBackend, $timeout) {
+      scope.loadPane('pane02');
+
+      $httpBackend.flush();
+      $timeout(function() {
+        expect(elm.textContent).toEqual('pane: 2');
+      });
+    }));
+
+    it('should transition to the third pane', inject(function ($httpBackend, $timeout) {
+      scope.loadPane('pane03');
+
+      $httpBackend.flush();
+      $timeout(function() {
+        expect(elm.textContent).toEqual('pane: 3');
+      })
+    }));
+
+    it('should transition back to the main pane', inject(function ($httpBackend, $timeout) {
+      scope.loadPane('pane03');
+      scope.loadPane('main');
+
+      $httpBackend.flush();
+      $timeout(function() {
+        expect(elm.textContent).toEqual('main template: 1');
+      })
+    }));
+  });
+
   describe('controller instantiation', function () {
     var Ctrl;
     beforeEach(inject(function (ngDialog, $timeout, $q) {

@@ -63,6 +63,7 @@
     <a href="" ng-click="openConfirmWithPreCloseCallbackOnScope()">Open confirm modal with pre-close callback on scope</a>
     <a href="" ng-click="openConfirmWithPreCloseCallbackInlinedWithNestedConfirm()">Open confirm modal with pre-close inlined with nested confirm.</a>
     <a href="" ng-click="openWithoutOverlay()">Open without overlay</a>
+    <a href="" ng-click="openMultiPane()">Open multi-pane</a>
 
     <!-- Templates -->
 
@@ -372,6 +373,33 @@
             $scope.openWithoutOverlay = function () {
                 ngDialog.open({
                     template: '<h2>Notice that there is no overlay!</h2>',
+                    className: 'ngdialog-theme-default',
+                    plain: true,
+                    overlay: false
+                });
+            };
+
+            $scope.openMultiPane = function () {
+                ngDialog.open({
+                    template:
+                        '<h2>This is the initial pane.</h2>' +
+                        '<div class="ngdialog-buttons">' +
+                        '<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="loadPane(\'secondPane\')">Load Pane Two</button>' +
+                        '</div>',
+                    panes: {
+                        'secondPane':
+                            '<h2>The second pane is loaded.</h2>' +
+                            '<h3>With more space.</h3>' +
+                            '<div class="ngdialog-buttons">' +
+                            '<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="loadPane(\'thirdPane\')">Load Pane Three</button>' +
+                            '</div>',
+                        'thirdPane':
+                            '<h2>The third pane is loaded.</h2>' +
+                            '<h3>With even<br />more space<br />than ever before.</h3>' +
+                            '<div class="ngdialog-buttons">' +
+                            '<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="loadPane(\'main\')">Load Main Pane</button>' +
+                            '</div>',
+                    },
                     className: 'ngdialog-theme-default',
                     plain: true,
                     overlay: false

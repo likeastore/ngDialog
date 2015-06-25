@@ -63,6 +63,13 @@
 	background: white;
 	-webkit-backface-visibility: hidden;
 	animation: ngdialog-fadein 0.5s;
+	transition: height 0.4s ease-in-out;
+}
+
+.ngdialog-content > * {
+  /* translate is needed to fix Chrome transition issues */
+  -webkit-transform: translateZ(0);
+  transition: opacity 0.25s ease-in-out;
 }
 
 .ngdialog.ngdialog-closing .ngdialog-content {

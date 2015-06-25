@@ -29,6 +29,7 @@
     var disabledAnimationClass = 'ngdialog-disabled-animation';
     var forceBodyReload = false;
     var scopes = {};
+    var options = {};
     var openIdStack = [];
     var keydownIsBound = false;
 
@@ -394,6 +395,158 @@
 
                             return generatedId;
                         }
+                    },
+
+                    setOptions: function(dialogID, opts) {
+                        options[dialogID] = opts;
+                    },
+
+                    getOptions: function(dialogID) {
+                        return options[dialogID];
+                    },
+
+                    replacePane: function(templateToLoad) {
+                        var $dialog = privateMethods.getActiveDialog();
+                        var dialogChildren = $dialog.children();
+                        var $dialogContent = null;
+
+                        // find the ngDialog content
+                        for (var i = 0, length = dialogChildren.length; i < length; i++) {
+                            if ($el(dialogChildren[i]).hasClass('ngdialog-content')) {
+                                $dialogContent = $el(dialogChildren[i]);
+                                break;
+                            }
+                        }
+
+                        // load the new template html
+                        var dialogID = $dialog.attr('id');
+                        var options = privateMethods.getOptions(dialogID);
+                        var scope = scopes[dialogID];
+                        var defer = defers[dialogID];
+
+                        var resolve = angular.extend({}, options.resolve);
+
+                        angular.forEach(resolve, function (value, key) {
+                            resolve[key] = angular.isString(value) ? $injector.get(value) : $injector.invoke(value, null, null, key);
+                        });
+
+                        $q.all({
+                            template: privateMethods.loadTemplate(templateToLoad, options.plain, options.cache),
+                            locals: $q.all(resolve)
+                        }).then(function (setup) {
+                            var template = setup.template;
+
+                            // add the close button to the new template
+                            if (options.showClose) {
+                                template += '<div class="ngdialog-close"></div>';
+                            }
+
+                            // temporary holder for transition timeout
+                            var transitionTimer = 0;
+                            var transitionWait  = 25;
+                            var opacityDuration = 250;
+                            var heightDuration = 400;
+
+                            // create a temporary element to find the new size
+                            var tempContent = $dialogContent.clone();
+                            tempContent.css('visibility', 'hidden');
+                            tempContent.css('height', '');
+                            tempContent.empty()
+                            tempContent.append(template);
+
+                            $dialog.append(tempContent);
+
+                            // trigger a compile on the new template, so we can
+                            // retrieve the actual height
+                            $compile($dialog)(scope);
+
+                            // everything else needs to fire after the new compile
+                            $timeout(function() {
+                                var newHeight = tempContent[0].clientHeight;
+
+                                tempContent.remove();
+                                tempContent = null;
+
+                                // find the current height so we can allow smooth transitions
+                                var currentHeight = $dialogContent[0].clientHeight;
+
+                                // disable the current transition properties so the height
+                                // change doesn't transition from 0 to current
+                                $dialogContent.css('transition', 'none');
+                                $dialogContent.css('-webkit-transition', 'none');
+                                $dialogContent.css('-moz-transition', 'none');
+                                $dialogContent.css('-o-transition', 'none');
+
+                                // assign the new height, then trigger a reflow to flush changes
+                                $dialogContent.css('height', currentHeight + 'px');
+                                $dialogContent[0].offsetHeight;
+
+                                // restore the transitions to the default CSS
+                                $dialogContent.css('transition', '');
+                                $dialogContent.css('-webkit-transition', '');
+                                $dialogContent.css('-moz-transition', '');
+                                $dialogContent.css('-o-transition', '');
+
+                                // fade out the current content
+                                $timeout(function() {
+                                    $dialogContent.children().css('opacity', 0);
+                                }, transitionTimer);
+                                transitionTimer += opacityDuration + transitionWait;
+
+                                // change the height of the dialog after the content is gone
+                                $timeout(function() {
+                                    $dialogContent.empty();
+
+                                    // make sure the new content is added and is invisible
+                                    $dialogContent.append(template);
+                                    $dialogContent.children().css('opacity', 0);
+                                }, transitionTimer);
+                                transitionTimer += opacityDuration + transitionWait;
+
+                                // change the height of the dialog after the content is gone
+                                $timeout(function() {
+                                    $dialogContent.css('height', newHeight + 'px');
+                                }, transitionTimer);
+                                transitionTimer += heightDuration + transitionWait;
+
+                                // make sure the new pane is compiled after it is loaded
+                                // and before it is visible to prevent popping
+                                $timeout(function () {
+                                    privateMethods.applyAriaAttributes($dialog, options);
+                                    $compile($dialog)(scope);
+                                }, transitionTimer);
+                                transitionTimer += opacityDuration + transitionWait;
+
+                                // add the new content and fade it in
+                                $timeout(function() {
+                                    $dialogContent.children().css('opacity', 1);
+                                }, transitionTimer);
+                            });
+                        });
+                    },
+
+                    loadTemplateUrl: function (tmpl, config) {
+                        $rootScope.$broadcast('ngDialog.templateLoading', tmpl);
+                        return $http.get(tmpl, (config || {})).then(function(res) {
+                            $rootScope.$broadcast('ngDialog.templateLoaded', tmpl);
+                            return res.data || '';
+                        });
+                    },
+
+                    loadTemplate: function (tmpl, plain, cache) {
+                        if (!tmpl) {
+                            return 'Empty template';
+                        }
+
+                        if (angular.isString(tmpl) && plain) {
+                            return tmpl;
+                        }
+
+                        if (typeof cache === 'boolean' && !cache) {
+                            return privateMethods.loadTemplateUrl(tmpl, {cache: false});
+                        }
+
+                        return privateMethods.loadTemplateUrl(tmpl, {cache: $templateCache});
                     }
                 };
 
@@ -402,6 +555,7 @@
                     /*
                      * @param {Object} options:
                      * - template {String} - id of ng-template, url for partial, plain string (if enabled)
+                     * - panes {Object} - additional templates to be transitioned to
                      * - plain {Boolean} - enable plain string templates, default false
                      * - scope {Object}
                      * - controller {String}
@@ -424,6 +578,8 @@
                         opts = opts || {};
                         angular.extend(options, opts);
 
+                        privateMethods.setOptions(dialogID, options);
+
                         var defer;
                         defers[dialogID] = defer = $q.defer();
 
@@ -439,7 +595,7 @@
                         });
 
                         $q.all({
-                            template: loadTemplate(options.template || options.templateUrl),
+                            template: privateMethods.loadTemplate(options.template || options.templateUrl, options.plain, options.cache),
                             locals: $q.all(resolve)
                         }).then(function (setup) {
                             var template = setup.template,
@@ -525,6 +681,23 @@
                                 privateMethods.closeDialog($dialog, value);
                             };
 
+                            // inject pane navigation into the scope
+                            scope.loadPane = function (paneId) {
+                                var paneTemplate = '';
+
+                                if (paneId === 'main') {
+                                    paneTemplate = options.template;
+                                } else {
+                                    paneTemplate = options.panes[paneId];
+                                }
+
+                                if (!paneTemplate) {
+                                    return;
+                                }
+
+                                privateMethods.replacePane(paneTemplate);
+                            };
+
                             $timeout(function () {
                                 var $activeDialogs = document.querySelectorAll('.ngdialog');
                                 privateMethods.deactivateAll($activeDialogs);
@@ -594,30 +767,6 @@
                                 privateMethods.closeDialog($dialog, value);
                             }
                         };
-
-                        function loadTemplateUrl (tmpl, config) {
-                            $rootScope.$broadcast('ngDialog.templateLoading', tmpl);
-                            return $http.get(tmpl, (config || {})).then(function(res) {
-                                $rootScope.$broadcast('ngDialog.templateLoaded', tmpl);
-                                return res.data || '';
-                            });
-                        }
-
-                        function loadTemplate (tmpl) {
-                            if (!tmpl) {
-                                return 'Empty template';
-                            }
-
-                            if (angular.isString(tmpl) && options.plain) {
-                                return tmpl;
-                            }
-
-                            if (typeof options.cache === 'boolean' && !options.cache) {
-                                return loadTemplateUrl(tmpl, {cache: false});
-                            }
-
-                            return loadTemplateUrl(tmpl, {cache: $templateCache});
-                        }
                     },
 
                     /*

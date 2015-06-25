@@ -92,6 +92,30 @@ You could use one of the plugins specifically for these purposes. They are avail
 
 You could find more detailed examples on each of these pages.
 
+##### ``panes {Object}``
+
+Dialog panes can be loaded via the same sources as the ``template`` option. The template will always load in as the first pane. Subsequent panes should be set with their key as the pane identifier:
+
+```javascript
+$scope.clickToOpen = function () {
+    ngDialog.open({
+        template: 'popupTmpl.html',
+        panes   : {
+            'paneTwo'  : 'paneTwo.html',
+            'paneThree': 'paneThree.html'
+        }
+    });
+};
+```
+
+An additional method is injected into the passed ``$scope`` to allow switching between panes via the pane identifier:
+
+```html
+$scope.loadPane('paneIdentifier');
+```
+
+The initial template can be loaded with the pane identifier of ``main``.
+
 ##### ``plain {Boolean}``
 
 If ``true`` allows to use plain string as template, default ``false``:

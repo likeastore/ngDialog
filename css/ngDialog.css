@@ -92,6 +92,15 @@
   -webkit-backface-visibility: hidden;
   -webkit-animation: ngdialog-fadein 0.5s;
   animation: ngdialog-fadein 0.5s;
+  -webkit-transition: height 0.4s ease-in-out;
+  transition: height 0.4s ease-in-out;
+}
+
+.ngdialog-content > * {
+  /* translate is needed to fix Chrome transition issues */
+  -webkit-transform: translateZ(0);
+  -webkit-transition: opacity 0.25s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
 }
 
 .ngdialog.ngdialog-closing .ngdialog-content {
