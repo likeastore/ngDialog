@@ -196,6 +196,8 @@ Any value passed to this function will be attached to the object which resolves 
 
 Any serializable data that you want to be stored in controller's dialog scope. (``$scope.ngDialogData``). From version `0.3.6` `$scope.ngDialogData` keeps references to the objects instead of copying them.
 
+Additionally, you will have dialog id available as ``$scope.ngDialogId``. If you are using ``$scope.ngDialogData``, it'll be also available under ``$scope.ngDialogData.ngDialogId``.
+
 ##### ``className {String}``
 
 This option allows you to control the dialog's look, you can use built-in [themes](https://github.com/likeastore/ngDialog#themes) or create your own styled modals.
