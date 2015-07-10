@@ -456,11 +456,15 @@
 
                             $dialog.data('$ngDialogOptions', options);
 
+                            scope.ngDialogId = dialogID;
+
                             if (options.data && angular.isString(options.data)) {
                                 var firstLetter = options.data.replace(/^\s*/, '')[0];
                                 scope.ngDialogData = (firstLetter === '{' || firstLetter === '[') ? angular.fromJson(options.data) : options.data;
+                                scope.ngDialogData.ngDialogId = dialogID;
                             } else if (options.data && angular.isObject(options.data)) {
                                 scope.ngDialogData = options.data;
+                                scope.ngDialogData.ngDialogId = dialogID;
                             }
 
                             if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
