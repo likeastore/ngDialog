@@ -35,7 +35,7 @@ Thanks everybody, you're awesome! :dancer: :+1:
 
 - [x] support for [UMD pattern](https://github.com/umdjs/umd)
 - [x] get rid of `module` variable in source code
-- [x] get rid of `window` dependency in flavor of `$window`
+- [x] get rid of `window` dependency in favor of `$window`
 
 # 0.3.6
 
