@@ -69,7 +69,8 @@
             function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller, $injector) {
                 var $body = $document.find('body');
                 if (forceBodyReload) {
-                    $rootScope.$on('$locationChangeSuccess', function () {
+                    var eventName = privateMethods.getRouterLocationEventName();
+                    $rootScope.$on(eventName, function () {
                         $body = $document.find('body');
                     });
                 }
@@ -394,6 +395,23 @@
 
                             return generatedId;
                         }
+                    },
+
+                    detectUIRouter: function() {
+                        //Detect if ui-router module is installed if not return false
+                        try { 
+                            angular.module("ui.router");
+                            return true;
+                        } catch(err) { 
+                            return false;
+                        }
+                    },
+
+                    getRouterLocationEventName: function() {
+                        if(privateMethods.detectUIRouter()){
+                            return '$stateChangeSuccess';
+                        }
+                        return '$locationChangeSuccess';
                     }
                 };
 
@@ -561,7 +579,8 @@
                             }
 
                             if (options.closeByNavigation) {
-                                $rootScope.$on('$locationChangeSuccess', function () {
+                                var eventName = privateMethods.getRouterLocationEventName();
+                                $rootScope.$on(eventName, function () {
                                     privateMethods.closeDialog($dialog);
                                 });
                             }
