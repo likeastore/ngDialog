@@ -408,7 +408,7 @@
                     },
 
                     getRouterLocationEventName: function() {
-                        if(privateMethods.detectUIRouter()){
+                        if(privateMethods.detectUIRouter()) {
                             return '$stateChangeSuccess';
                         }
                         return '$locationChangeSuccess';
