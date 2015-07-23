@@ -27,6 +27,7 @@
     var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
     var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
     var disabledAnimationClass = 'ngdialog-disabled-animation';
+    var forceHtmlReload = false;
     var forceBodyReload = false;
     var scopes = {};
     var openIdStack = [];
@@ -55,6 +56,10 @@
             ariaDescribedBySelector: null
         };
 
+        this.setForceHtmlReload = function (_useIt) {
+            forceHtmlReload = _useIt || false;
+        };
+
         this.setForceBodyReload = function (_useIt) {
             forceBodyReload = _useIt || false;
         };
@@ -67,6 +72,14 @@
 
         this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller', '$injector',
             function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller, $injector) {
+                var $html = $document.find('html');
+                if (forceHtmlReload) {
+                    var eventName = privateMethods.getRouterLocationEventName();
+                    $rootScope.$on(eventName, function () {
+                        $html = $document.find('html');
+                    });
+                }
+
                 var $body = $document.find('body');
                 if (forceBodyReload) {
                     var eventName = privateMethods.getRouterLocationEventName();
@@ -159,6 +172,7 @@
                             $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
                                 $dialog.remove();
                                 if (dialogsCount === 0) {
+                                    $html.removeClass('ngdialog-open');
                                     $body.removeClass('ngdialog-open');
                                     privateMethods.resetBodyPadding();
                                 }
@@ -168,6 +182,7 @@
                             scope.$destroy();
                             $dialog.remove();
                             if (dialogsCount === 0) {
+                                $html.removeClass('ngdialog-open');
                                 $body.removeClass('ngdialog-open');
                                 privateMethods.resetBodyPadding();
                             }
@@ -399,10 +414,10 @@
 
                     detectUIRouter: function() {
                         //Detect if ui-router module is installed if not return false
-                        try { 
+                        try {
                             angular.module("ui.router");
                             return true;
-                        } catch(err) { 
+                        } catch(err) {
                             return false;
                         }
                     },
@@ -553,6 +568,7 @@
 
                                 $compile($dialog)(scope);
                                 var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
+                                $html.addClass('ngdialog-open');
                                 $body.addClass('ngdialog-open');
                                 var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
                                 if (scrollBarWidth > 0) {
