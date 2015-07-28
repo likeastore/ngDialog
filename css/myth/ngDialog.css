@@ -75,6 +75,7 @@
 	cursor: pointer;
 }
 
+html.ngdialog-open,
 body.ngdialog-open {
 	overflow: hidden;
 }
