@@ -82,7 +82,7 @@ angular.module('dialog.templates').run([$templateCache, function($templateCache)
 
 Then you it would be possible to include ``dialog.templates`` module into dependencies of your main module and start using this template as ``templateId``.
 
-There is no need to do these actions manually. 
+There is no need to do these actions manually.
 You could use one of the plugins specifically for these purposes. They are available for different build systems including most popular Gulp / Grunt:
 
 - [gulp-angular-templatecache](https://github.com/miickel/gulp-angular-templatecache)
@@ -414,7 +414,7 @@ An Angular promise object that is resolved if the ``.confirm()`` function is use
 
 ### ``.isOpen(id)``
 
-Method accepts dialog's ``id`` and returns a ``Boolean`` value indicating whether the specified dialog is open. 
+Method accepts dialog's ``id`` and returns a ``Boolean`` value indicating whether the specified dialog is open.
 
 ===
 
@@ -433,6 +433,20 @@ Method manages closing all active modals on the page. Takes an optional value to
 ### ``.getOpenDialogs()``
 
 Method that returns array which includes ids of opened dialogs.
+
+===
+
+### ``.setForceHtmlReload({Boolean})``
+
+Adds additional listener on every ``$locationChangeSuccess`` event and gets update version of ``html`` into dialog. Maybe useful in some rare cases when you're dependant on DOM changes, defaults to ``false``. Use it in module's config as provider instance:
+
+```javascript
+var app = angular.module('exampleApp', ['ngDialog']);
+
+app.config(function (ngDialogProvider) {
+    ngDialogProvider.setForceHtmlReload(true);
+});
+```
 
 ===
 

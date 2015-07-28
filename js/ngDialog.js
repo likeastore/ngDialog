@@ -27,7 +27,7 @@
     var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
     var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
     var disabledAnimationClass = 'ngdialog-disabled-animation';
-    var forceBodyReload = false;
+    var forceElementsReload = { html: false, body: false };
     var scopes = {};
     var openIdStack = [];
     var keydownIsBound = false;
@@ -55,8 +55,12 @@
             ariaDescribedBySelector: null
         };
 
+        this.setForceHtmlReload = function (_useIt) {
+            forceElementsReload.html = _useIt || false;
+        };
+
         this.setForceBodyReload = function (_useIt) {
-            forceBodyReload = _useIt || false;
+            forceElementsReload.body = _useIt || false;
         };
 
         this.setDefaults = function (newDefaults) {
@@ -67,13 +71,20 @@
 
         this.$get = ['$document', '$templateCache', '$compile', '$q', '$http', '$rootScope', '$timeout', '$window', '$controller', '$injector',
             function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller, $injector) {
-                var $body = $document.find('body');
-                if (forceBodyReload) {
-                    var eventName = privateMethods.getRouterLocationEventName();
-                    $rootScope.$on(eventName, function () {
-                        $body = $document.find('body');
-                    });
-                }
+                var $elements = [];
+
+                angular.forEach(
+                    ['html', 'body'],
+                    function(elementName) {
+                        $elements[elementName] = $document.find(elementName);
+                        if (forceElementsReload[elementName]) {
+                            var eventName = privateMethods.getRouterLocationEventName();
+                            $rootScope.$on(eventName, function () {
+                                $elements[elementName] = $document.find(elementName);
+                            });
+                        }
+                    }
+                );
 
                 var privateMethods = {
                     onDocumentKeydown: function (event) {
@@ -89,13 +100,13 @@
                             $dialog.on('keydown', privateMethods.onTrapFocusKeydown);
 
                             // Catch rogue changes (eg. after unfocusing everything by clicking a non-focusable element)
-                            $body.on('keydown', privateMethods.onTrapFocusKeydown);
+                            $elements.body.on('keydown', privateMethods.onTrapFocusKeydown);
                         }
                     },
 
                     deactivate: function ($dialog) {
                         $dialog.off('keydown', privateMethods.onTrapFocusKeydown);
-                        $body.off('keydown', privateMethods.onTrapFocusKeydown);
+                        $elements.body.off('keydown', privateMethods.onTrapFocusKeydown);
                     },
 
                     deactivateAll: function () {
@@ -106,17 +117,17 @@
                     },
 
                     setBodyPadding: function (width) {
-                        var originalBodyPadding = parseInt(($body.css('padding-right') || 0), 10);
-                        $body.css('padding-right', (originalBodyPadding + width) + 'px');
-                        $body.data('ng-dialog-original-padding', originalBodyPadding);
+                        var originalBodyPadding = parseInt(($elements.body.css('padding-right') || 0), 10);
+                        $elements.body.css('padding-right', (originalBodyPadding + width) + 'px');
+                        $elements.body.data('ng-dialog-original-padding', originalBodyPadding);
                     },
 
                     resetBodyPadding: function () {
-                        var originalBodyPadding = $body.data('ng-dialog-original-padding');
+                        var originalBodyPadding = $elements.body.data('ng-dialog-original-padding');
                         if (originalBodyPadding) {
-                            $body.css('padding-right', originalBodyPadding + 'px');
+                            $elements.body.css('padding-right', originalBodyPadding + 'px');
                         } else {
-                            $body.css('padding-right', '');
+                            $elements.body.css('padding-right', '');
                         }
                     },
 
@@ -140,7 +151,7 @@
                         }
 
                         if (dialogsCount === 1) {
-                            $body.unbind('keydown');
+                            $elements.body.unbind('keydown');
                         }
 
                         if (!$dialog.hasClass('ngdialog-closing')){
@@ -157,21 +168,11 @@
                         if (animationEndSupport && !options.disableAnimation) {
                             scope.$destroy();
                             $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
-                                $dialog.remove();
-                                if (dialogsCount === 0) {
-                                    $body.removeClass('ngdialog-open');
-                                    privateMethods.resetBodyPadding();
-                                }
-                                $rootScope.$broadcast('ngDialog.closed', $dialog, value);
+                                privateMethods.closeDialogElement($dialog, value);
                             }).addClass('ngdialog-closing');
                         } else {
                             scope.$destroy();
-                            $dialog.remove();
-                            if (dialogsCount === 0) {
-                                $body.removeClass('ngdialog-open');
-                                privateMethods.resetBodyPadding();
-                            }
-                            $rootScope.$broadcast('ngDialog.closed', $dialog, value);
+                            privateMethods.closeDialogElement($dialog, value);
                         }
                         if (defers[id]) {
                             defers[id].resolve({
@@ -187,9 +188,19 @@
                         }
                         openIdStack.splice(openIdStack.indexOf(id), 1);
                         if (!openIdStack.length) {
-                            $body.unbind('keydown', privateMethods.onDocumentKeydown);
+                            $elements.body.unbind('keydown', privateMethods.onDocumentKeydown);
                             keydownIsBound = false;
                         }
+                    },
+
+                    closeDialogElement: function($dialog, value) {
+                        $dialog.remove();
+                        if (dialogsCount === 0) {
+                            $elements.html.removeClass('ngdialog-open');
+                            $elements.body.removeClass('ngdialog-open');
+                            privateMethods.resetBodyPadding();
+                        }
+                        $rootScope.$broadcast('ngDialog.closed', $dialog, value);
                     },
 
                     closeDialog: function ($dialog, value) {
@@ -399,10 +410,10 @@
 
                     detectUIRouter: function() {
                         //Detect if ui-router module is installed if not return false
-                        try { 
+                        try {
                             angular.module("ui.router");
                             return true;
-                        } catch(err) { 
+                        } catch(err) {
                             return false;
                         }
                     },
@@ -516,7 +527,7 @@
                             if (options.appendTo && angular.isString(options.appendTo)) {
                                 $dialogParent = angular.element(document.querySelector(options.appendTo));
                             } else {
-                                $dialogParent = $body;
+                                $dialogParent = $elements.body;
                             }
 
                             privateMethods.applyAriaAttributes($dialog, options);
@@ -552,9 +563,10 @@
                                 privateMethods.deactivateAll($activeDialogs);
 
                                 $compile($dialog)(scope);
-                                var widthDiffs = $window.innerWidth - $body.prop('clientWidth');
-                                $body.addClass('ngdialog-open');
-                                var scrollBarWidth = widthDiffs - ($window.innerWidth - $body.prop('clientWidth'));
+                                var widthDiffs = $window.innerWidth - $elements.body.prop('clientWidth');
+                                $elements.html.addClass('ngdialog-open');
+                                $elements.body.addClass('ngdialog-open');
+                                var scrollBarWidth = widthDiffs - ($window.innerWidth - $elements.body.prop('clientWidth'));
                                 if (scrollBarWidth > 0) {
                                     privateMethods.setBodyPadding(scrollBarWidth);
                                 }
@@ -574,7 +586,7 @@
                             });
 
                             if (!keydownIsBound) {
-                                $body.bind('keydown', privateMethods.onDocumentKeydown);
+                                $elements.body.bind('keydown', privateMethods.onDocumentKeydown);
                                 keydownIsBound = true;
                             }
 
