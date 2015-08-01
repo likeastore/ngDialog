@@ -482,7 +482,7 @@
                                 template += '<div class="ngdialog-close"></div>';
                             }
 
-                            $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog"></div>');
+                            $dialog = $el('<div id="ngdialog' + localID + '" ng-style="position_dialog" class="ngdialog"></div>');
                             $dialog.html((options.overlay ?
                                 '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
                                 '<div class="ngdialog-content" role="document">' + template + '</div>'));
