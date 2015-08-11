@@ -63,9 +63,11 @@
   left: 0;
 }
 
-.ngdialog.ngdialog-disabled-animation * {
-  -webkit-animation: none !important;
-  animation: none !important;
+.ngdialog.ngdialog-disabled-animation,
+.ngdialog.ngdialog-disabled-animation .ngdialog-overlay,
+.ngdialog.ngdialog-disabled-animation .ngdialog-content {
+  -webkit-animation: none!important;
+  animation: none!important;
 }
 
 .ngdialog-overlay {
