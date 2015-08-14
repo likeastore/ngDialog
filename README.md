@@ -545,13 +545,13 @@ Dialog Content ``role`` attribute:
 
 ## CDN
 
-_ngDialog_ is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dialog). For example, please use following urls for version ``0.3.12``.
+_ngDialog_ is available for public on [cdnjs](http://cdnjs.com/libraries/ng-dialog). For example, please use following urls for version ``0.4.0``.
 
 ```html
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog-theme-default.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/css/ngDialog-theme-plain.min.css
-//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.3.12/js/ngDialog.min.js
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.4.0/css/ngDialog.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.4.0/css/ngDialog-theme-default.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.4.0/css/ngDialog-theme-plain.min.css
+//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.4.0/js/ngDialog.min.js
 ```
 
 ## References
