@@ -1,3 +1,28 @@
+# 0.5.0
+- [x] Angular version in `package.json` is now `1.4.x` ([ISSUE-244](https://github.com/likeastore/ngDialog/issues/244))
+- [x] fixed spelling of `ariaLabelledById` and `ariaLabelledBySelector` inside README file by [@rylan](https://github.com/rylan) ([PR-242](https://github.com/likeastore/ngDialog/pull/242))
+- [x] fixed bug with $templateCache when template was already cached before calling ngDialog by [@mixer2](https://github.com/mixer2) ([PR-241](https://github.com/likeastore/ngDialog/pull/241))
+- [x] add dialog close value to the $broadcast'ed events by [@Kidlike](https://github.com/Kidlike) ([PR-252](https://github.com/likeastore/ngDialog/pull/252))
+- [x] fix for removing package version from bower.json as it's ignored by bower by [@kkirsche](https://github.com/kkirsche) ([PR-255](https://github.com/likeastore/ngDialog/pull/255))
+- [x] fix for non-working `ngDialog.close()` when no arguments are provided by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-243](https://github.com/likeastore/ngDialog/issues/243)) 
+- [x] added documentation for `controllerAs` option by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-248](https://github.com/likeastore/ngDialog/issues/248)) 
+- [x] new option `disableAnimation` that could be used for disabling animation of dialog by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-159](https://github.com/likeastore/ngDialog/issues/159)) 
+- [x] new attribute `ng-dialog-overlay` for ngDialog directive by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-198](https://github.com/likeastore/ngDialog/issues/198)) 
+- [x] new attribute `ng-dialog-bind-to-controller` for ngDialog directive by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-236](https://github.com/likeastore/ngDialog/issues/236)) 
+- [x] fix for error when `controllerAs` is used together with inline controller definition by   [@andrewogburn](https://github.com/andrewogburn) ([PR-260](https://github.com/likeastore/ngDialog/pull/260), [ISSUE-259](https://github.com/likeastore/ngDialog/issues/259)) 
+- [x] added method `getOpenDialogs()` that returns array of all opened dialogs by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-240](https://github.com/likeastore/ngDialog/issues/240))
+- [x] added two new events emmited by ngDialog - `ngDialog.templateLoading` and `ngDialog.templateLoaded` by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-231](https://github.com/likeastore/ngDialog/issues/231)) 
+- [x] added `ngDialogId` field to scope of opened dialog (this field is equal to id of dialog) by [@egor-smirnov](https://github.com/egor-smirnov) ([ISSUE-274](https://github.com/likeastore/ngDialog/issues/274), [ISSUE-264](https://github.com/likeastore/ngDialog/issues/264)) 
+- [x] fix for odd timing issue when using the `closeByNavigation` option alongside `angular-ui-router package` by   [@jdelibas](https://github.com/jdelibas) ([PR-277](https://github.com/likeastore/ngDialog/pull/277)) 
+- [x] fix for disabling of body scroll when dialog is opened for some cases by [@marmotz](https://github.com/marmotz) ([PR-280](https://github.com/likeastore/ngDialog/pull/280), [ISSUE-206](https://github.com/likeastore/ngDialog/issues/206)) 
+- [x] fix for avoiding require multiple angular when it's required already when using CommonJS by [@michaeleekk](https://github.com/michaeleekk) ([PR-284](https://github.com/likeastore/ngDialog/pull/284))
+- [x] fix for `frunt build` that was resetting  html.ngdialog changes by [@davidvuong](https://github.com/davidvuong) ([PR-285](https://github.com/likeastore/ngDialog/pull/285))
+- [x] moved Angular to dev.dependencies by [@platdesign](https://github.com/platdesign) ([PR-287](https://github.com/likeastore/ngDialog/pull/287))
+- [x] fix for unboudning all keydown events when dialog is closed by [@daanoz](https://github.com/daanoz) ([PR-291](https://github.com/likeastore/ngDialog/pull/291))
+- [x] ignore elements with tabindex=-1 when tabbing by [@roaks3](https://github.com/roaks3) ([PR-292](https://github.com/likeastore/ngDialog/pull/292), [ISSUE-281](https://github.com/likeastore/ngDialog/issues/281)) 
+
+That was huge. Thanks everybody!
+
 # 0.4.0
 
 - [x] new `resolve` option for defining locals for ngDialog controller by [@rur](https://github.com/rur) ([PR-182](https://github.com/likeastore/ngDialog/pull/182))
