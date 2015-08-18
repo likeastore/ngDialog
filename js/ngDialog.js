@@ -499,7 +499,8 @@
                                 template += '<div class="ngdialog-close"></div>';
                             }
 
-                            $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog"></div>');
+                            var hasOverlayClass = options.overlay ? '' : ' ngdialog-no-overlay';
+                            $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog' + hasOverlayClass + '"></div>');
                             $dialog.html((options.overlay ?
                                 '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
                                 '<div class="ngdialog-content" role="document">' + template + '</div>'));
