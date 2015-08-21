@@ -1,4 +1,8 @@
+# Directories
+/node_modules
+/bower_components
+/coverage
+
+# Files
 .DS_Store
-node_modules
-bower_components
 *.log
