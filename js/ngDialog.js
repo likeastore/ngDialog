@@ -77,19 +77,6 @@
             function ($document, $templateCache, $compile, $q, $http, $rootScope, $timeout, $window, $controller, $injector) {
                 var $elements = [];
 
-                angular.forEach(
-                    ['html', 'body'],
-                    function(elementName) {
-                        $elements[elementName] = $document.find(elementName);
-                        if (forceElementsReload[elementName]) {
-                            var eventName = privateMethods.getRouterLocationEventName();
-                            $rootScope.$on(eventName, function () {
-                                $elements[elementName] = $document.find(elementName);
-                            });
-                        }
-                    }
-                );
-
                 var privateMethods = {
                     onDocumentKeydown: function (event) {
                         if (event.keyCode === 27) {
@@ -767,6 +754,19 @@
                         return defaults;
                     }
                 };
+                
+                angular.forEach(
+                    ['html', 'body'],
+                    function(elementName) {
+                        $elements[elementName] = $document.find(elementName);
+                        if (forceElementsReload[elementName]) {
+                            var eventName = privateMethods.getRouterLocationEventName();
+                            $rootScope.$on(eventName, function () {
+                                $elements[elementName] = $document.find(elementName);
+                            });
+                        }
+                    }
+                );
 
                 return publicMethods;
             }];
