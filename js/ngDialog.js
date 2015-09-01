@@ -8,7 +8,7 @@
     if (typeof module !== 'undefined' && module.exports) {
         // CommonJS
         if (typeof angular === 'undefined') {
-            module.exports = factory(require('angular'));
+            module.exports = factory(require('../../../bower_components/angular'));
         } else {
             module.exports = factory(angular);
         }
