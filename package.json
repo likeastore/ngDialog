@@ -50,6 +50,7 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "myth": "~0.1.6",
     "network-address": "0.0.4",
+    "protractor": "^2.2.0",
     "strata": "~0.20.1"
   }
 }
