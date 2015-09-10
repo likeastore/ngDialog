@@ -5,6 +5,7 @@
   "description": "Modal dialogs and popups provider for Angular.js applications",
   "main": "./js/ngDialog.js",
   "scripts": {
+    "pretest": "npm install && bower install --allow-root",
     "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
     "preprotractor": "npm install && bower install --allow-root",
     "protractor": "docker-compose -f protractor/docker-compose.yml run test"
