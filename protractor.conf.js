@@ -20,12 +20,8 @@ module.exports.config = {
       }
     },
     {
-      path: 'node_modules/protractor/plugins/ngHint',
-      asTests: true
-    },
-    {
       path: 'node_modules/protractor/plugins/console',
       failOnWarning: false,
-      failOnError: false
+      failOnError: true
     }]
 };
