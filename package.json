@@ -7,7 +7,7 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
     "preprotractor": "npm install && bower install --allow-root",
-    "protractor": "docker-compose -f tests/protractor/docker-compose.yml run test"
+    "protractor": "docker-compose -f protractor/docker-compose.yml run test"
   },
   "directories": {
     "test": "tests"
