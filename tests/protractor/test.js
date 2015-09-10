@@ -1,9 +1,9 @@
 describe('ngDialog', function() {
   beforeEach(function() {
-    browser.get('http://web:8080/index.html');
+    browser.get('http://web:8081/example/index.html');
   });
 
-  it('work', function() {
+  it('should work', function() {
 
   });
 });
