@@ -16,7 +16,7 @@ module.exports = function(config) {
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
       subject,
-      'tests/ngDialog.spec.js'
+      'tests/unit/**/*.js'
     ],
     port: 9877,
     colors: true,
