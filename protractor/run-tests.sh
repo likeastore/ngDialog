@@ -1,4 +1,7 @@
 #!/bin/bash
 cd /srv/www
-curl -v http://web:8081/example/index.html
+
+npm install
+bower install --allow-root
+
 node_modules/.bin/protractor protractor.conf.js
