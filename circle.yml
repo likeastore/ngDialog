@@ -8,5 +8,5 @@ dependencies:
 
 test:
   override:
-    - npm test && npm run coverage-average
+    - npm test
     - npm run protractor
