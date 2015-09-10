@@ -21,7 +21,7 @@ web:
 
 test:
     image: nodesource/trusty:0.12
-    command: /srv/www/protractor/runtests.sh
+    command: /srv/www/protractor/run-tests.sh
     links:
         - "web"
         - "chromestandalone"
