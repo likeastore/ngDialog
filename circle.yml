@@ -1,0 +1,14 @@
+machine:
+  node:
+    version: 0.12.0
+  services:
+    - docker
+
+dependencies:
+  override:
+    - sudo pip install --upgrade docker-compose==1.2.0
+
+test:
+  override:
+    - npm test && npm run coverage-average
+    - npm run protractor
