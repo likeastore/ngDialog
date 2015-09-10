@@ -12,7 +12,7 @@ web:
     image: nginx
     command: nginx -c /srv/www/protractor/nginx.conf
     ports:
-        - "8080"
+        - "8081"
     volumes:
         - ../:/srv/www
     dns:
