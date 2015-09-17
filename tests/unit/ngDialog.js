@@ -1,4 +1,6 @@
 describe('ngDialog', function () {
+  'use strict';
+
   var any = jasmine.any,
       spy = jasmine.createSpy;
 

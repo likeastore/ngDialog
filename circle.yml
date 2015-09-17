@@ -1,0 +1,12 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - sudo pip install --upgrade docker-compose==1.2.0
+
+test:
+  override:
+    - npm test
+    - npm run protractor
