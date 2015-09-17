@@ -505,26 +505,6 @@
                                 scope.ngDialogData.ngDialogId = dialogID;
                             }
 
-                            if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
-
-                                var label;
-
-                                if (options.controllerAs && angular.isString(options.controllerAs)) {
-                                    label = options.controllerAs;
-                                }
-
-                                var controllerInstance = $controller(options.controller, angular.extend(
-                                    locals,
-                                    {
-                                        $scope: scope,
-                                        $element: $dialog
-                                    }),
-                                    null,
-                                    label
-                                );
-                                $dialog.data('$ngDialogControllerController', controllerInstance);
-                            }
-
                             if (options.className) {
                                 $dialog.addClass(options.className);
                             }
@@ -566,6 +546,26 @@
                             scope.closeThisDialog = function (value) {
                                 privateMethods.closeDialog($dialog, value);
                             };
+
+                            if (options.controller && (angular.isString(options.controller) || angular.isArray(options.controller) || angular.isFunction(options.controller))) {
+
+                                var label;
+
+                                if (options.controllerAs && angular.isString(options.controllerAs)) {
+                                    label = options.controllerAs;
+                                }
+
+                                var controllerInstance = $controller(options.controller, angular.extend(
+                                    locals,
+                                    {
+                                        $scope: scope,
+                                        $element: $dialog
+                                    }),
+                                    null,
+                                    label
+                                );
+                                $dialog.data('$ngDialogControllerController', controllerInstance);
+                            }
 
                             $timeout(function () {
                                 var $activeDialogs = document.querySelectorAll('.ngdialog');
@@ -754,7 +754,7 @@
                         return defaults;
                     }
                 };
-                
+
                 angular.forEach(
                     ['html', 'body'],
                     function(elementName) {
