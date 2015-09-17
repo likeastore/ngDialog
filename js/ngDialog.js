@@ -435,6 +435,7 @@
                 };
 
                 var publicMethods = {
+                    __PRIVATE__: privateMethods,
 
                     /*
                      * @param {Object} options:
