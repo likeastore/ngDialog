@@ -9,4 +9,5 @@ dependencies:
 test:
   override:
     - npm test
+    - npm run test-min
     - npm run protractor
