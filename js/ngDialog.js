@@ -488,9 +488,10 @@
 
                             var hasOverlayClass = options.overlay ? '' : ' ngdialog-no-overlay';
                             $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog' + hasOverlayClass + '"></div>');
+                            var contentClass = options.contentClass?options.contentClass:'';
                             $dialog.html((options.overlay ?
-                                '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
-                                '<div class="ngdialog-content" role="document">' + template + '</div>'));
+                                '<div class="ngdialog-overlay"></div><div class="ngdialog-content '+ contentClass +'" role="document">' + template + '</div>' :
+                                '<div class="ngdialog-content ' + contentClass +'" role="document">' + template + '</div>'));
 
                             $dialog.data('$ngDialogOptions', options);
 
