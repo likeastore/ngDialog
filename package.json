@@ -13,7 +13,9 @@
     "webdriver-update": "node_modules/.bin/webdriver-manager update --standalone",
     "webdriver": "node_modules/.bin/webdriver-manager start",
     "preprotractor": "npm install && bower install --allow-root",
-    "protractor": "node_modules/.bin/protractor protractor.conf.js"
+    "protractor": "node_modules/.bin/protractor protractor.conf.js",
+    "protractor-a11y": "node_modules/.bin/protractor protractor.conf.js --a11y",
+    "protractor-console": "node_modules/.bin/protractor protractor.conf.js --console-error"
   },
   "directories": {
     "test": "tests"
