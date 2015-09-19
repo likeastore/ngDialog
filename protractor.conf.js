@@ -1,27 +1,40 @@
+var args = process.argv.slice(2);
+var plugins = [];
+
+if (args.indexOf('--a11y') > -1) {
+    plugins.push({
+        path: 'node_modules/protractor/plugins/accessibility',
+        chromeA11YDevTools: {
+            treatWarningsAsFailures: true
+        }
+    });
+}
+
+if (args.indexOf('--console-warning') > -1 || args.indexOf('--console-error') > -1) {
+    plugins.push({
+        path: 'node_modules/protractor/plugins/console',
+        failOnWarning: args.indexOf('--console-warning') > -1,
+        failOnError: args.indexOf('--console-error') > -1
+    })
+}
+
 module.exports.config = {
+  sauceUser: process.env.SAUCE_USERNAME,
+  sauceKey: process.env.SAUCE_ACCESS_KEY,
   allScriptsTimeout: 11000,
   specs: ['tests/protractor/**/*.js'],
   multiCapabilities: [{
-    'browserName': 'firefox'
+    'browserName': 'chrome',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+  },
+  {
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'browserName': 'firefox',
   }],
   framework: 'jasmine',
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
   },
-  mocks: {
-    dir: 'mocks',
-    default: []
-  },
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-  plugins: [{
-      path: 'node_modules/protractor/plugins/accessibility',
-      chromeA11YDevTools: {
-        treatWarningsAsFailures: true
-      }
-    },
-    {
-      path: 'node_modules/protractor/plugins/console',
-      failOnWarning: false,
-      failOnError: false
-    }]
+  sauceSeleniumAddress: 'localhost:4445/wd/hub',
+  plugins: plugins
 };
