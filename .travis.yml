@@ -1,16 +1,20 @@
-sudo: required
+sudo: false
 language: node_js
 node_js:
-  - 0.10
-services:
-  - docker
+  - 0.12
 before_install:
-  - curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - npm install
   - npm install -g bower
   - bower install
+  - npm run webdriver-update
+  - sleep 3 # give xvfb some time to start
+  - npm run serve &
+  - npm run webdriver &
+  - sleep 3 # give Web server some time to bind to sockets, etc
 script:
   - npm test
   - npm run protractor

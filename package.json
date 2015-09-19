@@ -9,8 +9,11 @@
     "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
     "test-min": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS --min",
     "test-watch": "./node_modules/karma/bin/karma start --auto-watch --browsers PhantomJS",
+    "serve": "node server",
+    "webdriver-update": "node_modules/.bin/webdriver-manager update --standalone",
+    "webdriver": "node_modules/.bin/webdriver-manager start",
     "preprotractor": "npm install && bower install --allow-root",
-    "protractor": "docker-compose -f protractor/docker-compose.yml run test"
+    "protractor": "node_modules/.bin/protractor protractor.conf.js"
   },
   "directories": {
     "test": "tests"
@@ -39,6 +42,7 @@
   "readmeFilename": "README.md",
   "license": "MIT",
   "devDependencies": {
+    "express": "^4.13.3",
     "grunt": "^0.4.5",
     "grunt-contrib-cssmin": "^0.14.0",
     "grunt-contrib-jshint": "^0.11.3",
