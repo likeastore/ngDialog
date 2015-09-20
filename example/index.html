@@ -2,12 +2,12 @@
 <html ng-app="exampleDialog">
 <head>
     <meta charset="utf-8">
-    
+
     <title>ngDialog demo</title>
-    
+
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../css/ngDialog.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../css/ngDialog-theme-default.css">
     <link rel="stylesheet" href="../css/ngDialog-theme-plain.css">
     <link rel="stylesheet" href="../css/ngDialog-custom-width.css">
@@ -30,13 +30,17 @@
         }
 
         .ngdialog h2:focus { outline: none; }
+
+        button.inline {
+            display: inline
+        }
     </style>
 </head>
 
 <body ng-controller="MainCtrl">
     <!-- Buttons and links -->
 
-    <a href="" ng-click="open()">Open via service</a>
+    <a id="via-service" href="" ng-click="open()">Open via service</a>
     <button type="button"
         ng-dialog="firstDialogId"
         ng-dialog-controller="InsideCtrl"
@@ -74,8 +78,10 @@
             <h3>ngDialog template</h3>
             <p ng-show="theme">Test content for <code>{{theme}}</code></p>
             <p ng-show="ngDialogId">Dialog Id: <code>{{ngDialogId}}</code></p>
-            <p ng-show="ngDialogData.foo">Data passed through: <code>{{ngDialogData.foo}}</code></p>
+            <p class="data-passed-through" ng-show="ngDialogData.foo">Data passed through: <code>{{ngDialogData.foo}}</code></p>
             <p ng-show="dialogModel.message">Scope passed through: <code>{{dialogModel.message}}</code></p>
+            <p>Close this dialog: <button class="inline close-this-dialog" ng-click="closeThisDialog()">Close</button></p>
+
         </div>
         <div class="ngdialog-buttons">
             <button type="button" class="ngdialog-button ngdialog-button-secondary"
@@ -180,13 +186,12 @@
                 return false;
             };
 
-            $scope.open = function () {
-                var new_dialog = ngDialog.open({ template: 'firstDialogId', controller: 'InsideCtrl', data: {foo: 'some data'} });
-
-                                // example on checking whether created `new_dialog` is open
-                                $timeout(function() {
-                                    console.log(ngDialog.isOpen(new_dialog.id));
-                                }, 2000)
+            $scope.open = function() {
+                var new_dialog = ngDialog.open({ id: 'fromAService', template: 'firstDialogId', controller: 'InsideCtrl', data: { foo: 'from a service' } });
+                // example on checking whether created `new_dialog` is open
+                $timeout(function() {
+                    console.log(ngDialog.isOpen(new_dialog.id));
+                }, 2000)
             };
 
             $scope.openDefault = function () {

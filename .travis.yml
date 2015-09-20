@@ -2,12 +2,10 @@ sudo: false
 language: node_js
 node_js:
     - 0.12
-addons:
-    sauce_connect:
-        username: faceleg
-        access_key:
-            secure: e2OHqKjDVG1Vr1/0sCqTYK7BMq5tq5x/lhBUd3ziV8Hm3gFiY3ikeSI4fPylHFHiPXI1Vf204oda2jHFjbbixxRPgQ5vJuZ8Nx9buHdjOnpjUK91mf06jxBa+PW5KtRRURp81XGnwzOl5zZSDiuK3PeMwmTnePQNFv7G3lWFHJY=
+env:
+    - SAUCE_USERNAME=ngDialog SAUCE_ACCESS_KEY=916ebec2-5857-4740-aa4f-047db7472e8c
 before_script:
+    - curl https://gist.githubusercontent.com/henrikhodne/9322897/raw/d515f1bb3de75588cba0b6af8bb6dc3f198aedb6/sauce-connect.sh | bash
     - npm install
     - npm install -g bower
     - bower install
