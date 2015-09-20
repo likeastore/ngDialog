@@ -113,6 +113,7 @@
                         var originalBodyPadding = parseInt(($elements.body.css('padding-right') || 0), 10);
                         $elements.body.css('padding-right', (originalBodyPadding + width) + 'px');
                         $elements.body.data('ng-dialog-original-padding', originalBodyPadding);
+                        $rootScope.$broadcast('ngDialog.setPadding', width);
                     },
 
                     resetBodyPadding: function () {
@@ -122,6 +123,7 @@
                         } else {
                             $elements.body.css('padding-right', '');
                         }
+                        $rootScope.$broadcast('ngDialog.setPadding', 0);
                     },
 
                     performCloseDialog: function ($dialog, value) {
