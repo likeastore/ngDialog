@@ -102,8 +102,8 @@
                         $elements.body.off('keydown', privateMethods.onTrapFocusKeydown);
                     },
 
-                    deactivateAll: function () {
-                        angular.forEach(function(el) {
+                    deactivateAll: function (els) {
+                        angular.forEach(els,function(el) {
                             var $dialog = angular.element(el);
                             privateMethods.deactivate($dialog);
                         });
