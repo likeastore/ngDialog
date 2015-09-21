@@ -1,3 +1,17 @@
+# Testing
+
+ngDialog is in use by many people. In order to ensure quality and prevent regressions, all contributions require unit tests proving that the contribution:
+
+1. Fixes a bug
+2. Performs new functionality as expected
+3. Behaves in a predictable manner when misused (bad input given as an option for example)
+
+In addition, where a contribution is aimed at resolving a bug or implementing a feature that can only be measured in a real browser, an e2e test proving the expected behaviour should be included.
+
+# README
+
+If your PR adds new behhaviour or modifies existing behaviour, the README should be updated.
+
 # Coding style
 
 > All code in any code-base should look like a single person typed it, no matter how many people contributed.

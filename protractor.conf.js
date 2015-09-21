@@ -18,7 +18,7 @@ if (useConsole) {
         path: 'node_modules/protractor/plugins/console',
         failOnWarning: args.indexOf('--console-warning') > -1,
         failOnError: args.indexOf('--console-error') > -1
-    })
+    });
 }
 
 var multiCapabilities = [{
