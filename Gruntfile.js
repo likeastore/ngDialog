@@ -38,14 +38,6 @@ module.exports = function (grunt) {
                     'css/ngDialog-theme-plain.min.css': ['css/ngDialog-theme-plain.css']
                 }
             }
-        },
-        protractor: {
-            all: {
-                options: {
-                    configFile: "protractor.conf.js",
-                    keepAlive: true
-                }
-            }
         }
     });
 
@@ -53,7 +45,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-myth');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-protractor-runner');
 
     grunt.registerTask('default', ['jshint']);
     grunt.registerTask('build', ['uglify', 'myth', 'cssmin']);

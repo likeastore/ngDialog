@@ -1,6 +1,6 @@
 describe('ngDialog', function() {
   beforeEach(function() {
-    browser.get('http://localhost:3000/example/paddingTest.html');
+    browser.get('http://web:8081/example/paddingTest.html');
   });
 
   it('should add padding to the body tag when a scrollbar is present', function() {
