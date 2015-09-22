@@ -36,11 +36,11 @@ if (!useA11y) {
 
 if (!useA11y && !useConsole) {
     multiCapabilities.push({
-        browserName: 'internet explorer'
+        browserName: 'internet explorer',
         version: 10
     });
     multiCapabilities.push({
-        browserName: 'internet explorer'
+        browserName: 'internet explorer',
         version: 11
     });
 }
