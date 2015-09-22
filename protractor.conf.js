@@ -12,7 +12,7 @@ module.exports.config = {
     dir: 'mocks',
     default: []
   },
-  seleniumAddress: 'http://chromestandalone:4444/wd/hub',
+  seleniumAddress: 'http://127.0.0.1:4444/wd/hub',
   plugins: [{
       path: 'node_modules/protractor/plugins/accessibility',
       chromeA11YDevTools: {
