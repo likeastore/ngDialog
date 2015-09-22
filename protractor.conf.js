@@ -32,7 +32,7 @@ var multiCapabilities = [{
     name: 'ngDialog Protractor'
   }];
 
-if (!useA11y) {
+if (!useA11y && !useConsole) {
     multiCapabilities.push({
         browserName: 'internet explorer',
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
