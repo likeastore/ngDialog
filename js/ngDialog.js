@@ -150,7 +150,7 @@
                         }
 
                         var previousFocus = $dialog.data('$ngDialogPreviousFocus');
-                        if (previousFocus) {
+                        if (previousFocus && previousFocus.focus) {
                             previousFocus.focus();
                         }
 
