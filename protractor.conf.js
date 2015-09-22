@@ -24,25 +24,25 @@ if (useConsole) {
 var multiCapabilities = [{
     browserName: 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    name: 'ngDialog Protractor'
+    name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER
   },
   {
     browserName: 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    name: 'ngDialog Protractor'
+    name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER
   }];
 
 if (!useA11y && !useConsole) {
     multiCapabilities.push({
         browserName: 'internet explorer',
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        name: 'ngDialog Protractor',
+        name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER,
         version: 10
     });
     multiCapabilities.push({
         browserName: 'internet explorer',
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        name: 'ngDialog Protractor',
+        name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER,
         version: 11
     });
 }
