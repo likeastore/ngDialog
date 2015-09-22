@@ -5,7 +5,7 @@ node_js:
 env:
     - SAUCE_USERNAME=ngDialog SAUCE_ACCESS_KEY=916ebec2-5857-4740-aa4f-047db7472e8c
 before_script:
-    - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
+    - curl https://gist.githubusercontent.com/henrikhodne/9322897/raw/d515f1bb3de75588cba0b6af8bb6dc3f198aedb6/sauce-connect.sh | bash
     - npm install
     - npm install -g bower
     - bower install
