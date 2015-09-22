@@ -13,8 +13,8 @@
     "webdriver": "node_modules/.bin/webdriver-manager start",
     "preprotractor": "npm install && bower install --allow-root",
     "protractor": "node_modules/.bin/protractor protractor.conf.js",
-    "protractor_a11y": "node_modules/.bin/protractor protractor.conf.js --a11y",
-    "protractor_console": "node_modules/.bin/protractor protractor.conf.js --console-error"
+    "protractor-a11y": "node_modules/.bin/protractor protractor.conf.js --a11y",
+    "protractor-console": "node_modules/.bin/protractor protractor.conf.js --console-error"
   },
   "directories": {
     "test": "tests"
