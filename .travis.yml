@@ -4,9 +4,8 @@ node_js:
     - 0.12
 addons:
     sauce_connect:
-        username: faceleg
-        access_key:
-            secure: e2OHqKjDVG1Vr1/0sCqTYK7BMq5tq5x/lhBUd3ziV8Hm3gFiY3ikeSI4fPylHFHiPXI1Vf204oda2jHFjbbixxRPgQ5vJuZ8Nx9buHdjOnpjUK91mf06jxBa+PW5KtRRURp81XGnwzOl5zZSDiuK3PeMwmTnePQNFv7G3lWFHJY=
+        username: ngDialog
+        access_key: 916ebec2-5857-4740-aa4f-047db7472e8c
 before_script:
     - npm install
     - npm install -g bower
