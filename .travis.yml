@@ -12,8 +12,8 @@ before_script:
   - bower install
   - npm run webdriver-update
   - sleep 3 # give xvfb some time to start
-  - npm run serve
-  - npm run webdriver
+  - npm run serve &
+  - npm run webdriver &
   - sleep 3 # give Web server some time to bind to sockets, etc
 script:
   - npm test
