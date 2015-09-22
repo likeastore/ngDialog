@@ -2,11 +2,11 @@ sudo: false
 language: node_js
 node_js:
     - 0.12
-addons:
-    sauce_connect:
-        username: ngDialog
-        access_key: 916ebec2-5857-4740-aa4f-047db7472e8c
+env:
+    - SAUCE_USERNAME=ngDialog
+    - SAUCE_ACCESS_KEY=916ebec2-5857-4740-aa4f-047db7472e8c
 before_script:
+    - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
     - npm install
     - npm install -g bower
     - bower install
