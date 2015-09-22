@@ -37,7 +37,13 @@ if (!useA11y) {
         browserName: 'internet explorer',
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
         name: 'ngDialog Protractor',
-        browserVersion: 10
+        version: 10
+    });
+    multiCapabilities.push({
+        browserName: 'internet explorer',
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+        name: 'ngDialog Protractor',
+        version: 11
     });
 }
 
