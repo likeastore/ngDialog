@@ -22,30 +22,33 @@ if (useConsole) {
 }
 
 var multiCapabilities = [{
-    browserName: 'chrome',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER
+    browserName: 'chrome'
   },
   {
-    browserName: 'firefox',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER
+    browserName: 'firefox'
   }];
+
+if (!useA11y) {
+    multiCapabilities.push({
+    browserName: 'safari'
+  });
+}
 
 if (!useA11y && !useConsole) {
     multiCapabilities.push({
-        browserName: 'internet explorer',
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER,
+        browserName: 'internet explorer'
         version: 10
     });
     multiCapabilities.push({
-        browserName: 'internet explorer',
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-        name: 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER,
+        browserName: 'internet explorer'
         version: 11
     });
 }
+
+multiCapabilities.forEach(function(capability) {
+    capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+    capability.name = 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER;
+});
 
 module.exports.config = {
   sauceUser: process.env.SAUCE_USERNAME,
