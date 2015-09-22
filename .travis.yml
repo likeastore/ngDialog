@@ -16,5 +16,6 @@ script:
     - npm run serve &
     - sleep 3
     - npm run protractor
-after_script:
-    - ./scripts/print_logs.sh
+    - npm run protractor-a11y
+    - npm run protractor-console
+
