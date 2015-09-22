@@ -24,12 +24,20 @@ module.exports.config = {
   allScriptsTimeout: 11000,
   specs: ['tests/protractor/**/*.js'],
   multiCapabilities: [{
-    'browserName': 'chrome',
+    browserName: 'chrome',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    name: 'ngDialog Protractor'
   },
   {
+    browserName: 'firefox',
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'browserName': 'firefox',
+    name: 'ngDialog Protractor'
+  },
+  {
+      browserName: 'internet explorer',
+      'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+      name: 'ngDialog Protractor',
+      browserVersion: 10
   }],
   framework: 'jasmine',
   jasmineNodeOpts: {
