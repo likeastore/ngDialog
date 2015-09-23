@@ -517,7 +517,14 @@ Additionally we trigger following 2 events related to loading of template for di
 
 - ``ngDialog.templateLoaded``
 
-In case you are loading your templates from external location, you could use above events to show some kind of loader.
+In case you are loading your templates from an external location, you could use above events to show some kind of loader.
+
+Finally, we trigger the following event when adding padding to or removing padding from the body tag to compensate for scrollbar toggling:
+
+- ``ngDialog.setpadding``
+
+The ``ngDialog.setpadding`` event will communicate the pixel value being added to the body tag so you can add it to any other elements in your layout at the same time (often fixed-position elements will need this).
+
 
 ## Themes
 
