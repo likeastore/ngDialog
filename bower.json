@@ -1,5 +1,5 @@
 {
-  "name": "ngDialog",
+  "name": "ng-dialog",
   "homepage": "https://github.com/likeastore/ngDialog",
   "description": "Modal dialogs and popups provider for Angular.js applications",
   "main": [

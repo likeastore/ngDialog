@@ -18,7 +18,7 @@ ngDialog is ~10Kb, has minimalistic API, highly customizable through themes and 
 You can download all necessary ngDialog files manually or install it with bower:
 
 ```bash
-bower install ngDialog
+bower install ng-dialog
 ```
 
 or npm:
