@@ -14,7 +14,7 @@
         }
     } else if (typeof define === 'function' && define.amd) {
         // AMD
-        define(['ng-dialog'], function (angular) {
+        define(['ng-dialog'], function () {
           factory(root.angular);
         });
     } else {
@@ -423,7 +423,7 @@
                     detectUIRouter: function() {
                         //Detect if ui-router module is installed if not return false
                         try {
-                            angular.module("ui.router");
+                            angular.module('ui.router');
                             return true;
                         } catch(err) {
                             return false;
