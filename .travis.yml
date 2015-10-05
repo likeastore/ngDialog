@@ -2,18 +2,23 @@ sudo: false
 language: node_js
 node_js:
     - 0.12
-env:
-    - SAUCE_USERNAME=ngDialog SAUCE_ACCESS_KEY=916ebec2-5857-4740-aa4f-047db7472e8c
+addons:
+  sauce_connect:
+    username: "ngDialog"
+    access_key: "916ebec2-5857-4740-aa4f-047db7472e8c"
 before_script:
-    - curl https://gist.githubusercontent.com/henrikhodne/9322897/raw/d515f1bb3de75588cba0b6af8bb6dc3f198aedb6/sauce-connect.sh | bash
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
     - npm install
+    - npm run webdriver-update
+    - npm run webdriver &
     - npm install -g bower
-    - bower install
+    - sleep 3
 script:
-    - npm test
     - npm run serve &
     - sleep 3
     - npm run protractor
     - npm run protractor-a11y
     - npm run protractor-console
+    - npm test
 

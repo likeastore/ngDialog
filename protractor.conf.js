@@ -20,45 +20,53 @@ if (useConsole) {
         failOnError: args.indexOf('--console-error') > -1
     });
 }
-
 var multiCapabilities = [{
-    browserName: 'chrome'
-}, {
     browserName: 'firefox'
 }];
 
-if (!useA11y) {
+if (!process.env.TRAVIS_PULL_REQUEST) {
     multiCapabilities.push({
-       browserName: 'safari'
+        browserName: 'chrome'
+    });
+    
+    if (!useA11y) {
+        multiCapabilities.push({
+          browserName: 'safari'
+        });
+    }
+    
+    if (!useA11y && !useConsole) {
+        multiCapabilities.push({
+            browserName: 'internet explorer',
+            version: 10
+        });
+        multiCapabilities.push({
+            browserName: 'internet explorer',
+            version: 11
+        });
+    }
+    
+    multiCapabilities.forEach(function(capability) {
+        capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+        capability.name = 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER;
     });
 }
 
-if (!useA11y && !useConsole) {
-    multiCapabilities.push({
-        browserName: 'internet explorer',
-        version: 10
-    });
-    multiCapabilities.push({
-        browserName: 'internet explorer',
-        version: 11
-    });
-}
-
-multiCapabilities.forEach(function(capability) {
-    capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
-    capability.name = 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER;
-});
-
-module.exports.config = {
-    sauceUser: process.env.SAUCE_USERNAME,
-    sauceKey: process.env.SAUCE_ACCESS_KEY,
+var config = {
     allScriptsTimeout: 11000,
     specs: ['tests/protractor/**/*.js'],
     multiCapabilities: multiCapabilities,
-    framework: 'jasmine',
+    framework: 'jasmine2',
     jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
+        defaultTimeoutInterval: 30000
     },
-    sauceSeleniumAddress: 'localhost:4445/wd/hub',
     plugins: plugins
 };
+
+if (!process.env.TRAVIS_PULL_REQUEST) {
+    config.sauceUser = process.env.SAUCE_USERNAME;
+    config.sauceUser = process.env.SAUCE_ACCESS_KEY;
+    config.sauceSeleniumAddress = 'localhost:4445/wd/hub';
+}
+
+module.exports.config = config;
