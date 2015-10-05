@@ -48,6 +48,8 @@ multiCapabilities.forEach(function(capability) {
     capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
     capability.name = 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER;
 });
+console.log( process.env.SAUCE_USERNAME);
+console.log( process.env.SAUCE_ACCESS_KEY);
 
 module.exports.config = {
     sauceUser: process.env.SAUCE_USERNAME,
