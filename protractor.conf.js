@@ -1,14 +1,3 @@
-var http = require('http');
-http.get("http://localhost:3000/example/", function(res) {
-  console.log("Got response: " + res.statusCode);
-   res.setEncoding('utf8');
-    res.on('data', function (chunk) {
-        console.log('BODY: ' + chunk);
-    });
-}).on('error', function(e) {
-  console.log("Got error: " + e.message);
-});
-
 var args = process.argv.slice(2);
 var plugins = [];
 
