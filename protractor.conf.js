@@ -58,6 +58,6 @@ module.exports.config = {
     //jasmineNodeOpts: {
     //    defaultTimeoutInterval: 30000
     //},
-    //sauceSeleniumAddress: 'localhost:4445/wd/hub',
+    sauceSeleniumAddress: 'localhost:4445/wd/hub',
     plugins: plugins
 };
