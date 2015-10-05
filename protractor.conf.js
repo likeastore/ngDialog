@@ -55,9 +55,10 @@ module.exports.config = {
     allScriptsTimeout: 11000,
     specs: ['tests/protractor/**/*.js'],
     multiCapabilities: multiCapabilities,
-    //jasmineNodeOpts: {
-    //    defaultTimeoutInterval: 30000
-    //},
+    framework: 'jasmine2',
+    jasmineNodeOpts: {
+        defaultTimeoutInterval: 30000
+    },
     sauceSeleniumAddress: 'localhost:4445/wd/hub',
     plugins: plugins
 };
