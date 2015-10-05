@@ -22,6 +22,6 @@ script:
     - sleep 3
 #    - npm run protractor
     - npm run protractor-a11y
-#    - npm run protractor-console
+    - npm run protractor-console
     - npm test
 
