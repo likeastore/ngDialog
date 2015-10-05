@@ -8,9 +8,11 @@
     if (typeof module !== 'undefined' && module.exports) {
         // CommonJS
         if (typeof angular === 'undefined') {
-            module.exports = factory(require('angular'));
+            factory(require('angular'));
+            module.exports = 'ngDialog';
         } else {
-            module.exports = factory(angular);
+            factory(angular);
+            module.exports = 'ngDialog';
         }
     } else if (typeof define === 'function' && define.amd) {
         // AMD
