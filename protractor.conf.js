@@ -1,3 +1,10 @@
+http.get("http://localhost:3000/example/", function(res) {
+  console.log("Got response: " + res.statusCode);
+  console.log(res.body);
+}).on('error', function(e) {
+  console.log("Got error: " + e.message);
+});
+
 var args = process.argv.slice(2);
 var plugins = [];
 
