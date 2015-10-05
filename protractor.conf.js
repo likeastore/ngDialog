@@ -69,4 +69,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     config.sauceSeleniumAddress = 'localhost:4445/wd/hub';
 }
 
+console.log('protractor config: ', config);
+console.log('multiCapabilities: ', multiCapabilities);
+
 module.exports.config = config;
