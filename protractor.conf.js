@@ -24,7 +24,7 @@ var multiCapabilities = [{
     browserName: 'firefox'
 }];
 
-if (!process.env.TRAVIS_PULL_REQUEST) {
+if (process.env.TRAVIS_PULL_REQUEST === 'false') {
     multiCapabilities.push({
         browserName: 'chrome'
     });
@@ -63,7 +63,7 @@ var config = {
     plugins: plugins
 };
 
-if (!process.env.TRAVIS_PULL_REQUEST) {
+if (process.env.TRAVIS_PULL_REQUEST === 'false') {
     config.sauceUser = process.env.SAUCE_USERNAME;
     config.sauceUser = process.env.SAUCE_ACCESS_KEY;
     config.sauceSeleniumAddress = 'localhost:4445/wd/hub';
