@@ -23,15 +23,14 @@ if (useConsole) {
 
 var multiCapabilities = [{
     browserName: 'chrome'
-  },
-  {
+}, {
     browserName: 'firefox'
-  }];
+}];
 
 if (!useA11y) {
     multiCapabilities.push({
-    browserName: 'safari'
-  });
+       browserName: 'safari'
+    });
 }
 
 if (!useA11y && !useConsole) {
@@ -51,15 +50,15 @@ multiCapabilities.forEach(function(capability) {
 });
 
 module.exports.config = {
-  sauceUser: process.env.SAUCE_USERNAME,
-  sauceKey: process.env.SAUCE_ACCESS_KEY,
-  allScriptsTimeout: 11000,
-  specs: ['tests/protractor/**/*.js'],
-  multiCapabilities: multiCapabilities,
-  framework: 'jasmine',
-  jasmineNodeOpts: {
+    sauceUser: process.env.SAUCE_USERNAME,
+    sauceKey: process.env.SAUCE_ACCESS_KEY,
+    allScriptsTimeout: 11000,
+    specs: ['tests/protractor/**/*.js'],
+    multiCapabilities: multiCapabilities,
+    framework: 'jasmine',
+    jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
-  },
-  sauceSeleniumAddress: 'localhost:4445/wd/hub',
-  plugins: plugins
+    },
+    sauceSeleniumAddress: 'localhost:4445/wd/hub',
+    plugins: plugins
 };

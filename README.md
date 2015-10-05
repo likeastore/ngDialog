@@ -18,7 +18,7 @@ ngDialog is ~10Kb, has minimalistic API, highly customizable through themes and 
 You can download all necessary ngDialog files manually or install it with bower:
 
 ```bash
-bower install ngDialog
+bower install ng-dialog
 ```
 
 or npm:
@@ -96,7 +96,7 @@ You could use one of the plugins specifically for these purposes. They are avail
 - [gulp-angular-templatecache](https://github.com/miickel/gulp-angular-templatecache)
 - [gulp-ng-html2js](https://www.npmjs.com/package/gulp-ng-html2js)
 - [grunt-html2js](https://github.com/karlgoldstein/grunt-html2js)
-- [grunt-html2js](https://www.npmjs.com/package/broccoli-html2js)
+- [broccoli-html2js](https://www.npmjs.com/package/broccoli-html2js)
 
 You could find more detailed examples on each of these pages.
 
