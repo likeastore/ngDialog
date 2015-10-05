@@ -21,37 +21,40 @@ if (useConsole) {
     });
 }
 
-var multiCapabilities = [{
-    browserName: 'chrome'
-}, {
+var multiCapabilities = 
+[
+//     {
+//     browserName: 'chrome'
+// },
+{
     browserName: 'firefox'
 }];
 
-if (!useA11y) {
-    multiCapabilities.push({
-      browserName: 'safari'
-    });
-}
+// if (!useA11y) {
+//     multiCapabilities.push({
+//       browserName: 'safari'
+//     });
+// }
 
-if (!useA11y && !useConsole) {
-    multiCapabilities.push({
-        browserName: 'internet explorer',
-        version: 10
-    });
-    multiCapabilities.push({
-        browserName: 'internet explorer',
-        version: 11
-    });
-}
+// if (!useA11y && !useConsole) {
+//     multiCapabilities.push({
+//         browserName: 'internet explorer',
+//         version: 10
+//     });
+//     multiCapabilities.push({
+//         browserName: 'internet explorer',
+//         version: 11
+//     });
+// }
 
 multiCapabilities.forEach(function(capability) {
-    //capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
-    //capability.name = 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER;
+    capability['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+    capability.name = 'ngDialog Protractor ' +  process.env.TRAVIS_JOB_NUMBER;
 });
 
 module.exports.config = {
-    sauceUser: process.env.SAUCE_USERNAME,
-    sauceKey: process.env.SAUCE_ACCESS_KEY,
+    // sauceUser: process.env.SAUCE_USERNAME,
+    // sauceKey: process.env.SAUCE_ACCESS_KEY,
     allScriptsTimeout: 11000,
     specs: ['tests/protractor/**/*.js'],
     multiCapabilities: multiCapabilities,
@@ -59,6 +62,6 @@ module.exports.config = {
     jasmineNodeOpts: {
         defaultTimeoutInterval: 30000
     },
-    sauceSeleniumAddress: 'localhost:4445/wd/hub',
+    // sauceSeleniumAddress: 'localhost:4445/wd/hub',
     plugins: plugins
 };
