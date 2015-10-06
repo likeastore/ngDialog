@@ -66,7 +66,6 @@ var config = {
 if (process.env.TRAVIS_PULL_REQUEST === 'false') {
     config.sauceUser = process.env.SAUCE_USERNAME;
     config.sauceKey = process.env.SAUCE_ACCESS_KEY;
-    config.sauceSeleniumAddress = 'localhost:4445/wd/hub';
 }
 
 console.log('TRAVIS_PULL_REQUEST', process.env.TRAVIS_PULL_REQUEST);
