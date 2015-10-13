@@ -16,9 +16,7 @@
         }
     } else if (typeof define === 'function' && define.amd) {
         // AMD
-        define(['ng-dialog'], function () {
-          factory(root.angular);
-        });
+        define(['angular'], factory);
     } else {
         // Global Variables
         factory(root.angular);
