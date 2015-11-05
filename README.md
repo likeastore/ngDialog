@@ -521,9 +521,9 @@ In case you are loading your templates from an external location, you could use 
 
 Finally, we trigger the following event when adding padding to or removing padding from the body tag to compensate for scrollbar toggling:
 
-- ``ngDialog.setpadding``
+- ``ngDialog.setPadding``
 
-The ``ngDialog.setpadding`` event will communicate the pixel value being added to the body tag so you can add it to any other elements in your layout at the same time (often fixed-position elements will need this).
+The ``ngDialog.setPadding`` event will communicate the pixel value being added to the body tag so you can add it to any other elements in your layout at the same time (often fixed-position elements will need this).
 
 
 ## Themes
