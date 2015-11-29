@@ -625,7 +625,15 @@
                             };
 
                             if (typeof $window.Hammer !== 'undefined') {
-                                var hammerTime = scope.hammerTime = $window.Hammer($dialog[0]);
+                                var behavior = {};
+                                if (options.userSelect) {
+                                    behavior = {
+                                        cssProps: {
+                                            userSelect: options.userSelect
+                                        }
+                                    }
+                                }
+                                var hammerTime = scope.hammerTime = $window.Hammer($dialog[0], behavior);
                                 hammerTime.on('tap', closeByDocumentHandler);
                             } else {
                                 $dialog.bind('click', closeByDocumentHandler);

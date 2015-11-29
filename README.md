@@ -244,6 +244,10 @@ This will close all open modals if there are several of them opened at the same 
 
 It allows to close modals by clicking on overlay background, default ``true``. If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
 
+##### ``userSelect {Boolean}``
+
+If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, by default user text selection is disbaled. Setting userSelect to ``true`` will allow the text selection.
+
 ##### ``appendTo {String}``
 
 Specify your element where to append dialog instance, accepts selector string (e.g. ``#yourId``, ``.yourClass``). If not specified appends dialog to ``body`` as default behavior.
