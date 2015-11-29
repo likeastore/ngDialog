@@ -566,10 +566,15 @@
                                         $scope: scope,
                                         $element: $dialog
                                     }),
-                                    null,
+                                    true,
                                     label
                                 );
-                                $dialog.data('$ngDialogControllerController', controllerInstance);
+
+                                if(options.bindToController) {
+                                    angular.extend(controllerInstance.instance, {ngDialogId: scope.ngDialogId, ngDialogData: scope.ngDialogData, closeThisDialog: scope.closeThisDialog});
+                                }
+
+                                $dialog.data('$ngDialogControllerController', controllerInstance());
                             }
 
                             $timeout(function () {

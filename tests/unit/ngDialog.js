@@ -171,4 +171,34 @@ describe('ngDialog', function () {
     }));
 
   });
+
+  describe('bindToController data checking', function () {
+    var Ctrl;
+    beforeEach(inject(function (ngDialog, $timeout) {
+      Ctrl = spy('DialogCtrl');
+      ngDialog.open({
+        controller: Ctrl,
+        controllerAs: 'CtrlVM',
+        bindToController: true,
+        data: {
+          testData: 'testData'
+        }
+      });
+      $timeout.flush();
+    }));
+
+    it('should have placed ngDialogId on the controller', function() {
+      expect(Ctrl.calls.first().object.ngDialogId).toEqual('ngdialog1');
+    });
+
+    it('should have placed ngDialogData on the controller', function() {
+      expect(Ctrl.calls.first().object.ngDialogData.testData).toEqual('testData');
+    });
+
+    it('should have placed closeThisDialog function on the controller', function() {
+      expect(Ctrl.calls.first().object.closeThisDialog).toEqual(jasmine.any(Function));
+    });
+
+  });
+
 });
