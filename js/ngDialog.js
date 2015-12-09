@@ -9,11 +9,10 @@
         // CommonJS
         if (typeof angular === 'undefined') {
             factory(require('angular'));
-            module.exports = 'ngDialog';
         } else {
             factory(angular);
-            module.exports = 'ngDialog';
         }
+        module.exports = 'ngDialog';
     } else if (typeof define === 'function' && define.amd) {
         // AMD
         define(['angular'], factory);
