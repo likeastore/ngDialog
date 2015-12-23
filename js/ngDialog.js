@@ -691,11 +691,9 @@
                      */
                     openConfirm: function (opts) {
                         var defer = $q.defer();
-
-                        var options = {
-                            closeByEscape: false,
-                            closeByDocument: false
-                        };
+                        var options = angular.copy(defaults);
+                        
+                        opts = opts || {};
                         angular.extend(options, opts);
 
                         options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
