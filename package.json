@@ -4,6 +4,7 @@
   "homepage": "https://github.com/likeastore/ngDialog",
   "description": "Modal dialogs and popups provider for Angular.js applications",
   "main": "./js/ngDialog.js",
+  "style": "./css/ngDialog.css",
   "scripts": {
     "pretest": "npm install && bower install --allow-root",
     "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
