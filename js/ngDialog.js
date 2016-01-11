@@ -706,7 +706,7 @@
                         var openResult = publicMethods.open(options);
                         openResult.closePromise.then(function (data) {
                             if (data) {
-                                return defer.reject(data.value);
+                                return defer.resolve(data.value);
                             }
                             return defer.reject();
                         });
