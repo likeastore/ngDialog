@@ -206,7 +206,7 @@ describe('ngDialog', function () {
           name: 'do something'
       };
 
-      describe('when feature is off - default', function(){
+      describe('when feature is off - default', function () {
           var ngDialog;
           var $timeout;
 
@@ -215,7 +215,7 @@ describe('ngDialog', function () {
               $timeout = _$timeout_;
           }));
 
-          it('should allow opening 2 dialogs with the same name', function() {
+          it('should allow opening 2 dialogs with the same name', function () {
               var firstDialog = ngDialog.open(dialogOptions);
               expect(firstDialog).not.toBeUndefined();
               expect(firstDialog.id).toBe('ngdialog1');

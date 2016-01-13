@@ -74,7 +74,7 @@
             angular.extend(defaults, newDefaults);
         };
 
-        this.setOpenOnePerName = function(isOpenOne){
+        this.setOpenOnePerName = function (isOpenOne) {
             openOnePerName = isOpenOne || false;
         };
 
@@ -464,9 +464,9 @@
                     open: function (opts) {
                         var dialogID = null;
                         opts = opts || {};
-                        if(openOnePerName && opts.name){
+                        if (openOnePerName && opts.name) {
                             dialogID = opts.name+' dialog';
-                            if(this.isOpen(dialogID)){
+                            if (this.isOpen(dialogID)) {
                                 return;
                             }
                         }
@@ -716,7 +716,7 @@
                         };
 
                         var openResult = publicMethods.open(options);
-                        if(openResult) {
+                        if (openResult) {
                             openResult.closePromise.then(function (data) {
                                 if (data) {
                                     return defer.reject(data.value);
