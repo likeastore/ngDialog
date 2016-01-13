@@ -201,4 +201,55 @@ describe('ngDialog', function () {
 
   });
 
+  describe('openOnePerName', function () {
+      var dialogOptions = {
+          name: 'do something'
+      };
+
+      describe('when feature is off - default', function(){
+          var ngDialog;
+          var $timeout;
+
+          beforeEach(inject(function (_ngDialog_, _$timeout_) {
+              ngDialog = _ngDialog_;
+              $timeout = _$timeout_;
+          }));
+
+          it('should allow opening 2 dialogs with the same name', function() {
+              var firstDialog = ngDialog.open(dialogOptions);
+              expect(firstDialog).not.toBeUndefined();
+              expect(firstDialog.id).toBe('ngdialog1');
+
+              var secondDialog = ngDialog.open(dialogOptions);
+              expect(secondDialog).not.toBeUndefined();
+              expect(secondDialog.id).toBe('ngdialog2');
+              $timeout.flush();
+          });
+      });
+
+      describe('when feature is on (openOnePerName = true)', function () {
+          var ngDialog;
+          var $timeout;
+
+          beforeEach(module(function (ngDialogProvider) {
+              ngDialogProvider.setOpenOnePerName(true);
+          }));
+
+          beforeEach(inject(function (_ngDialog_, _$timeout_) {
+              ngDialog = _ngDialog_;
+              $timeout = _$timeout_;
+          }));
+
+          it('should allow opening 2 dialogs with the same name', function () {
+              var firstDialog = ngDialog.open(dialogOptions);
+              expect(firstDialog).not.toBeUndefined();
+              expect(firstDialog.id).toBe('do something dialog');
+              $timeout.flush();
+
+              var secondDialog = ngDialog.open(dialogOptions);
+              expect(secondDialog).toBeUndefined();
+          });
+      });
+  });
+
 });

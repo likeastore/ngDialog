@@ -471,6 +471,25 @@ app.config(function (ngDialogProvider) {
 });
 ```
 
+===
+
+### ``.setOpenOnePerName({Boolean})``
+Default value: false 
+
+Define weather or not opening a dialog with the same name more than once simultaneously is allowed. Assigning true prevents opening a second dialog.
+
+Setting it in the ngDialogProvider:
+```javascript
+var app = angular.module('exampleApp', ['ngDialog']);
+
+app.config(function (ngDialogProvider) {
+    ngDialogProvider.setOpenOnePerName(true);
+});
+```
+
+Make sure to remember to add a 'name' when opening a dialog.
+**ngDialog 'open' and 'openConfirm' functions will return `undefined` if the dialog was not opened.**
+
 ## Directive
 
 By default the ngDialog module is served with the ``ngDialog`` directive which can be used as attribute for buttons, links, etc. Almost all ``.open()`` options are available through tag attributes as well, the only difference is that ``ng-template`` id or path of template file is required.
