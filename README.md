@@ -476,7 +476,7 @@ app.config(function (ngDialogProvider) {
 ### ``.setOpenOnePerName({Boolean})``
 Default value: false 
 
-Define weather or not opening a dialog with the same name more than once simultaneously is allowed. Assigning true prevents opening a second dialog.
+Define whether or not opening a dialog with the same name more than once simultaneously is allowed. Assigning true prevents opening a second dialog.
 
 Setting it in the ngDialogProvider:
 ```javascript
