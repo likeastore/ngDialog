@@ -36,6 +36,8 @@
     var scopes = {};
     var openIdStack = [];
     var keydownIsBound = false;
+    var openOnePerName = false;
+
 
     m.provider('ngDialog', function () {
         var defaults = this.defaults = {
@@ -70,6 +72,10 @@
 
         this.setDefaults = function (newDefaults) {
             angular.extend(defaults, newDefaults);
+        };
+
+        this.setOpenOnePerName = function (isOpenOne) {
+            openOnePerName = isOpenOne || false;
         };
 
         var globalID = 0, dialogsCount = 0, closeByDocumentHandler, defers = {};
@@ -453,16 +459,22 @@
                      * - closeByEscape {Boolean} - default true
                      * - closeByDocument {Boolean} - default true
                      * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set)
-                     *
                      * @return {Object} dialog
                      */
                     open: function (opts) {
+                        var dialogID = null;
+                        opts = opts || {};
+                        if (openOnePerName && opts.name) {
+                            dialogID = opts.name+' dialog';
+                            if (this.isOpen(dialogID)) {
+                                return;
+                            }
+                        }
                         var options = angular.copy(defaults);
                         var localID = ++globalID;
-                        var dialogID = 'ngdialog' + localID;
+                        dialogID = dialogID || 'ngdialog' + localID;
                         openIdStack.push(dialogID);
 
-                        opts = opts || {};
                         angular.extend(options, opts);
 
                         var defer;
@@ -491,7 +503,7 @@
                             }
 
                             var hasOverlayClass = options.overlay ? '' : ' ngdialog-no-overlay';
-                            $dialog = $el('<div id="ngdialog' + localID + '" class="ngdialog' + hasOverlayClass + '"></div>');
+                            $dialog = $el('<div id="'+dialogID + '" class="ngdialog' + hasOverlayClass + '"></div>');
                             $dialog.html((options.overlay ?
                                 '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
                                 '<div class="ngdialog-content" role="document">' + template + '</div>'));
@@ -692,7 +704,7 @@
                     openConfirm: function (opts) {
                         var defer = $q.defer();
                         var options = angular.copy(defaults);
-                        
+
                         opts = opts || {};
                         angular.extend(options, opts);
 
@@ -704,14 +716,15 @@
                         };
 
                         var openResult = publicMethods.open(options);
-                        openResult.closePromise.then(function (data) {
-                            if (data) {
-                                return defer.reject(data.value);
-                            }
-                            return defer.reject();
-                        });
-
-                        return defer.promise;
+                        if (openResult) {
+                            openResult.closePromise.then(function (data) {
+                                if (data) {
+                                    return defer.reject(data.value);
+                                }
+                                return defer.reject();
+                            });
+                            return defer.promise;
+                        }
                     },
 
                     isOpen: function(id) {
