@@ -240,6 +240,15 @@ It allows to close modals by clicking the ``Esc`` key, default ``true``.
 
 This will close all open modals if there are several of them opened at the same time.
 
+##### ``closeByNavigation {Boolean}``
+
+It allows to close modals on state change (history.back, $state.go, etc.), default ``false``.
+Compatible with ui-router and angular-router.
+Set this value to true if you want your modal to close when you go back or change state.
+Set this value to false if you want your modal to stay open when you change state within your app.
+
+This will close all open modals if there are several of them opened at the same time.
+
 ##### ``closeByDocument {Boolean}``
 
 It allows to close modals by clicking on overlay background, default ``true``. If [Hammer.js](https://github.com/EightMedia/hammer.js) is loaded, it will listen for ``tap`` instead of ``click``.
