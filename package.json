@@ -17,8 +17,7 @@
     "protractor": "node_modules/.bin/protractor protractor.conf.js",
     "protractor-a11y": "node_modules/.bin/protractor protractor.conf.js --a11y",
     "protractor-console": "node_modules/.bin/protractor protractor.conf.js --console-error",
-    "build": "grunt build",
-    "prepublish": "npm run build"
+    "build": "grunt build"
   },
   "directories": {
     "test": "tests"
