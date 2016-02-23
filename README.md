@@ -31,14 +31,16 @@ npm install ng-dialog
 
 ## Usage
 
-You need only to include ``ngDialog.js``,  ``ngDialog.css`` and  ``ngDialog-theme-default.css`` (as minimal setup) to your project and then you can start using the ``ngDialog`` provider in your directives, controllers and services. For example in controllers:
+You need only to include ``ngDialog.js``,  ``ngDialog.css`` and  ``ngDialog-theme-default.css`` (as minimal setup) to your project and then you can start using the ``ngDialog`` provider in your directives, controllers and services. 
+Define the className to be the ``ngDialog-theme-default``. 
+For example in controllers:
 
 ```javascript
 var app = angular.module('exampleApp', ['ngDialog']);
 
 app.controller('MainCtrl', function ($scope, ngDialog) {
     $scope.clickToOpen = function () {
-        ngDialog.open({ template: 'popupTmpl.html' });
+        ngDialog.open({ template: 'popupTmpl.html', className: 'ngDialog-theme-default' });
     };
 });
 ```
@@ -219,6 +221,7 @@ ngDialog.open({
     className: 'ngdialog-theme-default'
 });
 ```
+Note: If the className is not mentioned, the dialog will not display correctly.
 
 Check [themes](https://github.com/likeastore/ngDialog#themes) block to learn more.
 
