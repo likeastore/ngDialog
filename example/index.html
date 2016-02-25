@@ -70,6 +70,7 @@
     <a href="" ng-click="openConfirmWithPreCloseCallbackOnScope()">Open confirm modal with pre-close callback on scope</a>
     <a href="" ng-click="openConfirmWithPreCloseCallbackInlinedWithNestedConfirm()">Open confirm modal with pre-close inlined with nested confirm.</a>
     <a href="" ng-click="openWithoutOverlay()">Open without overlay</a>
+    <a id="via-service" href="" ng-click="openWithMinifying()">Open with minifying</a>
 
     <!-- Templates -->
 
@@ -385,6 +386,14 @@
                     plain: true,
                     overlay: false
                 });
+            };
+            
+            $scope.openWithMinifying = function() {
+                var new_dialog = ngDialog.open({ id: 'fromAService', template: 'firstDialogId', controller: 'InsideCtrl', data: { foo: 'from a service' }, showMinimize: true, minimizedTitle: 'Test title' });
+                // example on checking whether created `new_dialog` is open
+                $timeout(function() {
+                    console.log(ngDialog.isOpen(new_dialog.id));
+                }, 2000)
             };
 
             $rootScope.$on('ngDialog.opened', function (e, $dialog) {

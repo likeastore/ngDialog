@@ -35,6 +35,7 @@
     var forceElementsReload = { html: false, body: false };
     var scopes = {};
     var openIdStack = [];
+    var openMinimizedIdStack = [];
     var keydownIsBound = false;
     var openOnePerName = false;
 
@@ -59,7 +60,9 @@
             ariaLabelledById: null,
             ariaLabelledBySelector: null,
             ariaDescribedById: null,
-            ariaDescribedBySelector: null
+            ariaDescribedBySelector: null,
+            showMinimize: false,
+            minimizedTitle: 'none titled',
         };
 
         this.setForceHtmlReload = function (_useIt) {
@@ -163,11 +166,13 @@
                             previousFocus.focus();
                         }
 
+                        var isMinimized = $el(document.getElementById(id + '-minimized')).length === 1;
+
                         $rootScope.$broadcast('ngDialog.closing', $dialog, value);
                         dialogsCount = dialogsCount < 0 ? 0 : dialogsCount;
-                        if (animationEndSupport && !options.disableAnimation) {
+                        if (animationEndSupport && !options.disableAnimation && !isMinimized) {
                             scope.$destroy();
-                            $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
+                            $dialog.unbind(animationEndEvent).bind(animationEndEvent, function() {
                                 privateMethods.closeDialogElement($dialog, value);
                             }).addClass('ngdialog-closing');
                         } else {
@@ -440,6 +445,91 @@
                             return '$stateChangeSuccess';
                         }
                         return '$locationChangeSuccess';
+                    },
+
+                    showDialog: function($dialog) {
+                        $dialog.css({
+                            display: 'block'
+                        });
+                    },
+
+                    hideDialog: function ($dialog) {
+                        $dialog.css({
+                            display: 'none'
+                        });
+                    },
+
+                    closeMinimize: function (minimizedId) {
+                        var minimizedElement = document.getElementById(minimizedId);
+                        var maximizeBtn = minimizedElement.getElementsByClassName("ngdialog-maximize-btn");
+                        $el(maximizeBtn[0]).unbind('click');
+
+                        var closeMinimizeBtn = minimizedElement.getElementsByClassName("ngdialog-close");
+                        $el(closeMinimizeBtn).unbind('click');
+
+                        var $minimized = $el(minimizedElement);
+                        $minimized.remove();
+
+                        openMinimizedIdStack.splice(openMinimizedIdStack.indexOf(minimizedId), 1);
+                        privateMethods.rearrangeMinimizedElements();
+                    },
+                    
+                    rearrangeMinimizedElements: function (){
+                        var leftPosition = 0;
+                        for(var i=0;i<openMinimizedIdStack.length; i++) {                            
+                            var minimized = $el(document.getElementById(openMinimizedIdStack[i]));
+                            var elementWidth = minimized[0].offsetWidth;
+                            
+                            minimized.css({
+                                left: leftPosition+"px"
+                            });
+                            
+                            leftPosition += elementWidth + privateMethods.getMarginBetweenMinimizedElements();
+                        }
+                    },
+                    
+                    getMarginBetweenMinimizedElements: function() {
+                        return 25;
+                    },
+                    
+                    isMoreMinimizedElementsPossible: function() {                        
+                        var windowWidth = window.innerWidth;
+                        var elementWidth = document.getElementsByClassName('ngdialog-minimized').length > 0 ? 
+                                           document.getElementsByClassName('ngdialog-minimized')[0].offsetWidth : 0;
+                                           
+                        var currentLeftStartPosition = (elementWidth + privateMethods.getMarginBetweenMinimizedElements()) * openMinimizedIdStack.length;
+                        
+                        if ((currentLeftStartPosition+elementWidth) > windowWidth) {
+                            alert("No more minimized is possible.");
+                            return false;
+                        }
+                        return true;
+                    },
+                    
+                    showMinimizedPreview: function(minimizedId, copiedPreviewContent, dialogcontentwidth) {
+                        var minimized = document.getElementById(minimizedId);
+                        var minimizedStyle = window.getComputedStyle(minimized);
+                        var minimizedLeftPosition = minimizedStyle.getPropertyValue('left');
+                        var minimizedWidth = minimized.offsetWidth;
+                        var minimizedHeight = minimized.offsetHeight;
+                        var zoomlevel = ((minimizedWidth/dialogcontentwidth)*100)/100;
+                        
+                        var previewContent = $el('<div>'+copiedPreviewContent+'</div>');
+                        previewContent.css({
+                            zoom: zoomlevel
+                        });
+                                                    
+                        var preview = $el('<div id="'+minimizedId+'-preview" class="ngdialog-minimized-preview"></div>');
+                        preview.css({
+                            bottom: minimizedHeight  + 'px',
+                            left: minimizedLeftPosition,
+                            width: (minimizedWidth-10)+'px'
+                        });
+                        
+                        preview.append(previewContent);
+                        
+                        var body = $el(document.body);
+                        body.append(preview);
                     }
                 };
 
@@ -459,6 +549,8 @@
                      * - closeByEscape {Boolean} - default true
                      * - closeByDocument {Boolean} - default true
                      * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set)
+                     * - showMinimize {Boolean} - show minimize button, default false
+                     * - minimizedTitle {String} - Title for the minimized element, default is 'None titled'
                      * @return {Object} dialog
                      */
                     open: function (opts) {
@@ -500,6 +592,10 @@
 
                             if (options.showClose) {
                                 template += '<div class="ngdialog-close"></div>';
+                            }
+
+                            if (options.showMinimize) {
+                                template += '<div class="ngdialog-minimize-btn"></div>';
                             }
 
                             var hasOverlayClass = options.overlay ? '' : ' ngdialog-no-overlay';
@@ -634,9 +730,14 @@
                             closeByDocumentHandler = function (event) {
                                 var isOverlay = options.closeByDocument ? $el(event.target).hasClass('ngdialog-overlay') : false;
                                 var isCloseBtn = $el(event.target).hasClass('ngdialog-close');
+                                var isMinimizeBtn = $el(event.target).hasClass('ngdialog-minimize-btn');
 
                                 if (isOverlay || isCloseBtn) {
                                     publicMethods.close($dialog.attr('id'), isCloseBtn ? '$closeButton' : '$document');
+                                }
+
+                                if (isMinimizeBtn) {
+                                    publicMethods.minimize($dialog.attr('id'), options.minimizedTitle);
                                 }
                             };
 
@@ -766,6 +867,55 @@
                         }
                     },
 
+                    minimize: function(id, minimizedTitle) {
+                        if (!privateMethods.isMoreMinimizedElementsPossible())
+                            return;
+                        
+                        var dialogElement = document.getElementById(id);
+                        var $dialog = $el(dialogElement);
+                        var minimizedId = id + '-minimized';                        
+                        openMinimizedIdStack.push(minimizedId);
+                        
+                        // save the width of the dialog content before hiding it
+                        var dialogContentWidth = dialogElement.getElementsByClassName('ngdialog-content')[0].offsetWidth
+
+                        privateMethods.hideDialog($dialog);
+
+                        var titleElement = $el('<div class="ngdialog-minimized-title">' + minimizedTitle + '<div>');
+                        titleElement.bind('mouseover', function(event) {
+                            var dialog = document.getElementById(id);
+                            var copyDialogContent = dialog.getElementsByClassName('ngdialog-content')[0].innerHTML;
+                                                        
+                            privateMethods.showMinimizedPreview(minimizedId, copyDialogContent, dialogContentWidth);
+                        });
+                        
+                        titleElement.bind('mouseout', function(event) {                            
+                            var mini = $el(document.getElementById(minimizedId+'-preview'));
+                            mini.remove();
+                        });
+
+                        var maximizeButton = $el('<div class="ngdialog-maximize-btn"></div>');
+                        maximizeButton.bind('click', function (event) {
+                            privateMethods.closeMinimize(minimizedId);
+                            privateMethods.showDialog($dialog);
+                        });
+
+                        var closeButton = $el('<div class="ngdialog-minimized-close"></div>');
+                        closeButton.bind('click', function (event) {
+                            privateMethods.closeDialog($dialog, '$closeButton');
+                            privateMethods.closeMinimize(minimizedId);
+                        });
+
+                        var minimizedElement = $el('<div id="' + minimizedId + '" class="ngdialog-minimized"></div>');
+
+                        minimizedElement.append(titleElement);
+                        minimizedElement.append(maximizeButton);
+                        minimizedElement.append(closeButton);
+                        
+                        $elements.body.append(minimizedElement);
+                        privateMethods.rearrangeMinimizedElements();
+                    },
+
                     getOpenDialogs: function() {
                         return openIdStack;
                     },
@@ -819,7 +969,9 @@
                         closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
                         closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
                         overlay: attrs.ngDialogOverlay === 'false' ? false : (attrs.ngDialogOverlay === 'true' ? true : defaults.overlay),
-                        preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
+                        preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback,
+                        showMinimized: attrs.ngDialogShowMinimized === 'false' ? false : (attrs.ngDialogShowMinimized === 'true' ? true : defaults.showMinimized),
+                        minimizedTitle: attrs.ngDialogMinimizedTitle || defaults.minimizedTitle
                     });
                 });
             }

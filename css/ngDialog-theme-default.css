@@ -109,6 +109,39 @@
   color: #777;
 }
 
+.ngdialog.ngdialog-theme-default .ngdialog-minimize-btn {
+	border-radius: 5px;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-minimize-btn:before {
+	background: transparent;
+	border-radius: 3px;
+	color: #bbb;
+	content: '_';
+	font-size: 22px;
+	font-weight: 400;
+	height: 30px;
+	line-height: 26px;
+	position: absolute;
+	right: 25px;
+	top: -3px;
+	width: 30px;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-minimize-btn:hover:before,
+.ngdialog.ngdialog-theme-default .ngdialog-minimize-btn:active:before {
+  color: #777;
+}
+
+.ngdialog-minimized .ngdialog-maximize-btn:hover:before,
+.ngdialog-minimized .ngdialog-maximize-btn:active:before {
+  border: 2px solid #777;
+}
+
 .ngdialog.ngdialog-theme-default .ngdialog-message {
   margin-bottom: .5em;
 }
@@ -188,4 +221,78 @@
 .ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-secondary {
   background: #e0e0e0;
   color: #777;
+}
+
+.ngdialog-minimized {
+    padding: 10px;
+    padding-left: 15px;
+    min-width: 200px;
+    background-color: gray;
+    position: absolute;
+    bottom: 0;
+    z-index: 999999;
+    display: flex;
+}
+
+.ngdialog-minimized .ngdialog-minimized-close {
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.ngdialog-minimized .ngdialog-minimized-close:before {
+  background: transparent;
+  border-radius: 3px;
+  color: #bbb;
+  content: '\00D7';
+  font-size: 26px;
+  font-weight: 400;
+  height: 30px;
+  line-height: 26px;
+  position: absolute;
+  right: 3px;
+  text-align: center;
+  top: 3px;
+  width: 30px;
+}
+
+.ngdialog-minimized .ngdialog-minimized-close:hover:before,
+.ngdialog-minimized .ngdialog-minimized-close:active:before {
+  color: #777;
+}
+
+.ngdialog-minimized .ngdialog-minimized-title {
+    color: white;
+}
+
+.ngdialog-minimized .ngdialog-maximize-btn {
+	border-radius: 5px;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.ngdialog-minimized .ngdialog-maximize-btn:before {
+    content: '';
+	background: transparent;
+    border: 2px solid #bbb;
+	border-radius: 2px;
+	color: #bbb;
+	height: 8px;
+	position: absolute;
+	right: 35px;
+	top: 10px;
+    text-align: right;
+	width: 8px;
+}
+
+.ngdialog-minimized-preview {    
+    position: absolute;
+    background-color: gray;
+    opacity: 0.8;
+    padding: 5px;
+    z-index:99999;
 }
