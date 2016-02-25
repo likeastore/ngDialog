@@ -54,6 +54,8 @@
             cache: true,
             trapFocus: true,
             preserveFocus: true,
+            tooltip: false,
+            mouseEvent: null,
             ariaAuto: true,
             ariaRole: null,
             ariaLabelledById: null,
@@ -459,6 +461,8 @@
                      * - closeByEscape {Boolean} - default true
                      * - closeByDocument {Boolean} - default true
                      * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set)
+                     * - tooltip {Boolean} - if enabled ngDialog will be displayed as a tooltip. Left, top corner has the position where the cursor is. Default false
+                     * - mouseEvent {event} - mouse event with coordinates to set up tooltip position
                      * @return {Object} dialog
                      */
                     open: function (opts) {
@@ -646,6 +650,17 @@
                             } else {
                                 $dialog.bind('click', closeByDocumentHandler);
                             }
+                            if (options.tooltip && options.mouseEvent!==null) {
+                                var elDialogContent = getByClass($dialog, 'ngdialog-content');
+                                if (elDialogContent !== null) {
+                                    //set new position for the ngDialog (tooltip)
+                                    elDialogContent.css({
+                                        top: options.mouseEvent.pageY + 'px',
+                                        left: options.mouseEvent.pageX + 'px',
+                                        position: 'absolute'
+                                    });
+                                }
+                            }
 
                             dialogsCount += 1;
 
@@ -683,6 +698,20 @@
 
                             return loadTemplateUrl(tmpl, {cache: $templateCache});
                         }
+
+                        function getByClass(elem, className) {
+                            var elemWithClass = null;
+                            if (elem !== null) {
+                                var divList = $el(elem.find('div'));
+                                if (divList !== null) {
+                                    for (var i = 0; i < divList.length; i++) {
+                                        if ($el(divList[i]).hasClass(className))
+                                            elemWithClass = $el(divList[i]);
+                                    }
+                                }
+                            }
+                            return elemWithClass;
+                        }
                     },
 
                     /*
@@ -698,6 +727,8 @@
                      * - closeByEscape {Boolean} - default false
                      * - closeByDocument {Boolean} - default false
                      * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set); not called on confirm
+                     * - tooltip {Boolean} - if enabled ngDialog will be displayed as a tooltip. Left, top corner has the position where the cursor is. Default false
+                     * - mouseEvent {event} - mouse event with coordinates to set up tooltip position
                      *
                      * @return {Object} dialog
                      */
@@ -801,7 +832,6 @@
             link: function (scope, elem, attrs) {
                 elem.on('click', function (e) {
                     e.preventDefault();
-
                     var ngDialogScope = angular.isDefined(scope.ngDialogScope) ? scope.ngDialogScope : 'noScope';
                     angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
 
@@ -819,6 +849,8 @@
                         closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
                         closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
                         overlay: attrs.ngDialogOverlay === 'false' ? false : (attrs.ngDialogOverlay === 'true' ? true : defaults.overlay),
+                        tooltip: attrs.ngDialogTooltip === 'false' ? false : (attrs.ngDialogTooltip === 'true' ? true : defaults.tooltip),
+                        mouseEvent: attrs.ngDialogTooltip === 'false' ? null : e,
                         preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
                     });
                 });
