@@ -59,7 +59,8 @@
             ariaLabelledById: null,
             ariaLabelledBySelector: null,
             ariaDescribedById: null,
-            ariaDescribedBySelector: null
+            ariaDescribedBySelector: null,
+            bodyClassName: 'ngdialog-open'
         };
 
         this.setForceHtmlReload = function (_useIt) {
@@ -194,10 +195,11 @@
                     },
 
                     closeDialogElement: function($dialog, value) {
+                        var options = $dialog.data('$ngDialogOptions');
                         $dialog.remove();
                         if (dialogsCount === 0) {
-                            $elements.html.removeClass('ngdialog-open');
-                            $elements.body.removeClass('ngdialog-open');
+                            $elements.html.removeClass(options.bodyClassName);
+                            $elements.body.removeClass(options.bodyClassName);
                             privateMethods.resetBodyPadding();
                         }
                         $rootScope.$broadcast('ngDialog.closed', $dialog, value);
@@ -459,6 +461,7 @@
                      * - closeByEscape {Boolean} - default true
                      * - closeByDocument {Boolean} - default true
                      * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set)
+                     * - bodyClassName {String} - class added to body at open dialog
                      * @return {Object} dialog
                      */
                     open: function (opts) {
@@ -594,8 +597,8 @@
 
                                 $compile($dialog)(scope);
                                 var widthDiffs = $window.innerWidth - $elements.body.prop('clientWidth');
-                                $elements.html.addClass('ngdialog-open');
-                                $elements.body.addClass('ngdialog-open');
+                                $elements.html.addClass(options.bodyClassName);
+                                $elements.body.addClass(options.bodyClassName);
                                 var scrollBarWidth = widthDiffs - ($window.innerWidth - $elements.body.prop('clientWidth'));
                                 if (scrollBarWidth > 0) {
                                     privateMethods.setBodyPadding(scrollBarWidth);
@@ -698,6 +701,7 @@
                      * - closeByEscape {Boolean} - default false
                      * - closeByDocument {Boolean} - default false
                      * - preCloseCallback {String|Function} - user supplied function name/function called before closing dialog (if set); not called on confirm
+                     * - bodyClassName {String} - class added to body at open dialog
                      *
                      * @return {Object} dialog
                      */
@@ -819,7 +823,8 @@
                         closeByDocument: attrs.ngDialogCloseByDocument === 'false' ? false : (attrs.ngDialogCloseByDocument === 'true' ? true : defaults.closeByDocument),
                         closeByEscape: attrs.ngDialogCloseByEscape === 'false' ? false : (attrs.ngDialogCloseByEscape === 'true' ? true : defaults.closeByEscape),
                         overlay: attrs.ngDialogOverlay === 'false' ? false : (attrs.ngDialogOverlay === 'true' ? true : defaults.overlay),
-                        preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback
+                        preCloseCallback: attrs.ngDialogPreCloseCallback || defaults.preCloseCallback,
+                        bodyClassName: attrs.ngDialogBodyClass || defaults.bodyClassName
                     });
                 });
             }
