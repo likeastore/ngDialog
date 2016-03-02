@@ -40,7 +40,7 @@ var app = angular.module('exampleApp', ['ngDialog']);
 
 app.controller('MainCtrl', function ($scope, ngDialog) {
     $scope.clickToOpen = function () {
-        ngDialog.open({ template: 'popupTmpl.html', className: 'ngDialog-theme-default' });
+        ngDialog.open({ template: 'popupTmpl.html', className: 'ngdialog-theme-default' });
     };
 });
 ```
