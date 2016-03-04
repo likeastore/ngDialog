@@ -225,6 +225,24 @@ Note: If the className is not mentioned, the dialog will not display correctly.
 
 Check [themes](https://github.com/likeastore/ngDialog#themes) block to learn more.
 
+##### ``appendClassName {String}``
+
+Unlike the `className` property, which overrides any default classes specified through the `setDefaults()` method ([see docs](https://github.com/likeastore/ngDialog#setdefaultsoptions)), `appendClassName` allows for the addition of a class on top of any defaults.
+
+For example, the following would add both the `ngdialog-theme-default` and `ngdialog-custom` classes to the dialog opened:
+
+```javascript
+ngDialogProvider.setDefaults({
+    className: 'ngdialog-theme-default'
+});
+```
+```javascript
+ngDialog.open({
+    template: 'template.html',
+    appendClassName: 'ngdialog-custom'
+});
+```
+
 ##### ``disableAnimation {Boolean}``
 
 If ``true`` then animation for the dialog will be disabled, default ``false``.

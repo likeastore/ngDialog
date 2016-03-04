@@ -42,6 +42,7 @@
     m.provider('ngDialog', function () {
         var defaults = this.defaults = {
             className: 'ngdialog-theme-default',
+            appendClassName: '',
             disableAnimation: false,
             plain: false,
             showClose: true,
@@ -456,6 +457,7 @@
                      * - controller {String}
                      * - controllerAs {String}
                      * - className {String} - dialog theme class
+                     * - appendClassName {String} - dialog theme class to be appended to defaults
                      * - disableAnimation {Boolean} - set to true to disable animation
                      * - showClose {Boolean} - show close button, default true
                      * - closeByEscape {Boolean} - default true
@@ -526,6 +528,10 @@
 
                             if (options.className) {
                                 $dialog.addClass(options.className);
+                            }
+
+                            if (options.appendClassName) {
+                                $dialog.addClass(options.appendClassName);
                             }
 
                             if (options.disableAnimation) {
@@ -697,6 +703,7 @@
                      * - controller {String}
                      * - controllerAs {String}
                      * - className {String} - dialog theme class
+                     * - appendClassName {String} - dialog theme class to be appended to defaults
                      * - showClose {Boolean} - show close button, default true
                      * - closeByEscape {Boolean} - default false
                      * - closeByDocument {Boolean} - default false
@@ -814,6 +821,7 @@
                     ngDialog.open({
                         template: attrs.ngDialog,
                         className: attrs.ngDialogClass || defaults.className,
+                        appendClassName: attrs.ngDialogAppendClass,
                         controller: attrs.ngDialogController,
                         controllerAs: attrs.ngDialogControllerAs,
                         bindToController: attrs.ngDialogBindToController,
