@@ -105,6 +105,21 @@ describe('ngDialog', function () {
     }));
   });
 
+  describe('with an appended class', function () {
+    var elm;
+    beforeEach(inject(function (ngDialog, $timeout, $document) {
+      var id = ngDialog.open({
+        appendClassName: 'ngdialog-custom'
+      }).id;
+      $timeout.flush();
+      elm = $document[0].getElementById(id);
+    }));
+
+    it('should have the additional class', inject(function () {
+      expect(elm.className.split(' ')).toContain('ngdialog-custom');
+    }));
+  });
+
   describe('controller instantiation', function () {
     var Ctrl;
     beforeEach(inject(function (ngDialog, $timeout, $q) {
