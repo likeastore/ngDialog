@@ -480,6 +480,13 @@
                         dialogID = dialogID || 'ngdialog' + localID;
                         openIdStack.push(dialogID);
 
+                        if (typeof options.data !== 'undefined') {
+                            if (typeof opts.data === 'undefined') {
+                                opts.data = {};
+                            }
+                            opts.data = angular.merge(angular.copy(options.data), opts.data);
+                        }
+
                         angular.extend(options, opts);
 
                         var defer;
@@ -717,6 +724,14 @@
                         var options = angular.copy(defaults);
 
                         opts = opts || {};
+
+                        if (typeof options.data !== 'undefined') {
+                            if (typeof opts.data === 'undefined') {
+                                opts.data = {};
+                            }
+                            opts.data = angular.merge(angular.copy(options.data), opts.data);
+                        }
+
                         angular.extend(options, opts);
 
                         options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
