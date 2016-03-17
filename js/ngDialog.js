@@ -480,6 +480,7 @@
                         dialogID = dialogID || 'ngdialog' + localID;
                         openIdStack.push(dialogID);
 
+                        // Merge opts.data with predefined via setDefaults
                         if (typeof options.data !== 'undefined') {
                             if (typeof opts.data === 'undefined') {
                                 opts.data = {};
@@ -725,6 +726,7 @@
 
                         opts = opts || {};
 
+                        // Merge opts.data with predefined via setDefaults
                         if (typeof options.data !== 'undefined') {
                             if (typeof opts.data === 'undefined') {
                                 opts.data = {};
