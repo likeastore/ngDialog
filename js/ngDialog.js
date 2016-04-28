@@ -32,6 +32,9 @@
     var animationEndEvent = 'animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend';
     var focusableElementSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
     var disabledAnimationClass = 'ngdialog-disabled-animation';
+    var animateFlyIn = "ngdialog-animation-flyin";
+    var animateFadeIn = "ngdialog-animation-fadein";
+    var ngdialogContent = ".ngdialog-content";
     var forceElementsReload = { html: false, body: false };
     var scopes = {};
     var openIdStack = [];
@@ -164,7 +167,6 @@
                         if (previousFocus && previousFocus.focus) {
                             previousFocus.focus();
                         }
-
                         $rootScope.$broadcast('ngDialog.closing', $dialog, value);
                         dialogsCount = dialogsCount < 0 ? 0 : dialogsCount;
                         if (animationEndSupport && !options.disableAnimation) {
@@ -543,7 +545,29 @@
                             }
 
                             if (options.disableAnimation) {
+
                                 $dialog.addClass(disabledAnimationClass);
+
+                            }
+
+                            var ngdialog_content = $dialog.find(ngdialogContent);
+
+                            if (options.animatonIn) {
+
+                                ngdialog_content.addClass(options.animatonIn);
+
+                            }else{
+
+                                if(options.className.indexOf("ngdialog-theme-default") != -1){
+
+                                  ngdialog_content.addClass(animateFlyIn);
+
+                                }else{
+
+                                  ngdialog_content.addClass(animateFadeIn);
+
+                                }
+
                             }
 
                             if (options.appendTo && angular.isString(options.appendTo)) {
