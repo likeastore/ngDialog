@@ -64,9 +64,12 @@
   animation: ngdialog-flyout .5s;
 }
 
-.ngdialog.ngdialog-theme-default .ngdialog-content {
+.ngdialog-animation-flyin {
   -webkit-animation: ngdialog-flyin .5s;
   animation: ngdialog-flyin .5s;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
   background: #f0f0f0;
   border-radius: 5px;
   color: #444;

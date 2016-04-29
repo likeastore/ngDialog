@@ -62,7 +62,9 @@
     -webkit-backface-visibility: hidden;
     animation: ngdialog-fadeout 0.5s;
 }
-
+.ngdialog-animation-fadein{
+	animation: ngdialog-fadein 0.5s;
+}
 .ngdialog-content {
     background: white;
     -webkit-backface-visibility: hidden;
