@@ -267,4 +267,27 @@ describe('ngDialog', function () {
       });
   });
 
+  describe('with an width', function () {
+    var elm, open;
+    beforeEach(inject(function (ngDialog, $timeout, $document) {
+      open = function(width) {
+        var id = ngDialog.open({
+          width: width
+        }).id;
+        $timeout.flush();
+        elm = $document[0].getElementById(id).querySelector('.ngdialog-content');
+      }
+    }));
+
+    it('should transform number to px', function () {
+      open(400);
+      expect(elm.style.cssText).toBe('width: 400px; ');
+    });
+
+    it('should set other width metrics', function () {
+      open('40%');
+      expect(elm.style.cssText).toBe('width: 40%; ');
+    });
+  });
+
 });

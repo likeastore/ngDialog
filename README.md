@@ -372,6 +372,30 @@ Specifies the CSS selector for the element to be referenced by the ``aria-descri
 
 If specified, the first matching element is used. See [Accessibility](#Accessibility) for more information.
 
+##### ``width {Number | String}``
+
+This option allows you to control the dialog's width. Default value is `null` (unspecified)
+
+If you provide a Number, 'px' will be appended. To use a custom metric, use a String, e.g. `'40%'`.
+
+For example, the following will add `width: 400px;` to the dialog when opened:
+
+```
+ngDialog.open({
+    template: 'template.html',
+    width: 400
+});
+```
+
+In another example, the following will add `width: 40%;`:
+
+```
+ngDialog.open({
+    template: 'template.html',
+    width: '40%'
+});
+```
+
 #### Returns:
 
 The ``open()`` method returns an object with some useful properties.

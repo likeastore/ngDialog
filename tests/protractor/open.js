@@ -14,4 +14,9 @@ describe('ngDialog open', function() {
         expect(text).toBe('Data passed through: from a service');
       });
   });
+
+  it('should define specific width through a property js', function() {
+    element(by.css('#js-width')).click();
+    expect(element(by.css('.ngdialog-content')).getCssValue('width')).toBe('650px');
+  });
 });
