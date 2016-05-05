@@ -52,6 +52,7 @@
     left: 0;
     -webkit-backface-visibility: hidden;
     animation: ngdialog-fadein 0.5s;
+    /*pointer-events: none;*/
 }
 
 .ngdialog-no-overlay {

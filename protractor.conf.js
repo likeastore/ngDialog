@@ -21,7 +21,7 @@ if (useConsole) {
     });
 }
 var multiCapabilities = [{
-    browserName: 'firefox'
+    browserName: 'chrome'
 }];
 
 // if (process.env.TRAVIS_PULL_REQUEST === 'false') {
