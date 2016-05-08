@@ -85,7 +85,7 @@ Also it is possible to use a simple string as template together with ``plain`` o
 It's not always necessary to place your external html template inside ``<script>`` tag. You could put these templates into ``$templateCache`` like this:
 
 ```javascript
-angular.module('dialog.templates').run([$templateCache, function($templateCache) {
+angular.module('dialog.templates').run(['$templateCache', function($templateCache) {
     $templateCache.put('templateId', 'template content');
 }]);
 ```
