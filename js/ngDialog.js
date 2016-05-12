@@ -612,7 +612,11 @@
                                     angular.extend(controllerInstance.instance, {ngDialogId: scope.ngDialogId, ngDialogData: scope.ngDialogData, closeThisDialog: scope.closeThisDialog});
                                 }
 
-                                $dialog.data('$ngDialogControllerController', controllerInstance());
+                                if(typeof controllerInstance === 'function'){
+                                    $dialog.data('$ngDialogControllerController', controllerInstance());
+                                } else {
+                                    $dialog.data('$ngDialogControllerController', controllerInstance);
+                                }
                             }
 
                             $timeout(function () {
