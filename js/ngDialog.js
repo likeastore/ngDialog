@@ -260,7 +260,7 @@
                         var focusableElements = privateMethods.getFocusableElements($dialog);
 
                         if (focusableElements.length === 0) {
-                            if (document.activeElement) {
+                            if (document.activeElement && document.activeElement.blur) {
                                 document.activeElement.blur();
                             }
                             return;
