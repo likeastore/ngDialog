@@ -218,16 +218,20 @@
                                 if (preCloseCallbackResult.closePromise) {
                                     preCloseCallbackResult.closePromise.then(function () {
                                         privateMethods.performCloseDialog($dialog, value);
+                                    }, function () {
+                                        return false;
                                     });
                                 } else {
                                     preCloseCallbackResult.then(function () {
                                         privateMethods.performCloseDialog($dialog, value);
                                     }, function () {
-                                        return;
+                                        return false;
                                     });
                                 }
                             } else if (preCloseCallbackResult !== false) {
                                 privateMethods.performCloseDialog($dialog, value);
+                            } else {
+                                return false;
                             }
                         } else {
                             privateMethods.performCloseDialog($dialog, value);
@@ -441,9 +445,9 @@
 
                     getRouterLocationEventName: function() {
                         if(privateMethods.detectUIRouter()) {
-                            return '$stateChangeSuccess';
+                            return '$stateChangeStart';
                         }
-                        return '$locationChangeSuccess';
+                        return '$locationChangeStart';
                     }
                 };
 
@@ -653,8 +657,9 @@
 
                             if (options.closeByNavigation) {
                                 var eventName = privateMethods.getRouterLocationEventName();
-                                $rootScope.$on(eventName, function () {
-                                    privateMethods.closeDialog($dialog);
+                                $rootScope.$on(eventName, function ($event) {
+                                    if (privateMethods.closeDialog($dialog) === false)
+                                        $event.preventDefault();
                                 });
                             }
 
