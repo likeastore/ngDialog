@@ -327,12 +327,12 @@ describe('ngDialog', function () {
 
     it('should set modal height from number to px', function () {
       open(400);
-      expect(elm.style.cssText).toBe('height: 400px;');
+      expect(elm.style.cssText).toBe('height: 400px; ');
     });
 
     it('should set modal height using other units', function () {
       open('40%');
-      expect(elm.style.cssText).toBe('height: 40%;');
+      expect(elm.style.cssText).toBe('height: 40%; ');
     });
   });
 
