@@ -313,4 +313,27 @@ describe('ngDialog', function () {
     });
   });
 
+  describe('with custom height', function () {
+    var elm, open;
+    beforeEach(inject(function (ngDialog, $timeout, $document) {
+      open = function(height) {
+        var id = ngDialog.open({
+          height: height
+        }).id;
+        $timeout.flush();
+        elm = $document[0].getElementById(id).querySelector('.ngdialog-content');
+      }
+    }));
+
+    it('should set modal height from number to px', function () {
+      open(400);
+      expect(elm.style.cssText).toBe('height: 400px;');
+    });
+
+    it('should set modal height using other units', function () {
+      open('40%');
+      expect(elm.style.cssText).toBe('height: 40%;');
+    });
+  });
+
 });

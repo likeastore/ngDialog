@@ -62,7 +62,8 @@
             ariaDescribedById: null,
             ariaDescribedBySelector: null,
             bodyClassName: 'ngdialog-open',
-            width: null
+            width: null,
+            height: null
         };
 
         this.setForceHtmlReload = function (_useIt) {
@@ -501,7 +502,7 @@
                         var scope;
                         scopes[dialogID] = scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
 
-                        var $dialog, $dialogParent;
+                        var $dialog, $dialogParent, $dialogContent;
 
                         var resolve = angular.extend({}, options.resolve);
 
@@ -548,11 +549,20 @@
                             }
 
                             if (options.width) {
-                                var $dialogContent = $dialog[0].querySelector('.ngdialog-content');
+                                $dialogContent = $dialog[0].querySelector('.ngdialog-content');
                                 if (angular.isString(options.width)) {
                                     $dialogContent.style.width = options.width;
                                 } else {
                                     $dialogContent.style.width = options.width + 'px';
+                                }
+                            }
+
+                            if (options.height) {
+                                $dialogContent = $dialog[0].querySelector('.ngdialog-content');
+                                if (angular.isString(options.height)) {
+                                    $dialogContent.style.height = options.height;
+                                } else {
+                                    $dialogContent.style.height = options.height + 'px';
                                 }
                             }
 

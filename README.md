@@ -396,6 +396,30 @@ ngDialog.open({
 });
 ```
 
+##### ``height {Number | String}``
+
+This option allows you to control the dialog's height. Default value is `null` (unspecified)
+
+If you provide a Number, 'px' will be appended. To use a custom metric, use a String, e.g. `'40%'`.
+
+For example, the following will add `height: 400px;` to the dialog when opened:
+
+```
+ngDialog.open({
+    template: 'template.html',
+    height: 400
+});
+```
+
+In another example, the following will add `height: 40%;`:
+
+```
+ngDialog.open({
+    template: 'template.html',
+    height: '40%'
+});
+```
+
 #### Returns:
 
 The ``open()`` method returns an object with some useful properties.
