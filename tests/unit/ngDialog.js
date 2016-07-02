@@ -336,4 +336,26 @@ describe('ngDialog', function () {
     });
   });
 
+  describe('without custom height', function () {
+    var elm, id;
+    beforeEach(inject(function (ngDialog, $timeout, $document) {      
+        id = ngDialog.open().id;        
+        $timeout.flush();
+        elm = $document[0].getElementById(id).querySelector('.ngdialog-content');
+    }));
+
+    it('should have id', function() {
+      expect(id).toBeDefined();
+      expect(id).toEqual('ngdialog1');
+    });
+
+    it('should have created an element on the DOM', function() {
+      expect(elm).toBeDefined();
+    });
+
+    it('should have content', function() {
+      expect(elm.clientHeight).toBeGreaterThan(0);
+    });
+  });
+
 });

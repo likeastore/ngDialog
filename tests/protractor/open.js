@@ -20,7 +20,7 @@ describe('ngDialog open', function() {
     expect(element(by.css('.ngdialog-content')).getCssValue('width')).toBe('650px');
   });
 
-    it('should define custom height through a js property', function() {
+  it('should define custom height through a js property', function() {
     element(by.css('#js-height')).click();
     expect(element(by.css('.ngdialog-content')).getCssValue('height')).toBe('400px');
   });
