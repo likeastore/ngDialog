@@ -71,6 +71,7 @@
     <a href="" ng-click="openConfirmWithPreCloseCallbackInlinedWithNestedConfirm()">Open confirm modal with pre-close inlined with nested confirm.</a>
     <a href="" ng-click="openWithoutOverlay()">Open without overlay</a>
     <a href="" ng-click="openWithJSSpecificWidth()" id="js-width">Open with js specific width</a>
+    <a href="" ng-click="openWithJSSpecificHeight()" id="js-height">Open with js specific height</a>
 
     <!-- Templates -->
 
@@ -393,6 +394,15 @@
                     template: '<h2>Notice that style inline set specific width!</h2>',
                     className: 'ngdialog-theme-default',
                     width: 650,
+                    plain: true
+                });
+            };
+
+            $scope.openWithJSSpecificHeight = function () {
+                ngDialog.open({
+                    template: '<h2>This modal is using a custom height (400px)! See the inline style</h2>',
+                    className: 'ngdialog-theme-default',
+                    height: 400,
                     plain: true
                 });
             };
