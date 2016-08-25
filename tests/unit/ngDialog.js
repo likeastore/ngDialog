@@ -241,7 +241,7 @@ describe('ngDialog', function () {
 
   describe('openOnePerName', function () {
       var dialogOptions = {
-          name: 'do something'
+          name: 'Do Something'
       };
 
       describe('when feature is off - default', function () {
@@ -255,11 +255,11 @@ describe('ngDialog', function () {
 
           it('should allow opening 2 dialogs with the same name', function () {
               var firstDialog = ngDialog.open(dialogOptions);
-              expect(firstDialog).not.toBeUndefined();
+              expect(firstDialog).toBeDefined();
               expect(firstDialog.id).toBe('ngdialog1');
 
               var secondDialog = ngDialog.open(dialogOptions);
-              expect(secondDialog).not.toBeUndefined();
+              expect(secondDialog).toBeDefined();
               expect(secondDialog.id).toBe('ngdialog2');
               $timeout.flush();
           });
@@ -278,10 +278,10 @@ describe('ngDialog', function () {
               $timeout = _$timeout_;
           }));
 
-          it('should allow opening 2 dialogs with the same name', function () {
+          it('should not allow opening 2 dialogs with the same name', function () {
               var firstDialog = ngDialog.open(dialogOptions);
-              expect(firstDialog).not.toBeUndefined();
-              expect(firstDialog.id).toBe('do something dialog');
+              expect(firstDialog).toBeDefined();
+              expect(firstDialog.id).toBe('do-something-dialog');
               $timeout.flush();
 
               var secondDialog = ngDialog.open(dialogOptions);

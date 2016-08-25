@@ -476,7 +476,7 @@
                         var dialogID = null;
                         opts = opts || {};
                         if (openOnePerName && opts.name) {
-                            dialogID = opts.name+' dialog';
+                            dialogID = opts.name.toLowerCase().replace(/\s/g, '-') + '-dialog';
                             if (this.isOpen(dialogID)) {
                                 return;
                             }
@@ -522,7 +522,7 @@
                             }
 
                             var hasOverlayClass = options.overlay ? '' : ' ngdialog-no-overlay';
-                            $dialog = $el('<div id="'+dialogID + '" class="ngdialog' + hasOverlayClass + '"></div>');
+                            $dialog = $el('<div id="' + dialogID + '" class="ngdialog' + hasOverlayClass + '"></div>');
                             $dialog.html((options.overlay ?
                                 '<div class="ngdialog-overlay"></div><div class="ngdialog-content" role="document">' + template + '</div>' :
                                 '<div class="ngdialog-content" role="document">' + template + '</div>'));
