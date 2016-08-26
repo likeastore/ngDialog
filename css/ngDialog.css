@@ -110,6 +110,5 @@
 
 html.ngdialog-open,
 body.ngdialog-open {
-  overflow: initial !important; 
+  overflow: hidden;
 }
-
