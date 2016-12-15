@@ -707,8 +707,13 @@
                         };
 
                         function loadTemplateUrl (tmpl, config) {
+                            var config = config || {};
+                            config.headers = config.headers || {};
+
+                            angular.extend(config.headers, {'Accept': 'text/html'});
+
                             $rootScope.$broadcast('ngDialog.templateLoading', tmpl);
-                            return $http.get(tmpl, (config || {})).then(function(res) {
+                            return $http.get(tmpl, config).then(function(res) {
                                 $rootScope.$broadcast('ngDialog.templateLoaded', tmpl);
                                 return res.data || '';
                             });
