@@ -55,6 +55,15 @@ Your help is appreciated! If you've found a bug or if something is not clear, pl
 
 Ideally, if you've found an issue, you will submit a PR that meets our [contributor guidelines][contributor-guidelines].
 
+### Running Tests
+
+```bash
+git clone git@github.com:likeastore/ngDialog.git
+cd ngDialog
+npm i
+npm run test
+```
+
 ## API
 
 ngDialog service provides easy to use and minimalistic API, but in the same time it's powerful enough. Here is the list of accessible methods that you can use:
