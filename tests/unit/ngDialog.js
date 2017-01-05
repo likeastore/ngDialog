@@ -304,12 +304,12 @@ describe('ngDialog', function () {
 
     it('should transform number to px', function () {
       open(400);
-      expect(elm.style.cssText).toBe('width: 400px; ');
+      expect(elm.style.cssText.trim()).toBe('width: 400px;');
     });
 
     it('should set other width metrics', function () {
       open('40%');
-      expect(elm.style.cssText).toBe('width: 40%; ');
+      expect(elm.style.cssText.trim()).toBe('width: 40%;');
     });
   });
 
@@ -327,19 +327,19 @@ describe('ngDialog', function () {
 
     it('should set modal height from number to px', function () {
       open(400);
-      expect(elm.style.cssText).toBe('height: 400px; ');
+      expect(elm.style.cssText.trim()).toBe('height: 400px;');
     });
 
     it('should set modal height using other units', function () {
       open('40%');
-      expect(elm.style.cssText).toBe('height: 40%; ');
+      expect(elm.style.cssText.trim()).toBe('height: 40%;');
     });
   });
 
   describe('without custom height', function () {
     var elm, id;
-    beforeEach(inject(function (ngDialog, $timeout, $document) {      
-        id = ngDialog.open().id;        
+    beforeEach(inject(function (ngDialog, $timeout, $document) {
+        id = ngDialog.open().id;
         $timeout.flush();
         elm = $document[0].getElementById(id).querySelector('.ngdialog-content');
     }));
