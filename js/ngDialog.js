@@ -413,6 +413,7 @@
                     applyAriaAttribute: function($dialog, attr, id, selector) {
                         if (id) {
                             $dialog.attr(attr, id);
+                            return;
                         }
 
                         if (selector) {
