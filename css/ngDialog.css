@@ -102,6 +102,12 @@
   animation: ngdialog-fadeout 0.5s;
 }
 
+.ngdialog-close {
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+}
+
 .ngdialog-close:before {
   font-family: 'Helvetica', Arial, sans-serif;
   content: '\00D7';

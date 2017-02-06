@@ -519,7 +519,7 @@
                                 locals = setup.locals;
 
                             if (options.showClose) {
-                                template += '<div class="ngdialog-close"></div>';
+                                template += '<button aria-label="Dismiss" class="ngdialog-close"></button>';
                             }
 
                             var hasOverlayClass = options.overlay ? '' : ' ngdialog-no-overlay';
