@@ -1,3 +1,6 @@
+# 1.0.0
+- [x] Changes close element to button with proper accessibility rules ([PR-553](https://github.com/likeastore/ngDialog/pull/533)) 
+
 # 0.5.0
 - [x] Angular version in `package.json` is now `1.4.x` ([ISSUE-244](https://github.com/likeastore/ngDialog/issues/244))
 - [x] fixed spelling of `ariaLabelledById` and `ariaLabelledBySelector` inside README file by [@rylan](https://github.com/rylan) ([PR-242](https://github.com/likeastore/ngDialog/pull/242))
