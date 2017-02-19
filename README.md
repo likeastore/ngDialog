@@ -31,9 +31,11 @@ npm install ng-dialog
 
 You need only to include ``ngDialog.js``,  ``ngDialog.css`` and  ``ngDialog-theme-default.css`` (as minimal setup) to your project and then you can start using the ``ngDialog`` provider in your directives, controllers and services.  For example:
 
-    <link rel="stylesheet" href="lib/ng-dialog/css/ngDialog.min.css">
-    <link rel="stylesheet" href="lib/ng-dialog/css/ngDialog-theme-default.min.css">
-    <script src="lib/ng-dialog/js/ngDialog.min.js"></script>
+```html
+<link rel="stylesheet" href="lib/ng-dialog/css/ngDialog.min.css">
+<link rel="stylesheet" href="lib/ng-dialog/css/ngDialog-theme-default.min.css">
+<script src="lib/ng-dialog/js/ngDialog.min.js"></script>
+```
 
 Define the className to be the ``ngDialog-theme-default``. 
 
