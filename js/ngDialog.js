@@ -51,6 +51,7 @@
             closeByNavigation: false,
             appendTo: false,
             preCloseCallback: false,
+            preConfirmCallback: false,
             overlay: true,
             cache: true,
             trapFocus: true,
@@ -764,6 +765,10 @@
                     openConfirm: function (opts) {
                         var defer = $q.defer();
                         var options = angular.copy(defaults);
+                        var closeConfirm = function ($dialog, value) {
+                            defer.resolve(value);
+                            privateMethods.performCloseDialog($dialog, value);
+                        };
 
                         opts = opts || {};
 
@@ -779,9 +784,21 @@
 
                         options.scope = angular.isObject(options.scope) ? options.scope.$new() : $rootScope.$new();
                         options.scope.confirm = function (value) {
-                            defer.resolve(value);
                             var $dialog = $el(document.getElementById(openResult.id));
-                            privateMethods.performCloseDialog($dialog, value);
+                            if (angular.isFunction(options.preConfirmCallback)) {
+                                var preConfirmCallbackResult = options.preConfirmCallback.call($dialog, value);
+
+                                if (angular.isObject(preConfirmCallbackResult) && preConfirmCallbackResult.constructor.name == 'Promise') {
+                                    preConfirmCallbackResult.then(function (result) {
+                                        closeConfirm($dialog, result);
+                                    });
+                                } else if (preConfirmCallbackResult) {
+                                    closeConfirm($dialog, value);
+                                }
+                            } else if (value) {
+                                closeConfirm($dialog, value);
+                            }
+
                         };
 
                         var openResult = publicMethods.open(options);
