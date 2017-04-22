@@ -313,6 +313,24 @@ describe('ngDialog', function () {
     });
   });
 
+  describe('with onOpenCallback', function () {
+    var elm, open;
+    beforeEach(inject(function (ngDialog, $timeout, $document) {
+      open = function (onOpenCallback) {
+        var id = ngDialog.open({
+          onOpenCallback: onOpenCallback
+        }).id;
+        $timeout.flush();
+      }
+    }));
+
+    it('onOpenCallback method should be called on opening of the dialog', function () {
+      var callback = spy();
+      open(callback);
+      expect(callback).toHaveBeenCalled();
+    })
+  });
+
   describe('with custom height', function () {
     var elm, open;
     beforeEach(inject(function (ngDialog, $timeout, $document) {

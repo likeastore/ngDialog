@@ -301,6 +301,11 @@ Pass ``false`` to disable template caching. Useful for developing purposes, defa
 
 Give a name for a dialog instance. It is useful for identifying specific dialog if there are multiple dialog boxes opened.
 
+#### ``onOpenCallback {String} | {Function}``
+
+Provide either the name of a function or a function to be called after the dialog is opened. This callback can be used instead of the `ngdialog.opened` event.
+It provides with a way to register a hook for when the dialog is appended to the DOM and about to be shown to the user.
+
 ##### ``preCloseCallback {String} | {Function}``
 
 Provide either the name of a function or a function to be called before the dialog is closed.  If the callback function specified in the option returns ``false`` then the dialog will not be closed. Alternatively, if the callback function returns a promise that gets resolved the dialog will be closed.
