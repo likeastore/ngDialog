@@ -376,4 +376,60 @@ describe('ngDialog', function () {
     });
   });
 
+  describe('body classes should be applied / removed correctly', function () {
+    var elm, first, second, ngDialog, flush;
+
+    beforeEach(inject(function (_ngDialog_, $timeout, $document) {
+      ngDialog = _ngDialog_
+
+      first = ngDialog.open({
+        bodyClassName: 'ngdialog-first'
+      });
+
+      $timeout.flush();
+
+      second = ngDialog.open({
+        bodyClassName: 'ngdialog-second'
+      });
+
+      $timeout.flush();
+
+      elm = angular.element($document.find('body'));
+
+      flush = function () {
+        [].slice.call(
+          $document.find('body').children()
+        )
+        .map(angular.element)
+        .forEach(function (elm) {
+          if (elm.hasClass('ngdialog')) {
+            // yuck
+            elm.triggerHandler('animationend');
+          }
+        });
+      };
+    }));
+
+    it('should have two body classes applied', function () {
+      expect(elm.hasClass('ngdialog-first')).toEqual(true);
+      expect(elm.hasClass('ngdialog-second')).toEqual(true);
+    });
+
+    it('should properly remove one body class', function () {
+      first.close();
+      flush();
+
+      expect(elm.hasClass('ngdialog-second')).toEqual(true);
+      expect(elm.hasClass('ngdialog-first')).toEqual(false);
+    });
+
+    it('should properly remove all classes on closeAll', function () {
+      ngDialog.closeAll();
+      flush();
+
+      expect(elm.hasClass('ngdialog-second')).toEqual(false);
+      expect(elm.hasClass('ngdialog-first')).toEqual(false);
+    });
+  });
+
 });

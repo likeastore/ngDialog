@@ -35,6 +35,7 @@
     var forceElementsReload = { html: false, body: false };
     var scopes = {};
     var openIdStack = [];
+    var activeBodyClasses = [];
     var keydownIsBound = false;
     var openOnePerName = false;
     var closeByNavigationDialogStack = [];
@@ -210,11 +211,17 @@
                     closeDialogElement: function($dialog, value) {
                         var options = $dialog.data('$ngDialogOptions');
                         $dialog.remove();
-                        if (dialogsCount === 0) {
+
+                        activeBodyClasses.splice(activeBodyClasses.indexOf(options.bodyClassName), 1);
+                        if (activeBodyClasses.indexOf(options.bodyClassName) === -1) {
                             $elements.html.removeClass(options.bodyClassName);
                             $elements.body.removeClass(options.bodyClassName);
+                        }
+
+                        if (dialogsCount === 0) {
                             privateMethods.resetBodyPadding();
                         }
+
                         $rootScope.$broadcast('ngDialog.closed', $dialog, value);
                     },
 
@@ -664,6 +671,7 @@
                                 var widthDiffs = $window.innerWidth - $elements.body.prop('clientWidth');
                                 $elements.html.addClass(options.bodyClassName);
                                 $elements.body.addClass(options.bodyClassName);
+                                activeBodyClasses.push(options.bodyClassName);
                                 var scrollBarWidth = widthDiffs - ($window.innerWidth - $elements.body.prop('clientWidth'));
                                 if (scrollBarWidth > 0) {
                                     privateMethods.setBodyPadding(scrollBarWidth);
