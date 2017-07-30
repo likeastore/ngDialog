@@ -29,6 +29,8 @@
 }
 
 .ngdialog.ngdialog-theme-plain .ngdialog-close {
+  border: none;
+  background: transparent;
   cursor: pointer;
   position: absolute;
   right: 0;
@@ -41,13 +43,8 @@
   content: "\00D7";
   font-size: 26px;
   font-weight: 400;
-  height: 30px;
   line-height: 26px;
-  position: absolute;
-  right: 3px;
   text-align: center;
-  top: 3px;
-  width: 30px;
 }
 
 .ngdialog.ngdialog-theme-plain .ngdialog-close:hover:before,

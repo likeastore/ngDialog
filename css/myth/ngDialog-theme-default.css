@@ -47,7 +47,8 @@
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-close {
-	border-radius: 5px;
+	border: none;
+	background: transparent;
 	cursor: pointer;
 	position: absolute;
 	right: 0;
@@ -55,19 +56,15 @@
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-close:before {
+	display: block;
+	padding: 3px;
 	background: transparent;
-	border-radius: 3px;
 	color: #bbb;
 	content: '\00D7';
 	font-size: 26px;
 	font-weight: 400;
-	height: 30px;
 	line-height: 26px;
-	position: absolute;
-	right: 3px;
 	text-align: center;
-	top: 3px;
-	width: 30px;
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-close:hover:before,.ngdialog.ngdialog-theme-default .ngdialog-close:active:before {
