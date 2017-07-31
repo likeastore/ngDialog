@@ -387,14 +387,22 @@
                     },
 
                     getActiveDialog: function () {
-                        var dialogs = document.querySelectorAll('.ngdialog');
-
-                        if (dialogs.length === 0) {
+                        if (openIdStack.length === 0) {
                             return null;
                         }
-
-                        // TODO: This might be incorrect if there are a mix of open dialogs with different 'appendTo' values
-                        return $el(dialogs[dialogs.length - 1]);
+                        var dialogs;
+                        return openIdStack.map(function (id) {
+                            return $el('#' + id);
+                        }).reduce(function (a, b) {
+                            var aZIndex = parseInt(a.css('z-index'));
+                            var bZIndex = parseInt(b.css('z-index'));
+                            if (aZIndex === bZIndex) {
+                                var dialogs = dialogs || $el('.ngdialog');
+                                return (dialogs.index(a) > dialogs.index(b)) ? a : b;
+                            } else {
+                                return (aZIndex > bZIndex) ? a : b;
+                            }
+                        });
                     },
 
                     applyAriaAttributes: function ($dialog, options) {
