@@ -667,7 +667,7 @@
                                 var $activeDialogs = document.querySelectorAll('.ngdialog');
                                 privateMethods.deactivateAll($activeDialogs);
 
-                                $compile($dialog)(scope);
+                              
                                 var widthDiffs = $window.innerWidth - $elements.body.prop('clientWidth');
                                 $elements.html.addClass(options.bodyClassName);
                                 $elements.body.addClass(options.bodyClassName);
@@ -677,7 +677,7 @@
                                     privateMethods.setBodyPadding(scrollBarWidth);
                                 }
                                 $dialogParent.append($dialog);
-
+                                $compile($dialog)(scope);
                                 privateMethods.activate($dialog);
 
                                 if (options.trapFocus) {
