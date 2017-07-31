@@ -176,10 +176,22 @@
                         $rootScope.$broadcast('ngDialog.closing', $dialog, value);
                         dialogsCount = dialogsCount < 0 ? 0 : dialogsCount;
                         if (animationEndSupport && !options.disableAnimation) {
+			    var isIE = !!window.MSInputMethodContext && !!document.documentMode;
                             scope.$destroy();
-                            $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
-                                privateMethods.closeDialogElement($dialog, value);
-                            }).addClass('ngdialog-closing');
+                            if (!isIE) {
+                                $dialog.unbind(animationEndEvent).bind(animationEndEvent, function () {
+                                        privateMethods.closeDialogElement($dialog, value);
+                                }).addClass('ngdialog-closing');
+                            }
+                            // Awful IE detection due to https://connect.microsoft.com/IE/feedbackdetail/view/1605631/animation-end-events-firing-late 
+                            else {
+                                $dialog.addClass('ngdialog-closing');
+                                var duration = window.getComputedStyle($dialog.find(".ngdialog-content")[0]).animationDuration,
+                                    dialogAnimationDuration = (0 < duration.indexOf("ms")) ? parseFloat(duration) : parseFloat(duration) * 1000;
+                                setTimeout(function () {
+                                    privateMethods.closeDialogElement($dialog, value);
+                                }, dialogAnimationDuration);                    
+                            }                        
                         } else {
                             scope.$destroy();
                             privateMethods.closeDialogElement($dialog, value);
