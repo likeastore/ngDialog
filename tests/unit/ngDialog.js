@@ -432,4 +432,35 @@ describe('ngDialog', function () {
     });
   });
 
+  describe('with trapped focus', function () {
+    var document, elm;
+
+    beforeEach(inject(function (ngDialog, $timeout, $document) {
+      var id = ngDialog.open({
+        template: '<svg><rect id=test1 width=10 height=10 tabindex=0></rect></svg><a id=test2 href="#"></div>',
+        trapFocus: true,
+        plain: true,
+        showClose: false
+      }).id;
+      $timeout.flush();
+
+      document = $document[0];
+      elm = angular.element(document.getElementById(id));
+    }));
+
+    it('should be able to focus SVG elements', function () {
+      expect(document.activeElement.id).toBe('test1');
+    });
+
+    it('should let the browser handle tab key event after SVG is focused', function () {
+      var preventDefaultSpy = jasmine.createSpy('preventDefaultSpy');
+      var stopPropagationSpy = jasmine.createSpy('stopPropagationSpy');
+
+      // pressing TAB
+      elm.triggerHandler({type: 'keydown', keyCode: 9, preventDefault: preventDefaultSpy, stopPropagation: stopPropagationSpy});
+
+      expect(preventDefaultSpy).not.toHaveBeenCalled();
+      expect(stopPropagationSpy).not.toHaveBeenCalled();
+    });
+  });
 });

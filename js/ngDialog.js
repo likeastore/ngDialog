@@ -376,10 +376,10 @@
                         var visibleFocusableElements = [];
 
                         for (var i = 0; i < els.length; i++) {
-                            var el = els[i];
+                            var clientRect = els[i].getBoundingClientRect();
 
-                            if (el.offsetWidth > 0 || el.offsetHeight > 0) {
-                                visibleFocusableElements.push(el);
+                            if (clientRect.height > 0 || clientRect.width > 0) {
+                                visibleFocusableElements.push(els[i]);
                             }
                         }
 
