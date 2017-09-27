@@ -746,7 +746,7 @@
 
                             $rootScope.$broadcast('ngDialog.templateLoading', tmpl);
                             return $http.get(tmpl, config).then(function(res) {
-                                $rootScope.$broadcast('ngDialog.templateLoaded', tmpl);
+                                $rootScope.$broadcast('ngDialog.templateLoaded', tmpl, res);
                                 return res.data || '';
                             });
                         }
