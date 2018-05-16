@@ -928,6 +928,7 @@
 
                     ngDialog.open({
                         template: attrs.ngDialog,
+                        name: attrs.ngDialog,
                         className: attrs.ngDialogClass || defaults.className,
                         appendClassName: attrs.ngDialogAppendClass,
                         controller: attrs.ngDialogController,
