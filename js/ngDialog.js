@@ -573,6 +573,15 @@
                                 $dialog.addClass(options.appendClassName);
                             }
 
+                            if (options.top) {
+                                $dialogContent = $dialog[0].querySelector('.ngdialog-content');
+                                if (angular.isString(options.top)) {
+                                    $dialogContent.style.top = options.top;
+                                } else {
+                                    $dialogContent.style.top = options.top + 'px';
+                                }
+                            }
+
                             if (options.width) {
                                 $dialogContent = $dialog[0].querySelector('.ngdialog-content');
                                 if (angular.isString(options.width)) {
