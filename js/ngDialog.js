@@ -152,7 +152,7 @@
                         }
 
                         if (typeof $window.Hammer !== 'undefined') {
-                            var hammerTime = scope.hammerTime;
+                            var hammerTime = scope.hammerTime = $window.Hammer($dialog[0]);
                             hammerTime.off('tap', closeByDocumentHandler);
                             hammerTime.destroy && hammerTime.destroy();
                             delete scope.hammerTime;
