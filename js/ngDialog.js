@@ -68,7 +68,8 @@
             ariaDescribedBySelector: null,
             bodyClassName: 'ngdialog-open',
             width: null,
-            height: null
+            height: null,
+            inContext: false
         };
 
         this.setForceHtmlReload = function (_useIt) {
@@ -669,12 +670,15 @@
 
                                 $compile($dialog)(scope);
                                 var widthDiffs = $window.innerWidth - $elements.body.prop('clientWidth');
-                                $elements.html.addClass(options.bodyClassName);
-                                $elements.body.addClass(options.bodyClassName);
-                                activeBodyClasses.push(options.bodyClassName);
-                                var scrollBarWidth = widthDiffs - ($window.innerWidth - $elements.body.prop('clientWidth'));
-                                if (scrollBarWidth > 0) {
-                                    privateMethods.setBodyPadding(scrollBarWidth);
+
+                                if (!options.inContext) {
+                                    $elements.html.addClass(options.bodyClassName);
+                                    $elements.body.addClass(options.bodyClassName);
+                                    activeBodyClasses.push(options.bodyClassName);
+                                    var scrollBarWidth = widthDiffs - ($window.innerWidth - $elements.body.prop('clientWidth'));
+                                    if (scrollBarWidth > 0) {
+                                        privateMethods.setBodyPadding(scrollBarWidth);
+                                    }
                                 }
                                 $dialogParent.append($dialog);
 

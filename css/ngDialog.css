@@ -57,10 +57,6 @@
   right: 0;
   bottom: 0;
   left: 0;
-  /* fix for Scrollbars not clickable on overflow #552 */
-  background: rgba(0, 0, 0, 0.4); 
-  animation: ngdialog-fadein 0.5s;
-  /* end fix for Scrollbars not clickable on overflow #552 */
 }
 
 .ngdialog.ngdialog-disabled-animation,
@@ -72,6 +68,7 @@
 
 .ngdialog-overlay {
   position: fixed;
+  background: rgba(0, 0, 0, 0.4);
   top: 0;
   right: 0;
   bottom: 0;
@@ -79,10 +76,6 @@
   -webkit-backface-visibility: hidden;
   -webkit-animation: ngdialog-fadein 0.5s;
   animation: ngdialog-fadein 0.5s;
-  /* fix for Scrollbars not clickable on overflow #552 */
-  margin-right: 15px;
-  background: transparent;
-  /* end fix for Scrollbars not clickable on overflow #552 */
 }
 
 .ngdialog-no-overlay {
