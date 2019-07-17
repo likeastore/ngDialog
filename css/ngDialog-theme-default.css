@@ -78,6 +78,7 @@
   padding: 1em;
   position: relative;
   width: 450px;
+  z-index: 1  
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-close {
